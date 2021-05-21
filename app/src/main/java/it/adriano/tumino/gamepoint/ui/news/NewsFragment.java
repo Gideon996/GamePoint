@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.ui.notifications;
+package it.adriano.tumino.gamepoint.ui.news;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.databinding.FragmentNotificationsBinding;
+import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
 
-public class NotificationsFragment extends Fragment {
+public class NewsFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
-    private FragmentNotificationsBinding binding;
+    private NewsViewModel newsViewModel;
+    private FragmentNewsBinding binding;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        newsViewModel =
+                new ViewModelProvider(this).get(NewsViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textNews;
+        newsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
