@@ -2,6 +2,7 @@ package it.adriano.tumino.gamepoint.news;
 
 
 import android.os.AsyncTask;
+import android.view.View;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,6 +60,10 @@ public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>
 
     @Override
     protected void onPostExecute(List<GameNews> result) {
+        newsViewModel.getShimmerFrameLayout().stopShimmer();
+        newsViewModel.getShimmerFrameLayout().setVisibility(View.GONE);
+        newsViewModel.getRecyclerView().setVisibility(View.VISIBLE);
+        
         newsViewModel.setList(result);
         newsAdapterRecycle.notifyDataSetChanged(); //nuovo
     }

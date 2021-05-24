@@ -13,6 +13,7 @@ import android.widget.Button;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.jetbrains.annotations.NotNull;
 

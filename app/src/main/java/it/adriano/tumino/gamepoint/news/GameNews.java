@@ -9,12 +9,6 @@ public class GameNews {
     private String newsUrl;
     private String sito;
 
-    public GameNews() {
-
-    }
-
-
-
     public GameNews(String title, String description, String imageUrl, String data, String newsUrl, String sito) {
         this.title = title;
         this.description = description;
