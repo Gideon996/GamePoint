@@ -59,7 +59,7 @@ public class NewsFragment extends Fragment {
         super.onStart();
         int initialPage = 1;
         CatchAndShowNews nuovo = new CatchAndShowNews(newsViewModel, newsAdapterRecycle);
-        nuovo.execute(initialPage, initialPage);
+        nuovo.execute(initialPage, null);
     }
 
     @Override

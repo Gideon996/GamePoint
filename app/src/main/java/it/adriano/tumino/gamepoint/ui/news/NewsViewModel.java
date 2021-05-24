@@ -18,11 +18,13 @@ public class NewsViewModel extends ViewModel {
     private ArrayList<GameNews> list;
     private ShimmerFrameLayout shimmerFrameLayout;
     private RecyclerView recyclerView;
+    private int lastPage;
 
     public NewsViewModel() {
         mText = new MutableLiveData<>();
         list = new ArrayList<>();
         mText.setValue("Ultime Notizie");
+        lastPage = 1;
     }
 
     public LiveData<String> getText() {
@@ -51,5 +53,18 @@ public class NewsViewModel extends ViewModel {
 
     public void setRecyclerView(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
+    }
+
+
+    public int getLastPage() {
+        return lastPage;
+    }
+
+    public void setLastPage(int lastPage) {
+        this.lastPage = lastPage;
+    }
+
+    public void incrementPage(){
+        lastPage++;
     }
 }

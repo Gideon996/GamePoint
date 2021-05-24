@@ -5,7 +5,10 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -16,7 +19,7 @@ import org.jsoup.select.Elements;
 
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
-public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>> {
+public class CatchAndShowNews extends AsyncTask<Integer, Void, List<GameNews>> {
 
 
     private final NewsViewModel newsViewModel;
@@ -29,7 +32,14 @@ public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>
 
     @Override
     protected List<GameNews> doInBackground(Integer... integers) {
-        String url = "https://www.everyeye.it/notizie/?pagina=" + integers[0];
+        ArrayList<GameNews> list = getEveryeye(integers[0]);
+        list.addAll(getMultiplayer(integers[0]));
+        Collections.shuffle(list);
+        return list;
+    }
+
+    public ArrayList<GameNews> getEveryeye(int page) {
+        String url = "https://www.everyeye.it/notizie/?pagina=" + page;
         ArrayList<GameNews> list = new ArrayList<>();
         try {
             Document document = Jsoup.connect(url).get();
@@ -58,12 +68,48 @@ public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>
         return list;
     }
 
+    public ArrayList<GameNews> getMultiplayer(int page) {
+        String[] mesi = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
+        String url = "https://multiplayer.it/articoli/notizie/?page=" + page;
+        ArrayList<GameNews> list = new ArrayList<>();
+        try {
+            Document document = Jsoup.connect(url)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36") //per visualizzare tutto correttamente
+                    .get();
+
+            Elements elements = document.getElementsByClass("media");
+            for (Element element : elements) {
+                String imageURL = element.getElementsByTag("img").get(0).attributes().get("data-src"); //nullo se non è possibile trovare il tag
+                Element mediaBody = element.getElementsByClass("media-body").get(0);
+                String newsUrl = "https://multiplayer.it" + mediaBody.getElementsByTag("a").get(0).attributes().get("href");
+                String titolo = mediaBody.getElementsByTag("a").get(0).text();
+                String[] subString = mediaBody.getElementsByTag("p").text().split("\\|");
+                String testo = subString[subString.length - 1].trim();
+                String data = subString[0].split(" - ")[subString[0].split(" - ").length - 1];
+
+                if(!data.matches("([0-9]{2})\\\\([0-9]{2})\\\\([0-9]{4})")){
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+                    String string[] = sdf.format(Calendar.getInstance().getTime()).split("/");
+                    data = string[0] + " " + mesi[Integer.parseInt(string[1]) - 1] + " " + string[string.length - 1];
+                }
+                if(!testo.isEmpty() || !data.isEmpty()){
+                    GameNews gameNews = new GameNews(titolo, testo, imageURL, data, newsUrl, "multiplayer.it");
+                    list.add(gameNews);
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     @Override
     protected void onPostExecute(List<GameNews> result) {
         newsViewModel.getShimmerFrameLayout().stopShimmer();
         newsViewModel.getShimmerFrameLayout().setVisibility(View.GONE);
         newsViewModel.getRecyclerView().setVisibility(View.VISIBLE);
-        
+
         newsViewModel.setList(result);
         newsAdapterRecycle.notifyDataSetChanged(); //nuovo
     }
