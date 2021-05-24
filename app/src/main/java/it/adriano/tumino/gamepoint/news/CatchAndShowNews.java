@@ -1,12 +1,7 @@
 package it.adriano.tumino.gamepoint.news;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.os.AsyncTask;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +18,8 @@ import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>> {
 
 
-    private NewsViewModel newsViewModel;
-    private NewsAdapterRecycle newsAdapterRecycle; //nuovo
+    private final NewsViewModel newsViewModel;
+    private final NewsAdapterRecycle newsAdapterRecycle; //nuovo
 
     public CatchAndShowNews(NewsViewModel newsViewModel, NewsAdapterRecycle newsAdapterRecycle) { //nuovo
         this.newsViewModel = newsViewModel;
