@@ -45,18 +45,14 @@ public class CatchAndShowNews extends AsyncTask<Integer, Void, List<GameNews>> {
             Document document = Jsoup.connect(url).get();
             Elements elements = document.getElementsByClass("fvideogioco");
             for (Element element : elements) {
-                Element image = element.getElementsByClass("lazy").get(0); //immagine
-                Attributes attributes = image.attributes();
-                String imageURL = attributes.get("data-src"); //nullo se non è possibile trovare il tag
+                String imageURL = element.getElementsByClass("lazy").get(0).attributes().get("data-src"); //nullo se non è possibile trovare il tag
 
                 Element notizia = element.getElementsByClass("testi_notizia").get(0); //dati della notizia
-                Element span = notizia.getElementsByTag("span").get(0); //tipo e data
-                String data = span.text().split(",")[1].substring(1); //prendo solo la data, senza lo spazio iniziale
+                String data = notizia.getElementsByTag("span").get(0).text().split(",")[1].substring(1); //prendo solo la data, senza lo spazio iniziale
 
                 Element link = notizia.getElementsByTag("a").get(0); //link notizia e titolo
-                attributes = link.attributes();
-                String notiziaUrl = attributes.get("href");
-                String titolo = attributes.get("title");
+                String notiziaUrl = link.attributes().get("href");
+                String titolo = link.attributes().get("title");
                 String testo = notizia.getElementsByTag("p").get(0).text();
 
                 GameNews gameNews = new GameNews(titolo, testo, imageURL, data, notiziaUrl, "everyeye.it");
@@ -92,7 +88,7 @@ public class CatchAndShowNews extends AsyncTask<Integer, Void, List<GameNews>> {
                     String string[] = sdf.format(Calendar.getInstance().getTime()).split("/");
                     data = string[0] + " " + mesi[Integer.parseInt(string[1]) - 1] + " " + string[string.length - 1];
                 }
-                if(!testo.isEmpty() || !data.isEmpty()){
+                if(!testo.isEmpty()){
                     GameNews gameNews = new GameNews(titolo, testo, imageURL, data, newsUrl, "multiplayer.it");
                     list.add(gameNews);
                 }
