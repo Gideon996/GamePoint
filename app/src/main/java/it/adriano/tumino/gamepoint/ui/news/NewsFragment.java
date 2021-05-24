@@ -15,11 +15,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.news.CatchAndShowNews;
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
 import it.adriano.tumino.gamepoint.news.NewsAdapter;
+import it.adriano.tumino.gamepoint.news.NewsAdapterRecycle;
 
 
 public class NewsFragment extends Fragment {
@@ -27,17 +30,17 @@ public class NewsFragment extends Fragment {
     private NewsViewModel newsViewModel;
     private FragmentNewsBinding binding;
 
-    private ListView listView;
     private int currentPage = 1;
 
-    private NewsAdapter newsAdapter;
+    private RecyclerView recyclerView;
+    private NewsAdapterRecycle newsAdapterRecycle;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        listView = binding.newsListView;
+
         final TextView textView = binding.textNews;
         newsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -46,10 +49,14 @@ public class NewsFragment extends Fragment {
             }
         });
 
-        newsAdapter = new NewsAdapter(getContext(), newsViewModel.getList(), getActivity());
-        listView.setAdapter(newsAdapter);
-        View footer = inflater.inflate(R.layout.footer_layout, null);
-        listView.addFooterView(footer);
+        /*View footer = inflater.inflate(R.layout.footer_layout, null);
+        listView.addFooterView(footer);*/
+
+        recyclerView = binding.recycleView;
+        newsAdapterRecycle = new NewsAdapterRecycle(newsViewModel.getList(), getActivity());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(newsAdapterRecycle);
 
         return root;
     }
@@ -58,14 +65,17 @@ public class NewsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        CatchAndShowNews catchAndShowNews = new CatchAndShowNews(listView, getContext(), getActivity(), newsViewModel, newsAdapter);
-        catchAndShowNews.execute(currentPage, currentPage);
-        Button visualizzaAltro = getView().findViewById(R.id.visualizzaAltro);
+        CatchAndShowNews nuovo = new CatchAndShowNews(newsViewModel, newsAdapterRecycle);
+        nuovo.execute(currentPage, currentPage);
+
+        /*Button visualizzaAltro = getView().findViewById(R.id.visualizzaAltro);
         visualizzaAltro.setOnClickListener(v -> {
             currentPage++;
             CatchAndShowNews update = new CatchAndShowNews(listView, getContext(), getActivity(), newsViewModel, newsAdapter);
             update.execute(currentPage, currentPage);
-        });
+        });*/
+
+
     }
 
     @Override

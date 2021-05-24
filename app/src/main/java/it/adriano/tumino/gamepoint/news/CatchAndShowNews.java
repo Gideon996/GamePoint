@@ -22,18 +22,13 @@ import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
 public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>> {
 
-    private ListView listView;
-    private Context context;
-    private Activity activity;
-    private NewsViewModel newsViewModel;
-    private NewsAdapter newsAdapter;
 
-    public CatchAndShowNews(ListView listView, Context context, Activity activity, NewsViewModel newsViewModel, NewsAdapter newsAdapter) {
-        this.listView = listView;
-        this.context = context;
-        this.activity = activity;
+    private NewsViewModel newsViewModel;
+    private NewsAdapterRecycle newsAdapterRecycle; //nuovo
+
+    public CatchAndShowNews(NewsViewModel newsViewModel, NewsAdapterRecycle newsAdapterRecycle) { //nuovo
         this.newsViewModel = newsViewModel;
-        this.newsAdapter = newsAdapter;
+        this.newsAdapterRecycle = newsAdapterRecycle;
     }
 
     @Override
@@ -58,7 +53,7 @@ public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>
                 String titolo = attributes.get("title");
                 String testo = notizia.getElementsByTag("p").get(0).text();
 
-                GameNews gameNews = new GameNews(titolo, testo, imageURL, data, notiziaUrl);
+                GameNews gameNews = new GameNews(titolo, testo, imageURL, data, notiziaUrl, "everyeye.it");
                 list.add(gameNews);
             }
         } catch (IOException e) {
@@ -70,6 +65,6 @@ public class CatchAndShowNews extends AsyncTask<Integer, Integer, List<GameNews>
     @Override
     protected void onPostExecute(List<GameNews> result) {
         newsViewModel.setList(result);
-        newsAdapter.notifyDataSetChanged();
+        newsAdapterRecycle.notifyDataSetChanged(); //nuovo
     }
 }

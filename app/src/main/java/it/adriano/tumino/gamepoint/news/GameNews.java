@@ -7,17 +7,21 @@ public class GameNews {
     private String imageUrl;
     private String data;
     private String newsUrl;
+    private String sito;
 
     public GameNews() {
 
     }
 
-    public GameNews(String title, String description, String imageUrl, String data, String newsUrl) {
+
+
+    public GameNews(String title, String description, String imageUrl, String data, String newsUrl, String sito) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
         this.data = data;
         this.newsUrl = newsUrl;
+        this.sito = sito;
     }
 
     public String getNewsUrl() {
@@ -58,5 +62,13 @@ public class GameNews {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getSito() {
+        return sito;
+    }
+
+    public void setSito(String sito) {
+        this.sito = sito;
     }
 }
