@@ -56,8 +56,8 @@ public class NewsAdapterRecycle extends RecyclerView.Adapter<RecyclerView.ViewHo
             Button visualizzaAltro = footerViewHolder.button;
             visualizzaAltro.setOnClickListener(v -> {
                 currentPage++;
-                CatchAndShowNews update = new CatchAndShowNews(newsViewModel, this);
-                update.execute(currentPage, null);
+                CatchNews updateNews = new CatchNews(newsViewModel, this);
+                updateNews.execute(currentPage);
             });
         } else if (holder instanceof ViewHolderContainer.ItemViewHolder) {
             ViewHolderContainer.ItemViewHolder itemViewHolder = (ViewHolderContainer.ItemViewHolder) holder;

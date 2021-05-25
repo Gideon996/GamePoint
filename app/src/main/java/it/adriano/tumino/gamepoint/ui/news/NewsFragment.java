@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import it.adriano.tumino.gamepoint.news.CatchAndShowNews;
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
+import it.adriano.tumino.gamepoint.news.CatchNews;
 import it.adriano.tumino.gamepoint.news.NewsAdapterRecycle;
 
 
@@ -58,8 +58,8 @@ public class NewsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         int initialPage = 1;
-        CatchAndShowNews nuovo = new CatchAndShowNews(newsViewModel, newsAdapterRecycle);
-        nuovo.execute(initialPage, null);
+        CatchNews catchNews = new CatchNews(newsViewModel, newsAdapterRecycle);
+        catchNews.execute(initialPage);
     }
 
     @Override

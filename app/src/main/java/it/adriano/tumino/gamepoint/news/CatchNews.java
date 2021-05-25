@@ -1,8 +1,11 @@
 package it.adriano.tumino.gamepoint.news;
 
-
-import android.os.AsyncTask;
 import android.view.View;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -11,34 +14,38 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Attributes;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
+import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchAndShowNews extends AsyncTask<Integer, Void, List<GameNews>> {
-
+public class CatchNews extends TaskRunner<Integer, List<GameNews>> {
 
     private final NewsViewModel newsViewModel;
-    private final NewsAdapterRecycle newsAdapterRecycle; //nuovo
+    private final NewsAdapterRecycle newsAdapterRecycle;
 
-    public CatchAndShowNews(NewsViewModel newsViewModel, NewsAdapterRecycle newsAdapterRecycle) { //nuovo
+    public CatchNews(NewsViewModel newsViewModel, NewsAdapterRecycle newsAdapterRecycle){
         this.newsViewModel = newsViewModel;
         this.newsAdapterRecycle = newsAdapterRecycle;
     }
 
     @Override
-    protected List<GameNews> doInBackground(Integer... integers) {
+    public List<GameNews> doInBackground(Integer... integers) {
         ArrayList<GameNews> list = getEveryeye(integers[0]);
         list.addAll(getMultiplayer(integers[0]));
         Collections.shuffle(list);
         return list;
     }
 
-    public ArrayList<GameNews> getEveryeye(int page) {
+    @Override
+    public void onPostExecute(List<GameNews> gameNewsList) {
+        newsViewModel.getShimmerFrameLayout().stopShimmer();
+        newsViewModel.getShimmerFrameLayout().setVisibility(View.GONE);
+        newsViewModel.getRecyclerView().setVisibility(View.VISIBLE);
+
+        newsViewModel.setList(gameNewsList);
+        newsAdapterRecycle.notifyDataSetChanged(); //nuovo
+    }
+
+    private ArrayList<GameNews> getEveryeye(int page) {
         String url = "https://www.everyeye.it/notizie/?pagina=" + page;
         ArrayList<GameNews> list = new ArrayList<>();
         try {
@@ -64,7 +71,7 @@ public class CatchAndShowNews extends AsyncTask<Integer, Void, List<GameNews>> {
         return list;
     }
 
-    public ArrayList<GameNews> getMultiplayer(int page) {
+    private ArrayList<GameNews> getMultiplayer(int page) {
         String[] mesi = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
         String url = "https://multiplayer.it/articoli/notizie/?page=" + page;
         ArrayList<GameNews> list = new ArrayList<>();
@@ -98,15 +105,5 @@ public class CatchAndShowNews extends AsyncTask<Integer, Void, List<GameNews>> {
             e.printStackTrace();
         }
         return list;
-    }
-
-    @Override
-    protected void onPostExecute(List<GameNews> result) {
-        newsViewModel.getShimmerFrameLayout().stopShimmer();
-        newsViewModel.getShimmerFrameLayout().setVisibility(View.GONE);
-        newsViewModel.getRecyclerView().setVisibility(View.VISIBLE);
-
-        newsViewModel.setList(result);
-        newsAdapterRecycle.notifyDataSetChanged(); //nuovo
     }
 }
