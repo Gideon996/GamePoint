@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
-import it.adriano.tumino.gamepoint.news.CatchNews;
+import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
 import it.adriano.tumino.gamepoint.adapter.NewsAdapter;
 
 

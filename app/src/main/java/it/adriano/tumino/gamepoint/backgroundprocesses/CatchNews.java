@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.news;
+package it.adriano.tumino.gamepoint.backgroundprocesses;
 
 import android.util.Log;
 import android.view.View;

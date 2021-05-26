@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.holder.FooterNewsHolder;
 import it.adriano.tumino.gamepoint.holder.NewsHolder;
-import it.adriano.tumino.gamepoint.news.CatchNews;
+import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
