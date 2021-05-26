@@ -10,12 +10,12 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.adriano.tumino.gamepoint.news.GameNews;
+import it.adriano.tumino.gamepoint.data.News;
 
 public class NewsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
-    private ArrayList<GameNews> list;
+    private ArrayList<News> list;
     private ShimmerFrameLayout shimmerFrameLayout;
     private RecyclerView recyclerView;
     private int lastPage;
@@ -31,11 +31,11 @@ public class NewsViewModel extends ViewModel {
         return mText;
     }
 
-    public void setList(List<GameNews> newElements){
+    public void setList(List<News> newElements){
         list.addAll(newElements);
     }
 
-    public ArrayList<GameNews> getList(){
+    public ArrayList<News> getList(){
         return list;
     }
 

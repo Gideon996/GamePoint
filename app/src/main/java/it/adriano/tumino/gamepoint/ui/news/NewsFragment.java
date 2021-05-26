@@ -1,6 +1,7 @@
 package it.adriano.tumino.gamepoint.ui.news;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +17,26 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
 import it.adriano.tumino.gamepoint.news.CatchNews;
-import it.adriano.tumino.gamepoint.news.NewsAdapterRecycle;
+import it.adriano.tumino.gamepoint.adapter.NewsAdapter;
 
 
 public class NewsFragment extends Fragment {
+    public static final String TAG = "NewsFragment";
 
     private NewsViewModel newsViewModel;
     private FragmentNewsBinding binding;
-    private NewsAdapterRecycle newsAdapterRecycle;
+    private NewsAdapter newsAdapter;
 
     private ShimmerFrameLayout shimmerFrameLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "Generazione vista News");
         newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNews;
+        TextView textView = binding.textNews;
         newsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         RecyclerView recyclerView = binding.recycleView;
@@ -45,10 +48,10 @@ public class NewsFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
 
         int currentPage = 1;
-        newsAdapterRecycle = new NewsAdapterRecycle(newsViewModel.getList(), getActivity(), currentPage, newsViewModel);
+        newsAdapter = new NewsAdapter(newsViewModel.getList(), getActivity(), currentPage, newsViewModel);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(newsAdapterRecycle);
+        recyclerView.setAdapter(newsAdapter);
 
         return root;
     }
@@ -57,8 +60,9 @@ public class NewsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Log.i(TAG, "Start vista News");
         int initialPage = 1;
-        CatchNews catchNews = new CatchNews(newsViewModel, newsAdapterRecycle);
+        CatchNews catchNews = new CatchNews(newsViewModel, newsAdapter);
         catchNews.execute(initialPage);
     }
 

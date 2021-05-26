@@ -14,40 +14,42 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import it.adriano.tumino.gamepoint.adapter.NewsAdapter;
+import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchNews extends TaskRunner<Integer, List<GameNews>> {
+public class CatchNews extends TaskRunner<Integer, List<News>> {
 
     private final NewsViewModel newsViewModel;
-    private final NewsAdapterRecycle newsAdapterRecycle;
+    private final NewsAdapter newsAdapter;
 
-    public CatchNews(NewsViewModel newsViewModel, NewsAdapterRecycle newsAdapterRecycle){
+    public CatchNews(NewsViewModel newsViewModel, NewsAdapter newsAdapter){
         this.newsViewModel = newsViewModel;
-        this.newsAdapterRecycle = newsAdapterRecycle;
+        this.newsAdapter = newsAdapter;
     }
 
     @Override
-    public List<GameNews> doInBackground(Integer... integers) {
-        ArrayList<GameNews> list = getEveryeye(integers[0]);
+    public List<News> doInBackground(Integer... integers) {
+        ArrayList<News> list = getEveryeye(integers[0]);
         list.addAll(getMultiplayer(integers[0]));
         Collections.shuffle(list);
         return list;
     }
 
     @Override
-    public void onPostExecute(List<GameNews> gameNewsList) {
+    public void onPostExecute(List<News> gameNewsList) {
         newsViewModel.getShimmerFrameLayout().stopShimmer();
         newsViewModel.getShimmerFrameLayout().setVisibility(View.GONE);
         newsViewModel.getRecyclerView().setVisibility(View.VISIBLE);
 
         newsViewModel.setList(gameNewsList);
-        newsAdapterRecycle.notifyDataSetChanged(); //nuovo
+        newsAdapter.notifyDataSetChanged(); //nuovo
     }
 
-    private ArrayList<GameNews> getEveryeye(int page) {
+    private ArrayList<News> getEveryeye(int page) {
         String url = "https://www.everyeye.it/notizie/?pagina=" + page;
-        ArrayList<GameNews> list = new ArrayList<>();
+        ArrayList<News> list = new ArrayList<>();
         try {
             Document document = Jsoup.connect(url).get();
             Elements elements = document.getElementsByClass("fvideogioco");
@@ -62,7 +64,7 @@ public class CatchNews extends TaskRunner<Integer, List<GameNews>> {
                 String titolo = link.attributes().get("title");
                 String testo = notizia.getElementsByTag("p").get(0).text();
 
-                GameNews gameNews = new GameNews(titolo, testo, imageURL, data, notiziaUrl, "everyeye.it");
+                News gameNews = new News(titolo, testo, imageURL, data, notiziaUrl, "everyeye.it");
                 list.add(gameNews);
             }
         } catch (IOException e) {
@@ -71,10 +73,10 @@ public class CatchNews extends TaskRunner<Integer, List<GameNews>> {
         return list;
     }
 
-    private ArrayList<GameNews> getMultiplayer(int page) {
+    private ArrayList<News> getMultiplayer(int page) {
         String[] mesi = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
         String url = "https://multiplayer.it/articoli/notizie/?page=" + page;
-        ArrayList<GameNews> list = new ArrayList<>();
+        ArrayList<News> list = new ArrayList<>();
         try {
             Document document = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36") //per visualizzare tutto correttamente
@@ -92,11 +94,11 @@ public class CatchNews extends TaskRunner<Integer, List<GameNews>> {
 
                 if(!data.matches("([0-9]{2})\\\\([0-9]{2})\\\\([0-9]{4})")){
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-                    String string[] = sdf.format(Calendar.getInstance().getTime()).split("/");
+                    String[] string = sdf.format(Calendar.getInstance().getTime()).split("/");
                     data = string[0] + " " + mesi[Integer.parseInt(string[1]) - 1] + " " + string[string.length - 1];
                 }
                 if(!testo.isEmpty()){
-                    GameNews gameNews = new GameNews(titolo, testo, imageURL, data, newsUrl, "multiplayer.it");
+                    News gameNews = new News(titolo, testo, imageURL, data, newsUrl, "multiplayer.it");
                     list.add(gameNews);
                 }
 
