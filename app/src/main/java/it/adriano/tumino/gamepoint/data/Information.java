@@ -5,6 +5,8 @@ public abstract class Information {
     private String imageURL;
     private String url;
 
+    public Information(){ }
+
     public Information(String title, String imageURL, String url) {
         this.title = title;
         this.imageURL = imageURL;

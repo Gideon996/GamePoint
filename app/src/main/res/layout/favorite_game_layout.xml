@@ -27,7 +27,6 @@
         android:autoSizeTextType="uniform"
         android:autoText="false"
         android:gravity="center_horizontal"
-        android:text="TITOLO"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

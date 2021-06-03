@@ -7,13 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import it.adriano.tumino.gamepoint.data.FavoriteGames;
+
 public class DBManager {
     public static final String TAG = "DBManager";
     private final DBHelper dbHelper;
+    private String tableName;
 
-    public DBManager(Context context) {
+    public DBManager(Context context, String tableName) {
         Log.i(TAG, "Inizializzazione DataBase");
-        dbHelper = new DBHelper(context);
+        this.tableName = tableName;
+        dbHelper = new DBHelper(context, tableName);
     }
 
     public void save(String title, String imageUrl, String store, String url) {
@@ -25,7 +31,7 @@ public class DBManager {
         contentValues.put(DataBaseValues.URL.getName(), url);
 
         try {
-            database.insert(DataBaseValues.FAVORITE_TABLE.getName(), null, contentValues);
+            database.insert(tableName, null, contentValues);
         } catch (SQLiteException exception) {
             Log.e(TAG, exception.toString());
         }
@@ -34,7 +40,7 @@ public class DBManager {
     public boolean delete(long id) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
-            if (database.delete(DataBaseValues.FAVORITE_TABLE.getName(), DataBaseValues.ID.getName() + "=?", new String[]{Long.toString(id)}) > 0) {
+            if (database.delete(tableName, DataBaseValues.ID.getName() + "=?", new String[]{Long.toString(id)}) > 0) {
                 return true;
             }
         } catch (SQLiteException exception) {
@@ -47,7 +53,7 @@ public class DBManager {
         Cursor cursor;
         try {
             SQLiteDatabase database = dbHelper.getReadableDatabase();
-            cursor = database.query(DataBaseValues.FAVORITE_TABLE.getName(), null, null, null, null, null, null, null);
+            cursor = database.query(tableName, null, null, null, null, null, null, null);
         } catch (SQLiteException exception) {
             Log.e(TAG, exception.toString());
             return null;
@@ -55,12 +61,33 @@ public class DBManager {
         return cursor;
     }
 
-    public String getUrlFromName(String name){
+    public String getUrlFromName(String name) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "select * from " + DataBaseValues.FAVORITE_TABLE.getName() + " where "+ DataBaseValues.TITLE.getName() + " = '" + name + "'";
+        String query = "select * from " + tableName + " where " + DataBaseValues.TITLE.getName() + " = '" + name + "'";
         Cursor cur = db.rawQuery(query, null);
         cur.moveToFirst();
         return cur.getString(cur.getColumnIndex(DataBaseValues.URL.getName()));
     }
 
+    public ArrayList<FavoriteGames> getAll() {
+        ArrayList<FavoriteGames> list = new ArrayList<>();
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + tableName;
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                FavoriteGames favoriteGames = new FavoriteGames();
+                favoriteGames.setTitle(cursor.getString(cursor.getColumnIndex(DataBaseValues.TITLE.getName())));
+                favoriteGames.setImageURL(cursor.getString(cursor.getColumnIndex(DataBaseValues.IMAGE_URL.getName())));
+                favoriteGames.setUrl(cursor.getString(cursor.getColumnIndex(DataBaseValues.URL.getName())));
+                favoriteGames.setStore(cursor.getString(cursor.getColumnIndex(DataBaseValues.STORE.getName())));
+                list.add(favoriteGames);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+
+        return list;
+    }
 }
