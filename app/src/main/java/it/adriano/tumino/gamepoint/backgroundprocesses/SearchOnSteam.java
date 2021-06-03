@@ -22,7 +22,6 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
     private final static String STORE = "STEAM";
     private final static String BASE_URL = "https://store.steampowered.com/search/?term=";
     private ArrayList<GameSearchResult> listOfGame = new ArrayList<>();
-    private String name;
 
     public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
 
@@ -53,15 +52,18 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
         }
 
         //se arrivo qui allora sicuramente è presente almeno un elemento
+        String name = i[0].toLowerCase();
         Elements links = resultsRows.getElementsByTag("a");
         for (Element link : links) {
-            String appid = link.attributes().get("data-ds-appid");
-            String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
             String titolo = link.getElementsByClass("title").get(0).text();
-            String piattaforme = getPlatform(link.getElementsByClass("platform_img"));
-            String releaseData = link.getElementsByClass("search_released").get(0).text();
-            GameSearchResult result = new GameSearchResult(titolo, imgUrl, null, appid, piattaforme, STORE);
-            listOfGame.add(result);
+            if (titolo.toLowerCase().contains(name)) {
+                String appid = link.attributes().get("data-ds-appid");
+                String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
+                String piattaforme = getPlatform(link.getElementsByClass("platform_img"));
+                String releaseData = link.getElementsByClass("search_released").get(0).text();
+                GameSearchResult result = new GameSearchResult(titolo, imgUrl, null, appid, piattaforme, STORE);
+                listOfGame.add(result);
+            }
         }
 
         return listOfGame;

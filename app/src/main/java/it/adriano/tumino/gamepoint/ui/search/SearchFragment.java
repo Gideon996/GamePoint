@@ -19,8 +19,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.adapter.RicercaGiochiAdapter;
 import it.adriano.tumino.gamepoint.adapter.UltimeRicercheAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnEShop;
+import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnMicrosoft;
+import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnPSN;
 import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnSteam;
 import it.adriano.tumino.gamepoint.data.FavoriteGames;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
@@ -52,33 +56,39 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
         searchButton.setOnClickListener(v -> {
             String text = editText.getText().toString();
-            if(text.isEmpty()){
+            if (text.isEmpty()) {
                 Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 //chiudo tastiera dopo che ho fatto la ricerca
+                listOfResult.clear();
                 InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+                //AGGIUNGERE FILTRO CHE RICHIEDE DOVE CERCARE IL GIOCO
 
                 //Cercare Sui vari siti i valori
                 catchInformation(text);
                 //mostrarli
-                    //Togliere ultime ricerche
-                    //Shimmer sul nuovo layout
-                    //Mostrare contenuto trovato
-                    //Inserire listener al click
-                        //Aggiungere il gioco ai preferiti
-                        //Aprire informazioni [
-                            //Bundle bundle = new Bundle();
-                            //bundle.putString("test", "sto provando a passare un valore");
-                            //Navigation.findNavController(v).navigate(R.id.search_action, bundle);
-                        //]
+                //Togliere ultime ricerche
+                //Shimmer sul nuovo layout
+                //Mostrare contenuto trovato
+                //Inserire listener al click
+                //Aggiungere il gioco ai preferiti
+                //Aprire informazioni [
+                //Bundle bundle = new Bundle();
+                //bundle.putString("test", "sto provando a passare un valore");
+                //Navigation.findNavController(v).navigate(R.id.search_action, bundle);
+                //]
             }
         });
 
         return view;
     }
 
-    private void setUpRecyclerView(View view){
+    private RicercaGiochiAdapter ricercaGiochiAdapter;
+    private ArrayList<GameSearchResult> listOfResult = new ArrayList<>();
+
+    private void setUpRecyclerView(View view) {
         ArrayList<FavoriteGames> list = dbManager.getAll();
         RecyclerView recyclerView = view.findViewById(R.id.ultimeRicerche);
         UltimeRicercheAdapter ultimeRicercheAdapter = new UltimeRicercheAdapter(list);
@@ -86,29 +96,42 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(ultimeRicercheAdapter);
+
+        RecyclerView risultatiLayout = view.findViewById(R.id.risultatiRicerca);
+        risultatiLayout.setVisibility(View.VISIBLE);
+        ricercaGiochiAdapter = new RicercaGiochiAdapter(listOfResult);
+        risultatiLayout.setHasFixedSize(true);
+        risultatiLayout.setLayoutManager(new LinearLayoutManager(getContext()));
+        risultatiLayout.setAdapter(ricercaGiochiAdapter);
     }
 
-    private void catchInformation(String name){
+    private String name;
+    private void catchInformation(String name) {
+        this.name = name;
         //Cercare su steam
         SearchOnSteam searchOnSteam = new SearchOnSteam();
         searchOnSteam.delegate = this;
         searchOnSteam.execute(name);
         //Cercare su Nintendo
+        SearchOnEShop searchOnEShop = new SearchOnEShop();
+        searchOnEShop.delegate = this;
+        searchOnEShop.execute(name);
         //Cercare su PSN
+        SearchOnPSN searchOnPSN = new SearchOnPSN();
+        searchOnPSN.delegate = this;
+        searchOnPSN.execute(name);
         //cercare su Microsoft
+        SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
+        searchOnMicrosoft.delegate = this;
+        searchOnMicrosoft.execute(name);
     }
 
 
     @Override
     public void processFinish(ArrayList<GameSearchResult> result) {
-        TextView textView = view.findViewById(R.id.textView);
-        String text = "";
-        for(GameSearchResult game : result){
-            text += game.getAppID();
-            text += ": " + game.getTitle();
-            text += " - " + game.getImageURL();
-            text += System.lineSeparator();
+        if(result != null){
+            listOfResult.addAll(result);
+            ricercaGiochiAdapter.notifyDataSetChanged();
         }
-        textView.setText(text);
     }
 }
