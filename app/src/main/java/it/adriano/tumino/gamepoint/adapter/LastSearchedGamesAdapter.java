@@ -36,7 +36,7 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
     public LastSearchedGamesHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         Log.i(TAG, "Inserimento Layout");
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.ultime_ricerche_layout, parent, false);
+        View view = layoutInflater.inflate(R.layout.last_search_layout, parent, false);
         return new LastSearchedGamesHolder(view);
     }
 

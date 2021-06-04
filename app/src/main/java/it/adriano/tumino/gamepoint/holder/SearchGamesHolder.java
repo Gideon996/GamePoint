@@ -19,9 +19,9 @@ public class SearchGamesHolder extends RecyclerView.ViewHolder {
 
     public SearchGamesHolder(@NonNull @NotNull View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.imageHeaderRicerche);
-        title = itemView.findViewById(R.id.titoloUltimeRicerche);
-        altro = itemView.findViewById(R.id.storeUltimeRicerche);
+        imageView = itemView.findViewById(R.id.gameCoverSearchedImageView);
+        title = itemView.findViewById(R.id.gameTitleSearchedTextView);
+        altro = itemView.findViewById(R.id.storeGameSearchedTextView);
     }
 
     public ImageView getImageView() {

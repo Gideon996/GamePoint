@@ -13,7 +13,8 @@
         <ImageView
             android:layout_width="125dp"
             android:layout_height="101dp"
-            android:background="#B3B3B3" />
+            android:background="#B3B3B3"
+            android:contentDescription="@string/content_description_shimmer_image"/>
 
         <TextView
             android:layout_width="125dp"

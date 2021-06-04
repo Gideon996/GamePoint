@@ -25,7 +25,6 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnEShop;
 import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnMicrosoft;
 import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnPSN;
 import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnSteam;
-import it.adriano.tumino.gamepoint.data.FavoriteGames;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DataBaseValues;
@@ -46,8 +45,8 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_search_game, container, false);
-        ImageButton searchButton = view.findViewById(R.id.searchButton);
-        EditText editText = view.findViewById(R.id.searchEditText);
+        ImageButton searchButton = view.findViewById(R.id.searchGameButton);
+        EditText editText = view.findViewById(R.id.searchGameEditText);
 
         dbManager = new DBManager(getContext(), DataBaseValues.ULITME_RICERCHE.getName()); //ultime ricerche
 
@@ -57,9 +56,9 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         searchButton.setOnClickListener(v -> {
             String text = editText.getText().toString();
             if (text.isEmpty()) {
-                view.findViewById(R.id.ultimeRicercheLayout).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.risultatiRicercaLayout).setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show(); 
+                view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show();
             } else {
                 listOfResult.clear(); //svuoto la lista precedente
 
@@ -68,8 +67,8 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
                 //mostrare possibili valori -> andrebbe inserito lo shimmer
-                view.findViewById(R.id.ultimeRicercheLayout).setVisibility(View.GONE);
-                view.findViewById(R.id.risultatiRicercaLayout).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.GONE);
+                view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.VISIBLE);
 
                 //Cercare Sui vari siti i valori
                 catchInformation(text);
@@ -92,14 +91,14 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
     private void setUpRecyclerView() {
         ArrayList<GameSearchResult> list = dbManager.getAll();
-        RecyclerView recyclerView = view.findViewById(R.id.ultimeRicerche);
+        RecyclerView recyclerView = view.findViewById(R.id.latestResearchGameRecyclerView);
         LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(lastSearchedGamesAdapter);
 
-        RecyclerView risultatiLayout = view.findViewById(R.id.risultatiRicerca);
+        RecyclerView risultatiLayout = view.findViewById(R.id.gameSearchResultsRecyclerView);
         searchGamesAdapter = new SearchGamesAdapter(listOfResult);
         risultatiLayout.setHasFixedSize(true);
         risultatiLayout.setLayoutManager(new LinearLayoutManager(getContext()));

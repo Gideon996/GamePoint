@@ -17,7 +17,7 @@ public class FavoriteGamesHolder extends RecyclerView.ViewHolder {
 
     public FavoriteGamesHolder(@NonNull @NotNull View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.favoriteImageView);
+        imageView = itemView.findViewById(R.id.favoriteImageHeaderView);
         title = itemView.findViewById(R.id.favoriteTitleTextView);
     }
 

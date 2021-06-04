@@ -38,17 +38,15 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         //generateDB();
         //generateUltimeRicerche();
 
-        shimmerFrameLayout = binding.shimmerLayoutFavorite;
+        shimmerFrameLayout = binding.shimmerFavoriteLayout;
         shimmerFrameLayout.startShimmer();
         homeViewModel.setShimmerFrameLayout(shimmerFrameLayout);
 
-        RecyclerView recyclerView = binding.favoriteRecycleView;
+        RecyclerView recyclerView = binding.favoriteGamesRecycleView;
 
         //Center Item in RecycleView
         LinearSnapHelper linearSnapHelper = new LinearSnapHelper();

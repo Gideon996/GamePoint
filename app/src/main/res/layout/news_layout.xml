@@ -14,16 +14,17 @@
         <ImageView
             android:id="@+id/newsImageView"
             android:layout_width="125dp"
-            android:layout_height="101dp" />
+            android:layout_height="101dp"
+            android:contentDescription="@string/content_description_image_view"/>
 
         <TextView
-            android:id="@+id/sitoTextView"
+            android:id="@+id/newsSiteTextView"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical" />
 
         <TextView
-            android:id="@+id/dataTextView"
+            android:id="@+id/dateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical" />

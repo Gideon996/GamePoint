@@ -12,7 +12,7 @@ public class FooterNewsHolder extends RecyclerView.ViewHolder {
 
     public FooterNewsHolder(View view) {
         super(view);
-        button = view.findViewById(R.id.visualizzaAltro);
+        button = view.findViewById(R.id.viewMoreNewsButton);
     }
 
     public Button getButton() {

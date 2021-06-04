@@ -16,7 +16,7 @@ public class ScreenshotHolder extends RecyclerView.ViewHolder{
 
     public ScreenshotHolder(@NonNull @NotNull View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.screenshotImage);
+        imageView = itemView.findViewById(R.id.screenshotImageView);
     }
 
     public ImageView getImageView() {

@@ -52,9 +52,9 @@ public class OtherInformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_other_information, container, false);
-        LinearLayout descrizioneLayout = view.findViewById(R.id.descrizioneLayout);
-        LinearLayout specificheLayout = view.findViewById(R.id.specificheLayout);
-        LinearLayout commentiLayout = view.findViewById(R.id.commentiLayout);
+        LinearLayout descrizioneLayout = view.findViewById(R.id.descriptionGameLayout);
+        LinearLayout specificheLayout = view.findViewById(R.id.specificationsGameLayout);
+        LinearLayout commentiLayout = view.findViewById(R.id.commentsLayout);
 
         switch (mParam1) {
             case "Descrizione":
@@ -62,12 +62,12 @@ public class OtherInformationFragment extends Fragment {
                 specificheLayout.setVisibility(View.GONE);
                 commentiLayout.setVisibility(View.GONE);
 
-                TextView sviluppatori = view.findViewById(R.id.sviluppatoriTextVIew);
+                TextView sviluppatori = view.findViewById(R.id.developersInformationTextVIew);
                 sviluppatori.setText(StringUtil.join(mParam3.getDevelopers(), ", "));
 
-                TextView dev = view.findViewById(R.id.publisherTextView);
+                TextView dev = view.findViewById(R.id.publisherInformationTextView);
                 dev.setText(StringUtil.join(mParam3.getPublishers(), ", "));
-                TextView descrizione = view.findViewById(R.id.descrizioneTextView);
+                TextView descrizione = view.findViewById(R.id.gameDescriptionTextView);
                 String text = mParam3.getDescription();
                 descrizione.setText(Html.fromHtml(mParam3.getDescription(), Html.FROM_HTML_MODE_COMPACT));
                 break;
@@ -76,13 +76,13 @@ public class OtherInformationFragment extends Fragment {
                 specificheLayout.setVisibility(View.VISIBLE);
                 commentiLayout.setVisibility(View.GONE);
 
-                TextView specificheWindows = view.findViewById(R.id.specificheWindows);
+                TextView specificheWindows = view.findViewById(R.id.windowsSpecificationsTextView);
                 specificheWindows.setText((mParam3.getMinimumWindows().isEmpty() || mParam3.getMinimumWindows().equals("[]")) ? "Non supportato" : Html.fromHtml(mParam3.getMinimumWindows(), Html.FROM_HTML_MODE_COMPACT));
 
-                TextView specificheMac = view.findViewById(R.id.specificheMac);
+                TextView specificheMac = view.findViewById(R.id.macSpecificationsTextView);
                 specificheMac.setText((mParam3.getMinimumMac().isEmpty() || mParam3.getMinimumLinux().equals("[]")) ? "Non supportato" : Html.fromHtml(mParam3.getMinimumMac(), Html.FROM_HTML_MODE_COMPACT));
 
-                TextView specificheLinux = view.findViewById(R.id.specificheLinux);
+                TextView specificheLinux = view.findViewById(R.id.linuxSpecificationsTextView);
                 specificheLinux.setText((mParam3.getMinimumLinux().isEmpty() || mParam3.getMinimumLinux().equals("[]")) ? "Non supportato" : Html.fromHtml(mParam3.getMinimumLinux(), Html.FROM_HTML_MODE_COMPACT));
                 break;
             case "Commenti":

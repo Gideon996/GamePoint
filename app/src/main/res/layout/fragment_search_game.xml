@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -18,25 +16,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/searchEditText"
-            android:layout_width="387dp"
+            android:id="@+id/searchGameEditText"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Cerca il gioco"
-            android:inputType="textPersonName" />
+            android:hint="@string/hint_search_edit_text"
+            android:inputType="textPersonName"
+            android:autofillHints="Game Title" />
 
         <ImageButton
-            android:id="@+id/searchButton"
-            android:layout_width="115dp"
-            android:layout_height="45dp"
+            android:id="@+id/searchGameButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_search_black_24" />
+            app:srcCompat="@drawable/ic_search_black_24"
+            android:contentDescription="@string/search_button_text"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ultimeRicercheLayout"
+        android:id="@+id/latestResearchGamesLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -46,16 +46,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ultime Ricerche" />
+            android:text="@string/ultime_ricerche_text" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ultimeRicerche"
+            android:id="@+id/latestResearchGameRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/risultatiRicercaLayout"
+        android:id="@+id/gameSearchResultsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -65,32 +65,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Risultati Ricerca:" />
+            android:text="@string/risultati_ricerca_text" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/risultatiRicerca"
+            android:id="@+id/gameSearchResultsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/fragment_fragment1_gotofragment2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to Fragment 2"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fragment 1"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_fragment1_gotofragment2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </LinearLayout>

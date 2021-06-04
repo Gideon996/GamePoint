@@ -37,12 +37,9 @@ public class NewsFragment extends Fragment {
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        TextView textView = binding.textNews;
-        newsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        RecyclerView recyclerView = binding.newsRecycleView;
 
-        RecyclerView recyclerView = binding.recycleView;
-
-        shimmerFrameLayout = binding.shimmerLayout;
+        shimmerFrameLayout = binding.newsShimmerLayout;
 
         newsViewModel.setRecyclerView(recyclerView);
         newsViewModel.setShimmerFrameLayout(shimmerFrameLayout);

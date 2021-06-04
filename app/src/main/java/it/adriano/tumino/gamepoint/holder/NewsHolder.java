@@ -23,8 +23,8 @@ public class NewsHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.newsImageView);
         title = itemView.findViewById(R.id.newsTitleTextView);
         description = itemView.findViewById(R.id.newsDescriptionTextView);
-        data = itemView.findViewById(R.id.dataTextView);
-        sito = itemView.findViewById(R.id.sitoTextView);
+        data = itemView.findViewById(R.id.dateTextView);
+        sito = itemView.findViewById(R.id.newsSiteTextView);
         relativeLayout = itemView.findViewById(R.id.newsRowLayout);
     }
 

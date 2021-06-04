@@ -7,7 +7,7 @@
     tools:context=".ui.news.NewsFragment">
 
     <TextView
-        android:id="@+id/text_news"
+        android:id="@+id/newsTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+        android:id="@+id/newsRecycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingBottom="50dp"
@@ -26,10 +26,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_news" />
+        app:layout_constraintTop_toBottomOf="@+id/newsTextView" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerLayout"
+        android:id="@+id/newsShimmerLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:animateLayoutChanges="true"
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_news"
+        app:layout_constraintTop_toBottomOf="@+id/newsTextView"
         app:shimmer_repeat_mode="restart"
         app:shimmer_shape="radial">
 
@@ -46,13 +46,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/shimmer_news_row" />
+            <include layout="@layout/shimmer_news" />
 
-            <include layout="@layout/shimmer_news_row" />
+            <include layout="@layout/shimmer_news" />
 
-            <include layout="@layout/shimmer_news_row" />
+            <include layout="@layout/shimmer_news" />
 
-            <include layout="@layout/shimmer_news_row" />
+            <include layout="@layout/shimmer_news" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
