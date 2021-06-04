@@ -78,11 +78,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemViewHolder.getData().setText(gameNews.getDate());
             itemViewHolder.getSito().setText(gameNews.getWebsite());
 
-            Picasso.get().load(gameNews.getImageURL())
-                    .fit()
-                    .centerInside()
-                    .into(itemViewHolder.getImageView());
+            if(gameNews.getImageURL() != null) {
+                Picasso.get().load(gameNews.getImageURL())
+                        .fit()
+                        .centerInside()
+                        .into(itemViewHolder.getImageView());
+            }else{
 
+            }
             itemViewHolder.getRelativeLayout().setOnClickListener(v -> {
                 String url = gameNews.getUrl();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

@@ -11,28 +11,28 @@ import org.jetbrains.annotations.NotNull;
 
 import it.adriano.tumino.gamepoint.R;
 
-public class RicercaHolder extends RecyclerView.ViewHolder {
+public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
 
     private final ImageView imageView;
-    private final TextView titolo;
-    private final TextView altro;
+    private final TextView textView1;
+    private final TextView textView2;
 
-    public RicercaHolder(@NonNull @NotNull View itemView) {
+    public LastSearchedGamesHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.imageHeaderRicerche);
-        titolo = itemView.findViewById(R.id.titoloUltimeRicerche);
-        altro = itemView.findViewById(R.id.storeUltimeRicerche);
+        textView1 = itemView.findViewById(R.id.titoloUltimeRicerche);
+        textView2 = itemView.findViewById(R.id.storeUltimeRicerche);
     }
 
     public ImageView getImageView() {
         return imageView;
     }
 
-    public TextView getTitolo() {
-        return titolo;
+    public TextView getTextView1() {
+        return textView1;
     }
 
-    public TextView getAltro() {
-        return altro;
+    public TextView getTextView2() {
+        return textView2;
     }
 }

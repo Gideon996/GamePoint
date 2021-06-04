@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String FAVORITE_DB_NAME = "Favorite Games";
-    private String tableName;
+    private final String tableName;
 
     public DBHelper(@Nullable Context context, String tableName) {
         super(context, tableName, null, 1);

@@ -11,11 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 import it.adriano.tumino.gamepoint.R;
 
-public class FavoriteHolder extends RecyclerView.ViewHolder {
+public class FavoriteGamesHolder extends RecyclerView.ViewHolder {
     private final ImageView imageView;
     private final TextView title;
 
-    public FavoriteHolder(@NonNull @NotNull View itemView) {
+    public FavoriteGamesHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.favoriteImageView);
         title = itemView.findViewById(R.id.favoriteTitleTextView);

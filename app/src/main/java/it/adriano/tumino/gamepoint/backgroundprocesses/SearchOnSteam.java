@@ -12,26 +12,25 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
-import it.adriano.tumino.gamepoint.data.GameShow;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
 public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult>> {
-    public final String TAG = getClass().getSimpleName();
-
+    public static final String TAG = "SearchOnSteam";
 
     private final static String STORE = "STEAM";
-    private final static String BASE_URL = "https://store.steampowered.com/search/?term=";
-    private ArrayList<GameSearchResult> listOfGame = new ArrayList<>();
+    private final static String URL = "https://store.steampowered.com/search/?term=";
 
     public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
 
     public SearchOnSteam() {
-        //this.name =
     }
 
     @Override
-    public ArrayList<GameSearchResult> doInBackground(String... i) {
-        String url = BASE_URL + i[0].toLowerCase(Locale.ROOT).replaceAll(" ", "+");
+    public ArrayList<GameSearchResult> doInBackground(String... input) {
+        Log.i(TAG, "Ricerca gioco su STEAM");
+        String name = input[0].toLowerCase();
+
+        String url = URL + name.replaceAll(" ", "+");
         Document document;
         try {
             document = Jsoup.connect(url)
@@ -42,53 +41,49 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
             return null;
         }
 
-        if (document == null) {//controllo per sicurezza, ma se è null allora ho ritornato dal catch
-            return null;
-        }
-
         Element resultsRows = document.getElementById("search_resultsRows");
-        if (resultsRows == null || resultsRows.getAllElements().isEmpty()) { //nessun risultato
+        if (resultsRows == null || resultsRows.getAllElements().isEmpty()) {
+            Log.i(TAG, "Nessun gioco trovato");
             return null;
         }
 
-        //se arrivo qui allora sicuramente è presente almeno un elemento
-        String name = i[0].toLowerCase();
+        ArrayList<GameSearchResult> listOfGames = new ArrayList<>();
         Elements links = resultsRows.getElementsByTag("a");
         for (Element link : links) {
-            String titolo = link.getElementsByClass("title").get(0).text();
-            if (titolo.toLowerCase().contains(name)) {
-                String appid = link.attributes().get("data-ds-appid");
+            String title = link.getElementsByClass("title").get(0).text();
+            if (title.toLowerCase().contains(name)) {
+                String gameID = link.attributes().get("data-ds-appid");
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
-                String piattaforme = getPlatform(link.getElementsByClass("platform_img"));
+                String platfoms = getPlatform(link.getElementsByClass("platform_img"));
                 String releaseData = link.getElementsByClass("search_released").get(0).text();
-                GameSearchResult result = new GameSearchResult(titolo, imgUrl, null, appid, piattaforme, STORE);
-                listOfGame.add(result);
+                GameSearchResult result = new GameSearchResult(title, imgUrl, null, gameID, platfoms, STORE);
+                listOfGames.add(result);
             }
         }
 
-        return listOfGame;
+        return listOfGames;
     }
 
     private String getPlatform(Elements platforms) {
-        String piattaforme = "";
+        StringBuilder piattaforme = new StringBuilder();
         for (Element platform : platforms) {
             switch (platform.attributes().get("class")) {
                 case "platform_img win":
-                    piattaforme += "WIN ";
+                    piattaforme.append("WIN ");
                     break;
                 case "platform_img mac":
-                    piattaforme += "MAC ";
+                    piattaforme.append("MAC ");
                     break;
                 case "platform_img linux":
-                    piattaforme += "LIN ";
+                    piattaforme.append("LIN ");
                     break;
             }
         }
-        return piattaforme;
+        return piattaforme.toString();
     }
 
     @Override
     public void onPostExecute(ArrayList<GameSearchResult> steamList) {
-        delegate.processFinish(steamList);
+        if (steamList != null) delegate.processFinish(steamList);
     }
 }

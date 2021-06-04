@@ -10,11 +10,12 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.data.FavoriteGames;
+import it.adriano.tumino.gamepoint.data.GameSearchResult;
 
 public class DBManager {
     public static final String TAG = "DBManager";
     private final DBHelper dbHelper;
-    private String tableName;
+    private final String tableName;
 
     public DBManager(Context context, String tableName) {
         Log.i(TAG, "Inizializzazione DataBase");
@@ -69,21 +70,22 @@ public class DBManager {
         return cur.getString(cur.getColumnIndex(DataBaseValues.URL.getName()));
     }
 
-    public ArrayList<FavoriteGames> getAll() {
-        ArrayList<FavoriteGames> list = new ArrayList<>();
+    public ArrayList<GameSearchResult> getAll() {
+        ArrayList<GameSearchResult> list = new ArrayList<>();
 
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + tableName;
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            do {
-                FavoriteGames favoriteGames = new FavoriteGames();
-                favoriteGames.setTitle(cursor.getString(cursor.getColumnIndex(DataBaseValues.TITLE.getName())));
-                favoriteGames.setImageURL(cursor.getString(cursor.getColumnIndex(DataBaseValues.IMAGE_URL.getName())));
-                favoriteGames.setUrl(cursor.getString(cursor.getColumnIndex(DataBaseValues.URL.getName())));
-                favoriteGames.setStore(cursor.getString(cursor.getColumnIndex(DataBaseValues.STORE.getName())));
-                list.add(favoriteGames);
-            } while (cursor.moveToNext());
+            while(cursor.moveToNext()){
+                String title = cursor.getString(cursor.getColumnIndex(DataBaseValues.TITLE.getName()));
+                String imageUrl = cursor.getString(cursor.getColumnIndex(DataBaseValues.IMAGE_URL.getName()));
+                String gameUrl = cursor.getString(cursor.getColumnIndex(DataBaseValues.URL.getName()));
+                String store = cursor.getString(cursor.getColumnIndex(DataBaseValues.STORE.getName()));
+
+                GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, null, null, store);
+                list.add(gameSearchResult);
+            }
         }
         cursor.close();
         database.close();

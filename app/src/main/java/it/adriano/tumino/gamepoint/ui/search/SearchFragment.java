@@ -13,14 +13,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.adapter.RicercaGiochiAdapter;
-import it.adriano.tumino.gamepoint.adapter.UltimeRicercheAdapter;
+import it.adriano.tumino.gamepoint.adapter.SearchGamesAdapter;
+import it.adriano.tumino.gamepoint.adapter.LastSearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnEShop;
 import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnMicrosoft;
@@ -50,28 +49,31 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         ImageButton searchButton = view.findViewById(R.id.searchButton);
         EditText editText = view.findViewById(R.id.searchEditText);
 
-        //ultime ricerche
-        dbManager = new DBManager(getContext(), DataBaseValues.ULITME_RICERCHE.getName());
-        setUpRecyclerView(view);
+        dbManager = new DBManager(getContext(), DataBaseValues.ULITME_RICERCHE.getName()); //ultime ricerche
 
+        setUpRecyclerView(); //setup tutte le recyclerView
+
+        //listener per la ricerca
         searchButton.setOnClickListener(v -> {
             String text = editText.getText().toString();
             if (text.isEmpty()) {
-                Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show();
+                view.findViewById(R.id.ultimeRicercheLayout).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.risultatiRicercaLayout).setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show(); 
             } else {
-                //chiudo tastiera dopo che ho fatto la ricerca
-                listOfResult.clear();
+                listOfResult.clear(); //svuoto la lista precedente
+
+                //faccio scomparire la tastiera dallo schermo
                 InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-                //AGGIUNGERE FILTRO CHE RICHIEDE DOVE CERCARE IL GIOCO
+                //mostrare possibili valori -> andrebbe inserito lo shimmer
+                view.findViewById(R.id.ultimeRicercheLayout).setVisibility(View.GONE);
+                view.findViewById(R.id.risultatiRicercaLayout).setVisibility(View.VISIBLE);
 
                 //Cercare Sui vari siti i valori
                 catchInformation(text);
-                //mostrarli
-                //Togliere ultime ricerche
-                //Shimmer sul nuovo layout
-                //Mostrare contenuto trovato
+
                 //Inserire listener al click
                 //Aggiungere il gioco ai preferiti
                 //Aprire informazioni [
@@ -85,41 +87,41 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         return view;
     }
 
-    private RicercaGiochiAdapter ricercaGiochiAdapter;
+    private SearchGamesAdapter searchGamesAdapter;
     private ArrayList<GameSearchResult> listOfResult = new ArrayList<>();
 
-    private void setUpRecyclerView(View view) {
-        ArrayList<FavoriteGames> list = dbManager.getAll();
+    private void setUpRecyclerView() {
+        ArrayList<GameSearchResult> list = dbManager.getAll();
         RecyclerView recyclerView = view.findViewById(R.id.ultimeRicerche);
-        UltimeRicercheAdapter ultimeRicercheAdapter = new UltimeRicercheAdapter(list);
+        LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(ultimeRicercheAdapter);
+        recyclerView.setAdapter(lastSearchedGamesAdapter);
 
         RecyclerView risultatiLayout = view.findViewById(R.id.risultatiRicerca);
-        risultatiLayout.setVisibility(View.VISIBLE);
-        ricercaGiochiAdapter = new RicercaGiochiAdapter(listOfResult);
+        searchGamesAdapter = new SearchGamesAdapter(listOfResult);
         risultatiLayout.setHasFixedSize(true);
         risultatiLayout.setLayoutManager(new LinearLayoutManager(getContext()));
-        risultatiLayout.setAdapter(ricercaGiochiAdapter);
+        risultatiLayout.setAdapter(searchGamesAdapter);
     }
 
-    private String name;
     private void catchInformation(String name) {
-        this.name = name;
         //Cercare su steam
         SearchOnSteam searchOnSteam = new SearchOnSteam();
         searchOnSteam.delegate = this;
         searchOnSteam.execute(name);
+
         //Cercare su Nintendo
         SearchOnEShop searchOnEShop = new SearchOnEShop();
         searchOnEShop.delegate = this;
         searchOnEShop.execute(name);
+
         //Cercare su PSN
         SearchOnPSN searchOnPSN = new SearchOnPSN();
         searchOnPSN.delegate = this;
         searchOnPSN.execute(name);
+
         //cercare su Microsoft
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
         searchOnMicrosoft.delegate = this;
@@ -129,9 +131,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
     @Override
     public void processFinish(ArrayList<GameSearchResult> result) {
-        if(result != null){
-            listOfResult.addAll(result);
-            ricercaGiochiAdapter.notifyDataSetChanged();
-        }
+        listOfResult.addAll(result);
+        searchGamesAdapter.notifyDataSetChanged();
     }
 }

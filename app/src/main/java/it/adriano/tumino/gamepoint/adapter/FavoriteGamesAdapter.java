@@ -1,41 +1,37 @@
 package it.adriano.tumino.gamepoint.adapter;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import org.jetbrains.annotations.NotNull;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.holder.FavoriteHolder;
-import it.adriano.tumino.gamepoint.data.FavoriteGames;
+import it.adriano.tumino.gamepoint.holder.FavoriteGamesHolder;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteHolder> {
+public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHolder> {
     public static final String TAG = "FavoriteAdapter";
 
-    public FavoriteAdapter() {
+    public FavoriteGamesAdapter() {
         Log.i(TAG, "Generazione Favorite Adapter");
     }
 
     @NotNull
     @Override
-    public FavoriteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FavoriteGamesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.i(TAG, "Inserimento Favorite Layout");
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.favorite_game_layout, parent, false);
 
-        return new FavoriteHolder(view);
+        return new FavoriteGamesHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(FavoriteHolder holder, int position) {
+    public void onBindViewHolder(FavoriteGamesHolder holder, int position) {
         Log.i(TAG, "Riempimento Favorite Item");
 
         //position = position % favoriteGames.length;

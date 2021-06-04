@@ -20,4 +20,11 @@ public class GameSearchResult extends Information {
         this.appID = appID;
     }
 
+    public String getPiattaforme() {
+        return piattaforme;
+    }
+
+    public String getStore() {
+        return store;
+    }
 }

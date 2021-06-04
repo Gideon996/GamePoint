@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import it.adriano.tumino.gamepoint.adapter.FavoriteAdapter;
+import it.adriano.tumino.gamepoint.adapter.FavoriteGamesAdapter;
 import it.adriano.tumino.gamepoint.data.FavoriteGames;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DataBaseValues;
@@ -61,8 +61,8 @@ public class HomeFragment extends Fragment {
 
         //Finalize RecycleView inizialization
         recyclerView.setHasFixedSize(true);
-        FavoriteAdapter favoriteAdapter = new FavoriteAdapter();
-        recyclerView.setAdapter(favoriteAdapter);
+        FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter();
+        recyclerView.setAdapter(favoriteGamesAdapter);
         homeViewModel.setRecyclerView(recyclerView);
         return root;
     }

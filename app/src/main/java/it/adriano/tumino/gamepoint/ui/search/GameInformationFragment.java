@@ -9,11 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,10 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jsoup.internal.StringUtil;
 
-import java.util.stream.Collectors;
-
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.adapter.FavoriteAdapter;
 import it.adriano.tumino.gamepoint.adapter.ScreenshotAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.backgroundprocesses.CatchGame;
@@ -103,7 +98,7 @@ public class GameInformationFragment extends Fragment implements AsyncResponse<G
         linearLayoutManager.scrollToPosition(Integer.MAX_VALUE / 2);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(gameShow);
+        ScreenshotAdapter screenshotAdapter = new ScreenshotAdapter(gameShow.getScreenshots());
         recyclerView.setAdapter(screenshotAdapter);
     }
 
