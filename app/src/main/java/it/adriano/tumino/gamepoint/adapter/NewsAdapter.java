@@ -1,17 +1,16 @@
 package it.adriano.tumino.gamepoint.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,19 +24,21 @@ import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.holder.NewsHolder;
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ClickNews {
     public static final String TAG = "NewsAdapter";
 
     private final ArrayList<News> newsList;
     private int currentPage;
     private final NewsViewModel newsViewModel;
+    private Activity activity;
 
     private static final int TYPE_FOOTER = 1;
 
-    public NewsAdapter(ArrayList<News> newsList, int currentPage, NewsViewModel newsViewModel) {
+    public NewsAdapter(ArrayList<News> newsList, int currentPage, Activity activity, NewsViewModel newsViewModel) {
         Log.i(TAG, "Generazione News Adapter");
         this.newsList = newsList;
         this.currentPage = currentPage;
+        this.activity = activity;
         this.newsViewModel = newsViewModel;
     }
 
@@ -72,6 +73,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             NewsHolder holderBinding = (NewsHolder) holder;
             News news = newsList.get(position);
             holderBinding.bind(news);
+            holderBinding.binding.setNewsClickListener(this);
         }
 
     }
@@ -88,4 +90,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         return newsList.size() + 1;
     }
+
+    @Override
+    public void newsClicked(String urlNews) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlNews));
+        activity.startActivity(intent);
+    }
 }
+

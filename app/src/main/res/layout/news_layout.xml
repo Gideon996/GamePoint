@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="newsClickListener"
+            type="it.adriano.tumino.gamepoint.adapter.ClickNews" />
         <variable
             name="news"
             type="it.adriano.tumino.gamepoint.data.News" />
@@ -13,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_news">
+        android:padding="@dimen/padding_news"
+        android:onClick="@{() -> newsClickListener.newsClicked(news.url)}">
 
         <LinearLayout
             android:layout_width="125dp"
