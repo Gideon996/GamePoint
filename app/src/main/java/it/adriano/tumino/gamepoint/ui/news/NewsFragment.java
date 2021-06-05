@@ -47,7 +47,7 @@ public class NewsFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
 
         int currentPage = 1;
-        newsAdapter = new NewsAdapter(newsViewModel.getList(), getActivity(), currentPage, newsViewModel);
+        newsAdapter = new NewsAdapter(newsViewModel.getList(), currentPage, newsViewModel);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(newsAdapter);

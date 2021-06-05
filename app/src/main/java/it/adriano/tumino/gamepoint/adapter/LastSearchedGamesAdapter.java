@@ -23,11 +23,11 @@ import it.adriano.tumino.gamepoint.holder.LastSearchedGamesHolder;
 
 public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> {
     public static final String TAG = "SearchGamesAdapter";
-    private ArrayList<GameSearchResult> favoriteGames;
+    private ArrayList<GameSearchResult> lastSearchedGamesList;
 
-    public LastSearchedGamesAdapter(ArrayList<GameSearchResult> favoriteGames) {
+    public LastSearchedGamesAdapter(ArrayList<GameSearchResult> lastSearchedGamesList) {
         Log.i(TAG, "Generazione Last Searched Games Adapter");
-        this.favoriteGames = favoriteGames;
+        this.lastSearchedGamesList = lastSearchedGamesList;
     }
 
     @NonNull
@@ -43,8 +43,8 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
     @Override
     public void onBindViewHolder(@NonNull @NotNull LastSearchedGamesHolder holder, int position) {
         Log.i(TAG, "Riempimento Item");
-        if (!favoriteGames.get(position).getImageURL().isEmpty()) {
-            Picasso.get().load(favoriteGames.get(position).getImageURL()).resize(1500, 1500).onlyScaleDown().into(holder.getImageView());
+        if (!lastSearchedGamesList.get(position).getImageURL().isEmpty()) {
+            Picasso.get().load(lastSearchedGamesList.get(position).getImageURL()).resize(1500, 1500).onlyScaleDown().into(holder.getImageView());
         } else {
             Log.i(TAG, "Immagine non disponibile, inserimento placeholder");
             GradientDrawable gd = new GradientDrawable();
@@ -52,12 +52,12 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
             gd.setColor(Color.BLACK);
             holder.getImageView().setImageDrawable(gd);
         }
-        holder.getTextView1().setText(favoriteGames.get(position).getTitle());
-        holder.getTextView2().setText(favoriteGames.get(position).getStore());
+        holder.getTextView1().setText(lastSearchedGamesList.get(position).getTitle());
+        holder.getTextView2().setText(lastSearchedGamesList.get(position).getStore());
     }
 
     @Override
     public int getItemCount() {
-        return favoriteGames.size();
+        return lastSearchedGamesList.size();
     }
 }

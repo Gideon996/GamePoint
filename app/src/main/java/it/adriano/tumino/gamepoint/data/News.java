@@ -1,5 +1,11 @@
 package it.adriano.tumino.gamepoint.data;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.squareup.picasso.Picasso;
+
 public class News extends Information {
 
     private String body;

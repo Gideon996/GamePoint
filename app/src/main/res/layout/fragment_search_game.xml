@@ -20,10 +20,10 @@
             android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autofillHints="Game Title"
             android:ems="10"
             android:hint="@string/hint_search_edit_text"
-            android:inputType="textPersonName"
-            android:autofillHints="Game Title" />
+            android:inputType="textPersonName" />
 
         <ImageButton
             android:id="@+id/searchGameButton"
@@ -31,8 +31,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_search_black_24"
-            android:contentDescription="@string/search_button_text"/>
+            android:contentDescription="@string/search_button_text"
+            app:srcCompat="@drawable/ic_search_black_24" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,6 +53,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/searchedGamesShimmerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:animationCache="true"
+        app:shimmer_repeat_mode="restart"
+        app:shimmer_shape="radial">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_searched_game" />
+
+            <include layout="@layout/shimmer_searched_game" />
+
+            <include layout="@layout/shimmer_searched_game" />
+
+            <include layout="@layout/shimmer_searched_game" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <LinearLayout
         android:id="@+id/gameSearchResultsLayout"

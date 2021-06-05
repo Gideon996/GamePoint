@@ -1,10 +1,12 @@
 package it.adriano.tumino.gamepoint.holder;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +24,11 @@ public class SearchGamesHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.gameCoverSearchedImageView);
         title = itemView.findViewById(R.id.gameTitleSearchedTextView);
         altro = itemView.findViewById(R.id.storeGameSearchedTextView);
+        itemView.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("test", "sto provando a passare un valore");
+            Navigation.findNavController(v).navigate(R.id.search_action, bundle);
+        });
     }
 
     public ImageView getImageView() {

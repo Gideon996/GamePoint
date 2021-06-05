@@ -8,7 +8,7 @@
     android:padding="@dimen/padding_news">
 
     <ImageView
-        android:id="@+id/lastGameCoverSearchedImageView"
+        android:id="@+id/gameCoverSearchedImageView"
         android:layout_width="125dp"
         android:layout_height="100dp"
         android:adjustViewBounds="true"
@@ -23,7 +23,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:id="@+id/lastGameTitleSearchedTextView"
+            android:id="@+id/gameTitleSearchedTextView"
             android:layout_width="200dp"
             android:layout_height="35dp"
             android:autoSizeTextType="uniform"
@@ -31,7 +31,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
-            android:id="@+id/lastStoreGameSearchedTextView"
+            android:id="@+id/storeGameSearchedTextView"
             android:layout_width="200dp"
             android:layout_height="64dp"
             android:autoSizeTextType="uniform"
@@ -39,13 +39,4 @@
             android:textColor="@color/Gray" />
 
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/cancellImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_close_24" />
-
 </LinearLayout>

@@ -19,9 +19,9 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
 
     public LastSearchedGamesHolder(@NonNull @NotNull View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.gameCoverSearchedImageView);
-        textView1 = itemView.findViewById(R.id.gameTitleSearchedTextView);
-        textView2 = itemView.findViewById(R.id.storeGameSearchedTextView);
+        imageView = itemView.findViewById(R.id.lastGameCoverSearchedImageView);
+        textView1 = itemView.findViewById(R.id.lastGameTitleSearchedTextView);
+        textView2 = itemView.findViewById(R.id.lastStoreGameSearchedTextView);
     }
 
     public ImageView getImageView() {

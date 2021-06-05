@@ -1,58 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/newsRowLayout"
-    android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:orientation="horizontal"
-    android:padding="@dimen/padding_news">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="news"
+            type="it.adriano.tumino.gamepoint.data.News" />
+    </data>
 
     <LinearLayout
-        android:layout_width="125dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/newsImageView"
-            android:layout_width="125dp"
-            android:layout_height="101dp"
-            android:contentDescription="@string/content_description_image_view"/>
-
-        <TextView
-            android:id="@+id/newsSiteTextView"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal|center_vertical" />
-
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal|center_vertical" />
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/newsRowLayout"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:orientation="vertical"
-        android:paddingStart="10dp">
+        android:layout_height="180dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_news">
 
-        <TextView
-            android:id="@+id/newsTitleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:autoSizeTextType="uniform"
-            android:gravity="center_horizontal|left"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/newsDescriptionTextView"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="125dp"
             android:layout_height="match_parent"
-            android:autoSizeTextType="uniform"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/Gray" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/newsImageView"
+                android:layout_width="125dp"
+                android:layout_height="101dp"
+                android:contentDescription="@string/content_description_image_view"
+                profileImage="@{news.imageURL}"/>
+
+            <TextView
+                android:id="@+id/newsSiteTextView"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@{news.website}" />
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@{news.date}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/newsTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="8dp"
+                android:autoSizeStepGranularity="1dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal|left"
+                android:text="@{news.title}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/newsDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="4dp"
+                android:autoSizeStepGranularity="1dp"
+                android:autoSizeTextType="uniform"
+                android:text="@{news.body}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/Gray" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
 

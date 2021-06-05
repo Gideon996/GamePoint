@@ -20,11 +20,11 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.holder.SearchGamesHolder;
 
-public class SearchGamesAdapter extends RecyclerView.Adapter<SearchGamesHolder> {
+public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGamesHolder> {
     public static final String TAG = "SearchGamesAdapter";
     private ArrayList<GameSearchResult> searchedGames;
 
-    public SearchGamesAdapter(ArrayList<GameSearchResult> searchedGames) {
+    public SearchedGamesAdapter(ArrayList<GameSearchResult> searchedGames) {
         Log.i(TAG, "Generazione Search Games Adapter");
         this.searchedGames = searchedGames;
     }
@@ -35,7 +35,7 @@ public class SearchGamesAdapter extends RecyclerView.Adapter<SearchGamesHolder> 
     public SearchGamesHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         Log.i(TAG, "Inserimento Layout");
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.last_search_layout, parent, false);
+        View view = layoutInflater.inflate(R.layout.game_searched_layout, parent, false);
         return new SearchGamesHolder(view);
     }
 

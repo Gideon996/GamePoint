@@ -1,14 +1,14 @@
 package it.adriano.tumino.gamepoint.adapter;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -18,26 +18,25 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.databinding.NewsLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.FooterNewsHolder;
-import it.adriano.tumino.gamepoint.holder.NewsHolder;
 import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
 import it.adriano.tumino.gamepoint.data.News;
+import it.adriano.tumino.gamepoint.holder.NewsHolder;
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final String TAG = "NewsAdapter";
 
     private final ArrayList<News> newsList;
-    private final Activity activity;
     private int currentPage;
     private final NewsViewModel newsViewModel;
 
     private static final int TYPE_FOOTER = 1;
 
-    public NewsAdapter(ArrayList<News> newsList, Activity activity, int currentPage, NewsViewModel newsViewModel) {
+    public NewsAdapter(ArrayList<News> newsList, int currentPage, NewsViewModel newsViewModel) {
         Log.i(TAG, "Generazione News Adapter");
         this.newsList = newsList;
-        this.activity = activity;
         this.currentPage = currentPage;
         this.newsViewModel = newsViewModel;
     }
@@ -51,9 +50,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return new FooterNewsHolder(itemView);
         }
         Log.i(TAG, "Inserimento Item Layout");
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.news_layout, parent, false);
-        return new NewsHolder(view);
+        NewsLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.news_layout, parent, false);
+        return new NewsHolder(binding);
     }
 
     @Override
@@ -71,26 +69,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (holder instanceof NewsHolder) {
             Log.i(TAG, "Riempimento News Layout e aggiunta onClickListener");
 
-            NewsHolder itemViewHolder = (NewsHolder) holder;
-            News gameNews = newsList.get(position);
-            itemViewHolder.getTitle().setText(gameNews.getTitle());
-            itemViewHolder.getDescription().setText(gameNews.getBody());
-            itemViewHolder.getData().setText(gameNews.getDate());
-            itemViewHolder.getSito().setText(gameNews.getWebsite());
-
-            if(gameNews.getImageURL() != null) {
-                Picasso.get().load(gameNews.getImageURL())
-                        .fit()
-                        .centerInside()
-                        .into(itemViewHolder.getImageView());
-            }else{
-
-            }
-            itemViewHolder.getRelativeLayout().setOnClickListener(v -> {
-                String url = gameNews.getUrl();
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                activity.startActivity(intent);
-            });
+            NewsHolder holderBinding = (NewsHolder) holder;
+            News news = newsList.get(position);
+            holderBinding.bind(news);
         }
 
     }
