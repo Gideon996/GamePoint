@@ -1,38 +1,21 @@
 package it.adriano.tumino.gamepoint.holder;
 
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.jetbrains.annotations.NotNull;
+import it.adriano.tumino.gamepoint.BR;
+import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
 
-import it.adriano.tumino.gamepoint.R;
+public class LastSearchedGamesHolder extends RecyclerView.ViewHolder{
 
-public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
+    private LastSearchLayoutBinding binding;
 
-    private final ImageView imageView;
-    private final TextView textView1;
-    private final TextView textView2;
-
-    public LastSearchedGamesHolder(@NonNull @NotNull View itemView) {
-        super(itemView);
-        imageView = itemView.findViewById(R.id.lastGameCoverSearchedImageView);
-        textView1 = itemView.findViewById(R.id.lastGameTitleSearchedTextView);
-        textView2 = itemView.findViewById(R.id.lastStoreGameSearchedTextView);
+    public LastSearchedGamesHolder(LastSearchLayoutBinding binding) {
+        super(binding.getRoot());
+        this.binding = binding;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public TextView getTextView1() {
-        return textView1;
-    }
-
-    public TextView getTextView2() {
-        return textView2;
+    public void bind(Object obj) {
+        binding.setVariable(BR.lastGames, obj); //nome della variabile da usare
+        binding.executePendingBindings();
     }
 }
