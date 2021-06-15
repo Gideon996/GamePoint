@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.adapter;
+package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
-import it.adriano.tumino.gamepoint.holder.LastSearchedGamesHolder;
+import it.adriano.tumino.gamepoint.holder.recyclerview.LastSearchedGamesHolder;
 
 
 public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> {

@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.adapter;
+package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.holder.ScreenshotHolder;
+import it.adriano.tumino.gamepoint.holder.recyclerview.ScreenshotHolder;
 
 
 public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotHolder> {

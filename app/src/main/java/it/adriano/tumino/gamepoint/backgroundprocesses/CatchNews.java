@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import it.adriano.tumino.gamepoint.adapter.NewsAdapter;
+import it.adriano.tumino.gamepoint.adapter.recyclerview.NewsAdapter;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;

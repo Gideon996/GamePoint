@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.holder;
+package it.adriano.tumino.gamepoint.holder.recyclerview;
 
 import androidx.recyclerview.widget.RecyclerView;
 

@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses;
+package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
 
 import android.util.Log;
 
@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
@@ -73,7 +74,7 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
                     imageURl = image.attributes().get("data-srcset"); //decodifica in automatico
                 }
 
-                GameSearchResult gameSearchResult = new GameSearchResult(title, imageURl, null, gameID, null, STORE);
+                GameSearchResult gameSearchResult = new GameSearchResult(title, imageURl, null, gameID, null, STORE, "N.A.");
                 listOfGames.add(gameSearchResult);
             }
         }

@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.adapter;
+package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.holder.FavoriteGamesHolder;
+import it.adriano.tumino.gamepoint.holder.recyclerview.FavoriteGamesHolder;
 
 public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHolder> {
     public static final String TAG = "FavoriteAdapter";

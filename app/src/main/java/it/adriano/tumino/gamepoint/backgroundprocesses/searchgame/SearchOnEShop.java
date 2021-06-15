@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses;
+package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
 
 import android.util.Log;
 
@@ -16,6 +16,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
@@ -75,12 +76,16 @@ public class SearchOnEShop extends TaskRunner<String, ArrayList<GameSearchResult
                         String releaseData = object.getJSONArray("dates_released_dts").getString(0);
                         String imageUrl = object.optString("image_url");
 
+                        double price = object.getDouble("price_sorting_f");
+                        String finalPrice = "" + price;
+                        if(price == 999999.0) finalPrice = "NON REPERIBILE";
+
                         JSONArray consoleArray = object.getJSONArray("system_names_txt");
                         StringBuilder console = new StringBuilder();
                         for (int k = 0; k < consoleArray.length(); k++) {
                             console.append(consoleArray.optString(j));
                         }
-                        GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, null, console.toString(), STORE);
+                        GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, null, console.toString(), STORE, finalPrice);
                         listOfGames.add(gameSearchResult);
                     }
                 }

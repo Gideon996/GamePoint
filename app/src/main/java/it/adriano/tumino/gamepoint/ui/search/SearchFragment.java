@@ -3,6 +3,7 @@ package it.adriano.tumino.gamepoint.ui.search;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,13 +23,13 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.adapter.SearchedGamesAdapter;
-import it.adriano.tumino.gamepoint.adapter.LastSearchedGamesAdapter;
+import it.adriano.tumino.gamepoint.adapter.recyclerview.SearchedGamesAdapter;
+import it.adriano.tumino.gamepoint.adapter.recyclerview.LastSearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnEShop;
-import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnMicrosoft;
-import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnPSN;
-import it.adriano.tumino.gamepoint.backgroundprocesses.SearchOnSteam;
+import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnEShop;
+import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnMicrosoft;
+import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnPSN;
+import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnSteam;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DataBaseValues;
@@ -52,7 +53,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search"); //Necessario per quando torno indietro dalla schermata di gioco
         view = inflater.inflate(R.layout.fragment_search_game, container, false);
         ImageButton searchButton = view.findViewById(R.id.searchGameButton);
         editText = view.findViewById(R.id.searchGameEditText);
@@ -86,13 +87,13 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         latestResearchGameRecyclerView.setAdapter(lastSearchedGamesAdapter);
 
         RecyclerView gameSearchResultsRecyclerView = view.findViewById(R.id.gameSearchResultsRecyclerView);
-        searchedGamesAdapter = new SearchedGamesAdapter(listOfResult);
+        searchedGamesAdapter = new SearchedGamesAdapter(listOfResult, view);
         gameSearchResultsRecyclerView.setHasFixedSize(true);
         gameSearchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         gameSearchResultsRecyclerView.setAdapter(searchedGamesAdapter);
 
         shimmerFrameLayout = view.findViewById(R.id.searchedGamesShimmerLayout);
-        
+
     }
 
     private void catchInformation(String name) {
@@ -155,7 +156,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
     @Override
     public void processFinish(ArrayList<GameSearchResult> result) {
-        if(shimmerFrameLayout.isShimmerStarted()){
+        if (shimmerFrameLayout.isShimmerStarted()) {
             shimmerFrameLayout.stopShimmer();
             view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.VISIBLE);
             shimmerFrameLayout.setVisibility(View.GONE);

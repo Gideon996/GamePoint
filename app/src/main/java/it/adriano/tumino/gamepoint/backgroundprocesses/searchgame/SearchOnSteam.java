@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses;
+package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
 
 import android.util.Log;
 
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
@@ -56,7 +57,8 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
                 String platfoms = getPlatform(link.getElementsByClass("platform_img"));
                 String releaseData = link.getElementsByClass("search_released").get(0).text();
-                GameSearchResult result = new GameSearchResult(title, imgUrl, null, gameID, platfoms, STORE);
+                String price = link.getElementsByClass("search_price").get(0).text();
+                GameSearchResult result = new GameSearchResult(title, imgUrl, null, gameID, platfoms, STORE, price);
                 listOfGames.add(result);
             }
         }

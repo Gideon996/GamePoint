@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses;
+package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
 
 import android.util.Log;
 
@@ -16,6 +16,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
@@ -76,7 +77,12 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
                     String releaseData = gameInfomation.optString("release_date");
                     String gameURL = gameInfomation.optString("url");
 
-                    GameSearchResult gameSearchResult = new GameSearchResult(titleGame, imageURL, gameURL, null, console, STORE);
+                    String price = "N.A.";
+                    if(gameInfomation.has("default_sku")){
+                        price = gameInfomation.getJSONObject("default_sku").getString("display_price");
+                    }
+
+                    GameSearchResult gameSearchResult = new GameSearchResult(titleGame, imageURL, gameURL, null, console, STORE, price);
                     listOfGame.add(gameSearchResult);
                 }
             }

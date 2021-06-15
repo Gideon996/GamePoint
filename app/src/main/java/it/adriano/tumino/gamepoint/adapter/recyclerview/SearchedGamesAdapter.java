@@ -1,11 +1,14 @@
-package it.adriano.tumino.gamepoint.adapter;
+package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,15 +18,17 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
-import it.adriano.tumino.gamepoint.holder.SearchGameHolder;
+import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
-public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> {
+public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> implements ClickItemList {
     public static final String TAG = "SearchGamesAdapter";
     private ArrayList<GameSearchResult> searchedGames;
+    private View view;
 
-    public SearchedGamesAdapter(ArrayList<GameSearchResult> searchedGames) {
+    public SearchedGamesAdapter(ArrayList<GameSearchResult> searchedGames, View view) {
         Log.i(TAG, "Generazione Search Games Adapter");
         this.searchedGames = searchedGames;
+        this.view = view;
     }
 
     @NonNull
@@ -40,11 +45,20 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
         Log.i(TAG, "Riempimento Item");
         GameSearchResult gameSearchResult = searchedGames.get(position);
         holder.bind(gameSearchResult);
-        //inserire un click
+        holder.binding.setGameClicked(this);
     }
 
     @Override
     public int getItemCount() {
         return searchedGames.size();
+    }
+
+    @Override
+    public void itemClicked(Object game) {
+        GameSearchResult gameSearchResult = (GameSearchResult) game;
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelable("game", gameSearchResult);
+        Navigation.findNavController(view).navigate(R.id.select_action, bundle);
     }
 }

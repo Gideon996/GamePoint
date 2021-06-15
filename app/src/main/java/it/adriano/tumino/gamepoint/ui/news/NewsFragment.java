@@ -5,20 +5,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
+import it.adriano.tumino.gamepoint.adapter.recyclerview.NewsAdapter;
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
 import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
-import it.adriano.tumino.gamepoint.adapter.NewsAdapter;
 
 
 public class NewsFragment extends Fragment {

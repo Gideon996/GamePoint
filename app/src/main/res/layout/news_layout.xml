@@ -4,7 +4,7 @@
     <data>
         <variable
             name="newsClickListener"
-            type="it.adriano.tumino.gamepoint.adapter.ClickNews" />
+            type="it.adriano.tumino.gamepoint.adapter.recyclerview.ClickItemList" />
         <variable
             name="news"
             type="it.adriano.tumino.gamepoint.data.News" />
@@ -16,7 +16,7 @@
         android:layout_height="180dp"
         android:orientation="horizontal"
         android:padding="@dimen/padding_news"
-        android:onClick="@{() -> newsClickListener.newsClicked(news.url)}">
+        android:onClick="@{() -> newsClickListener.itemClicked(news.url)}">
 
         <LinearLayout
             android:layout_width="125dp"
@@ -26,7 +26,7 @@
             <ImageView
                 android:id="@+id/newsImageView"
                 android:layout_width="125dp"
-                android:layout_height="101dp"
+                android:layout_height="100dp"
                 android:contentDescription="@string/content_description_image_view"
                 profileImage="@{news.imageURL}"/>
 

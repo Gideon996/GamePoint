@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.adapter;
+package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.NewsLayoutBinding;
-import it.adriano.tumino.gamepoint.holder.FooterNewsHolder;
+import it.adriano.tumino.gamepoint.holder.recyclerview.FooterNewsHolder;
 import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
 import it.adriano.tumino.gamepoint.data.News;
-import it.adriano.tumino.gamepoint.holder.NewsHolder;
+import it.adriano.tumino.gamepoint.holder.recyclerview.NewsHolder;
 import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ClickNews {
+public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ClickItemList {
     public static final String TAG = "NewsAdapter";
 
     private final ArrayList<News> newsList;
@@ -92,8 +92,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     }
 
     @Override
-    public void newsClicked(String urlNews) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlNews));
+    public void itemClicked(Object urlNews) {
+        String url = (String) urlNews;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         activity.startActivity(intent);
     }
 }

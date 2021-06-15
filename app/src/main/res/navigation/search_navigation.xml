@@ -9,11 +9,16 @@
         android:name="it.adriano.tumino.gamepoint.ui.search.SearchFragment"
         android:label="SearchFragment" >
         <action
-            android:id="@+id/search_action"
-            app:destination="@id/gameInformationFragment" />
+            android:id="@+id/select_action"
+            app:destination="@id/gameResultFragment" />
     </fragment>
     <fragment
-        android:id="@+id/gameInformationFragment"
-        android:name="it.adriano.tumino.gamepoint.ui.search.GameInformationFragment"
-        android:label="GameInformationFragment" />
+        android:id="@+id/gameResultFragment"
+        android:name="it.adriano.tumino.gamepoint.ui.showgame.GameResultFragment"
+        android:label="fragment_game_result"
+        tools:layout="@layout/fragment_game_result" >
+        <action
+            android:id="@+id/no_game_action"
+            app:destination="@id/searchFragment" />
+    </fragment>
 </navigation>

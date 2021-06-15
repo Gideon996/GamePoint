@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="gameClicked"
+            type="it.adriano.tumino.gamepoint.adapter.recyclerview.ClickItemList" />
         <variable
             name="game"
             type="it.adriano.tumino.gamepoint.data.GameSearchResult" />
@@ -13,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_news">
+        android:padding="@dimen/padding_news"
+        android:onClick="@{() -> gameClicked.itemClicked(game)}">
 
         <ImageView
             android:id="@+id/gameCoverSearchedImageView"
