@@ -7,10 +7,11 @@
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#1B2838"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,6 +74,7 @@
                 android:paddingBottom="10dp"
                 android:text="Full Metal Alchemist: Brotherhood"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -83,8 +85,8 @@
 
                 <ImageView
                     android:id="@+id/storeIconView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_account_circle_black_24" />
@@ -95,7 +97,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="12.99€" />
+                    android:text="12.99€"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/releaseDataTextView"
@@ -104,7 +107,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:text="03 Ottobre 1911" />
+                    android:text="03 Ottobre 1911"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -114,7 +118,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:tabMode="auto">
+                android:background="#1B2838"
+                app:tabIndicatorColor="@color/white"
+                app:tabMode="auto"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/Gray">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -143,5 +151,5 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="50dp" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

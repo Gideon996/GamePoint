@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.GalleryAdapter;
+import it.adriano.tumino.gamepoint.data.Game;
 
 
 public class GalleryFragment extends Fragment {
@@ -19,10 +20,18 @@ public class GalleryFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private Bundle information;
+    private String store;
+    private Game game;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            information = getArguments();
+            store = information.getString("store");
+            game = information.getParcelable("game");
+        }
     }
 
     @Override
@@ -31,7 +40,7 @@ public class GalleryFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.galleryListView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(new GalleryAdapter(getContext()));
+        recyclerView.setAdapter(new GalleryAdapter(getContext(), game.getScreenshots()));
 
         return view;
     }

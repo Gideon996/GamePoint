@@ -2,36 +2,58 @@ package it.adriano.tumino.gamepoint.ui.showgame;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.ImageWriter;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.IOException;
+
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.backgroundprocesses.CatchGame;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromSteam;
+import it.adriano.tumino.gamepoint.data.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.data.GameShow;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
-public class GameResultFragment extends Fragment implements AsyncResponse<GameShow>, TabLayout.OnTabSelectedListener {
+public class GameResultFragment extends Fragment implements AsyncResponse<Game>, TabLayout.OnTabSelectedListener {
     private GameSearchResult gameSearchResult;
     private static final String BASE_TEXT = "Garda che bel gioco ho trovato: ";
 
+    private final Fragment[] fragments = new Fragment[4];
+
+    private Bundle information = new Bundle();
+
+
     public GameResultFragment() {
+        fragments[0] = new DescriptionFragment();
+        fragments[1] = new GalleryFragment();
+        fragments[2] = new GameSpecificationsFragment();
+        fragments[3] = new GameCommentsFragment();
+
     }
 
     private TaskRunner<Integer, String> game;
@@ -41,23 +63,26 @@ public class GameResultFragment extends Fragment implements AsyncResponse<GameSh
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey("game"))
             gameSearchResult = getArguments().getParcelable("game");
+
+        information.putString("store", gameSearchResult.getStore());
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(gameSearchResult.getTitle().toUpperCase()); //Setto il titolo del fragment
         switch (gameSearchResult.getStore()) {
-            case "PSN":
-                game = new CatchGame();
-                ((CatchGame) game).delegate = this;
+            case "STEAM":
+                game = new CatchGameFromSteam(gameSearchResult.getAppID());
+                ((CatchGameFromSteam) game).delegate = this;
                 break;
             case "MCS":
                 game = new CatchGame();
-                ((CatchGame) game).delegate = this;
+                //((CatchGame) game).delegate = this;
                 break;
-            case "STEAM":
+            case "PSN":
                 game = new CatchGame();
-                ((CatchGame) game).delegate = this;
+                //((CatchGame) game).delegate = this;
                 break;
             case "ESHOP":
                 game = new CatchGame();
-                ((CatchGame) game).delegate = this;
+                //((CatchGame) game).delegate = this;
                 break;
             default:
                 //nessuno di questo
@@ -65,18 +90,18 @@ public class GameResultFragment extends Fragment implements AsyncResponse<GameSh
         }
     }
 
+    private View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_game_result, container, false);
+        view = inflater.inflate(R.layout.fragment_game_result, container, false);
 
         //if (gameSearchResult == null) Navigation.findNavController(view).navigate(R.id.no_game_action); //doesn't works, idk why
+        game.execute(0);
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout); //setto le impostazioni per il tabLayout
-        Fragment descrizione = new DescriptionFragment(); //imposto la vista di default
-        setFragmentLayout(descrizione); //imposto il layout da visualizzare
         tabLayout.addOnTabSelectedListener(this); //imposto il listener
 
-        //game.execute(0);
         return view;
     }
 
@@ -92,6 +117,15 @@ public class GameResultFragment extends Fragment implements AsyncResponse<GameSh
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ImageView logo = view.findViewById(R.id.storeIconView);
+        Drawable d;
+        try {
+            d = Drawable.createFromStream(getContext().getAssets().open("logo_steam.png"), null);
+        } catch (IOException exception) {
+            d = new ColorDrawable(Color.CYAN);
+        }
+        logo.setImageDrawable(d);
 
         ImageButton sharedButton = view.findViewById(R.id.shareButton); //setto il bottone condividi
         sharedButton.setOnClickListener(v -> { //listener per la condivisione
@@ -121,30 +155,35 @@ public class GameResultFragment extends Fragment implements AsyncResponse<GameSh
         });
     }
 
+    private Game result;
 
     @Override
-    public void processFinish(GameShow result) {
+    public void processFinish(Game result) {
+        this.result = result;
         //aggiorno l'interfaccia grafica
+        if (result == null) Navigation.findNavController(view).navigate(R.id.no_game_action);
+
+        information.putParcelable("game", result);
+        for (int i = 0; i < fragments.length; i++) fragments[i].setArguments(information);
+
+        setFragmentLayout(fragments[0]); //imposto il layout da visualizzare
+
+        ImageView imageView = view.findViewById(R.id.gameHeaderImageView);
+
+        Picasso.get().load(result.getImage())
+                .resize(imageView.getMaxWidth(), 700)
+                .centerInside()
+                .into(imageView);
+        ((TextView) view.findViewById(R.id.titleGameTextView)).setText(result.getName());
+        ((TextView) view.findViewById(R.id.priceGameTextView)).setText(result.getPrice());
+        ((TextView) view.findViewById(R.id.releaseDataTextView)).setText(result.getDate());
+
+
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) { //Listener per capire che Layout mostrare
-        Fragment fragment = null;
-        switch (tab.getPosition()) {
-            case 0: //Tab Descrizione
-                fragment = new DescriptionFragment();
-                break;
-            case 1: //Tab Galleria
-                fragment = new GalleryFragment();
-                break;
-            case 2: //Tab Specifiche
-                fragment = new GameSpecificationsFragment();
-                break;
-            case 3: //Tab Commenti
-                fragment = new GameCommentsFragment();
-                break;
-        }
-        setFragmentLayout(fragment); //imposto il frammento
+        setFragmentLayout(fragments[tab.getPosition()]); //imposto il frammento
     }
 
     @Override

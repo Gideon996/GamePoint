@@ -19,10 +19,10 @@ import it.adriano.tumino.gamepoint.holder.viewpager.ImageGalleryHolder;
 
 public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder> {
 
-    private List<GalleryAdapter.Item> list;
+    private List<String> list;
     private Context context;
 
-    public ImageGalleryAdapter(List<GalleryAdapter.Item> list, Context context) { //Costruttore per la viewPager2
+    public ImageGalleryAdapter(List<String> list, Context context) { //Costruttore per la viewPager2
         this.list = list;
         this.context = context;
     }
@@ -37,8 +37,8 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder
     @Override
     public void onBindViewHolder(ImageGalleryHolder holder, int position) { //Lunghezza infinita e mostro l'img
         position = position % list.size();
-        GalleryAdapter.Item item = list.get(position);
-        Glide.with(context).load(item.url).into(holder.imageView);
+        String image = list.get(position);
+        Glide.with(context).load(image).into(holder.imageView);
     }
 
     @Override
