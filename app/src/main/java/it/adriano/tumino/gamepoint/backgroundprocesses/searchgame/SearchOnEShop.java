@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
@@ -71,7 +72,8 @@ public class SearchOnEShop extends TaskRunner<String, ArrayList<GameSearchResult
                     JSONObject object = games.optJSONObject(j);
                     if (object == null) continue;
                     String title = object.optString("title");
-                    if (title.toLowerCase().contains(name)) {
+                    String verify = Normalizer.normalize(title, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+                    if (verify.toLowerCase().contains(name)) {
                         String gameUrl = object.optString("url");
                         String releaseData = object.getJSONArray("dates_released_dts").getString(0);
                         String imageUrl = object.optString("image_url");

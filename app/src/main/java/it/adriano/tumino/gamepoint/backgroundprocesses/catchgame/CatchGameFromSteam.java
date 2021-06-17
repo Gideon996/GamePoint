@@ -27,13 +27,14 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
 
     private final String finalURL;
     private final String appID;
-    private Game game = new Game();
+    private Game game;
 
     public AsyncResponse<Game> delegate = null;
 
     public CatchGameFromSteam(String appID) {
         finalURL = URL_API + appID;
         this.appID = appID;
+        game = new Game();
     }
 
     @Override

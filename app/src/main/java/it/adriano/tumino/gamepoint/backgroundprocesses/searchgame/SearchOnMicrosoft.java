@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
@@ -59,7 +60,8 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
             Element gameUrl = game.getElementsByTag("a").first();
             Element titlediv = gameUrl.getElementsByClass("c-subheading-6").first();
             String title = titlediv.text();
-            if (title.toLowerCase().contains(name)) {
+            String verify = Normalizer.normalize(title, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+            if (verify.toLowerCase().contains(name)) {
                 String gameID;
                 try {
                     gameID = new JSONObject(gameUrl.attributes().get("data-m")).getString("pid");

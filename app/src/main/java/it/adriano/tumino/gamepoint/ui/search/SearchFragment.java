@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         //Cercare su steam
         SearchOnSteam searchOnSteam = new SearchOnSteam();
         searchOnSteam.delegate = this;
-        searchOnSteam.execute(name);
+        //searchOnSteam.execute(name);
 
         //Cercare su Nintendo
         SearchOnEShop searchOnEShop = new SearchOnEShop();
@@ -110,12 +110,12 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         //Cercare su PSN
         SearchOnPSN searchOnPSN = new SearchOnPSN();
         searchOnPSN.delegate = this;
-        searchOnPSN.execute(name);
+        //searchOnPSN.execute(name);
 
         //cercare su Microsoft
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
         searchOnMicrosoft.delegate = this;
-        searchOnMicrosoft.execute(name);
+        //searchOnMicrosoft.execute(name);
     }
 
     private void closeKeyboard() {

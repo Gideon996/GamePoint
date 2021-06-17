@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -52,7 +53,8 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
         Elements links = resultsRows.getElementsByTag("a");
         for (Element link : links) {
             String title = link.getElementsByClass("title").get(0).text();
-            if (title.toLowerCase().contains(name)) {
+            String verify = Normalizer.normalize(title, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+            if (verify.toLowerCase().contains(name)) {
                 String gameID = link.attributes().get("data-ds-appid");
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
                 String platfoms = getPlatform(link.getElementsByClass("platform_img"));

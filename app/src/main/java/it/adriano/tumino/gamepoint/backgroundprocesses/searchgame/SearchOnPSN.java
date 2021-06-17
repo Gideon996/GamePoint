@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
@@ -37,7 +38,7 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
     public ArrayList<GameSearchResult> doInBackground(String... input) {
         Log.i(TAG, "Ricerca gioco su PSN");
 
-        String name = input[0];
+        String name = input[0].toLowerCase();
         String encodedName = name.replaceAll(" ", "_");
         try {
             encodedName = URLEncoder.encode(encodedName, String.valueOf(StandardCharsets.UTF_8));
@@ -70,7 +71,8 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
                 if (gameInfomation == null || gameInfomation.length() == 0) continue;
 
                 String titleGame = gameInfomation.optString("name");
-                if (titleGame.toLowerCase().contains(name)) {
+                String verify = Normalizer.normalize(titleGame, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+                if (verify.toLowerCase().contains(name)) {
                     String imageURL = gameInfomation.optJSONArray("images").optJSONObject(0).optString("url");
                     String console = gameInfomation.optJSONArray("playable_platform").join(", ").replaceAll("\"", "");
                     String publisher = gameInfomation.optString("provider_name");

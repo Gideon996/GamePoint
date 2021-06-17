@@ -86,7 +86,7 @@
                 <ImageView
                     android:id="@+id/storeIconView"
                     android:layout_width="100dp"
-                    android:layout_height="20dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_account_circle_black_24" />
@@ -97,6 +97,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
                     android:text="12.99€"
                     android:textColor="@color/white" />
 
@@ -107,6 +108,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="03 Ottobre 1911"
                     android:textColor="@color/white" />
 

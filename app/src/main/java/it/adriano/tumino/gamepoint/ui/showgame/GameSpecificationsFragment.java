@@ -9,6 +9,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,11 +46,28 @@ public class GameSpecificationsFragment extends Fragment {
             case "STEAM":
                 steamGame(view);
                 break;
+            case "ESHOP":
+                eShopGame(view);
+                break;
         }
         return view;
     }
 
+    private void eShopGame(View view){
+        LinearLayout linearLayout = view.findViewById(R.id.eshopSpecificationLayout);
+        linearLayout.setVisibility(View.VISIBLE);
+
+        TextView caratteristiche = view.findViewById(R.id.caratteristicheTextView);
+        caratteristiche.setText(Html.fromHtml(game.getMinimumRequirement(), Html.FROM_HTML_MODE_LEGACY));
+
+        TextView textView = view.findViewById(R.id.serieDiConsole);
+        textView.setText(Html.fromHtml(game.getRecommendedRequirement(), Html.FROM_HTML_MODE_LEGACY));
+    }
+
     private void steamGame(View view) {
+        LinearLayout linearLayout = view.findViewById(R.id.steamSpecificationLayout);
+        linearLayout.setVisibility(View.VISIBLE);
+
         TextView sviluppatoreTextView = view.findViewById(R.id.developerTextView);
         String string = String.join(", ", game.getDevelopers());
         sviluppatoreTextView.setText(string);

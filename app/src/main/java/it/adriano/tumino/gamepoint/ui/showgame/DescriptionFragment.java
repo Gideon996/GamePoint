@@ -16,6 +16,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -56,12 +57,28 @@ public class DescriptionFragment extends Fragment {
             case "STEAM":
                 steamGame(view);
                 break;
+            case "ESHOP":
+                eShopGame(view);
+                break;
         }
         return view;
     }
 
     private void steamGame(View view) {
+        LinearLayout linearLayout = view.findViewById(R.id.descriptionSteam);
+        linearLayout.setVisibility(View.VISIBLE);
         TextView textView = view.findViewById(R.id.descriptionTextView);
+        String body = game.getDescription();
+        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
+        textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setLinksClickable(true);
+    }
+
+    private void eShopGame(View view){
+        LinearLayout linearLayout = view.findViewById(R.id.descriptionEshop);
+        linearLayout.setVisibility(View.VISIBLE);
+        TextView textView = view.findViewById(R.id.descriptionEshopTextView);
         String body = game.getDescription();
         PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
         textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));

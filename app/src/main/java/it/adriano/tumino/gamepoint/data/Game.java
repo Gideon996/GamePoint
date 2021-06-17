@@ -4,12 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Game extends Information implements Parcelable {
 
-    private String name, description, languages, image, website, minimumRequirement, recommendedRequirement,  price, date;
+    private String name, description, languages, image, website, minimumRequirement, recommendedRequirement, price, date;
     private int scoreMetacritic;
     private ArrayList<String> developers, publishers, categories, genres, screenshots;
+
 
     public Game() {
     }
