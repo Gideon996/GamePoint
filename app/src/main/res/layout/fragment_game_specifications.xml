@@ -347,4 +347,53 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/mcsSpecificationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/pegiMCSTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PEGI"
+            android:textColor="#ACB2B8" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CATEGORIES"
+            android:textColor="#ACB2B8" />
+
+        <TextView
+            android:id="@+id/categoriesMCSTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CATEGORIES"
+            android:textColor="#ACB2B8" />
+
+        <TextView
+            android:id="@+id/metadataMCSTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="METADATA"
+            android:textColor="#ACB2B8" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REQUIREMENT"
+            android:textColor="#ACB2B8" />
+
+        <TextView
+            android:id="@+id/requirementMCSTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="requirement"
+            android:textColor="#ACB2B8" />
+    </LinearLayout>
+
 </LinearLayout>

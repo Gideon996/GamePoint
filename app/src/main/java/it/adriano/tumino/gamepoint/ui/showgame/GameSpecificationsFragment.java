@@ -55,8 +55,25 @@ public class GameSpecificationsFragment extends Fragment {
             case "PSN":
                 psnGame(view);
                 break;
+            case "MCS":
+                mcsGame(view);
+                break;
         }
         return view;
+    }
+
+    private void mcsGame(View view){
+        LinearLayout linearLayout = view.findViewById(R.id.mcsSpecificationLayout);
+        linearLayout.setVisibility(View.VISIBLE);
+
+        TextView pegi = view.findViewById(R.id.pegiMCSTextView);
+        pegi.setText(game.getRecommendedRequirement());
+        TextView categories = view.findViewById(R.id.categoriesMCSTextView);
+        categories.setText(Html.fromHtml(fromListToHTML(game.getCategories()), Html.FROM_HTML_MODE_LEGACY));
+        TextView metadata = view.findViewById(R.id.metadataMCSTextView);
+        metadata.setText(Html.fromHtml(fromListToHTML(game.getGenres()), Html.FROM_HTML_MODE_LEGACY));
+        TextView requirement = view.findViewById(R.id.requirementMCSTextView);
+        requirement.setText(Html.fromHtml(game.getMinimumRequirement(), Html.FROM_HTML_MODE_LEGACY));
     }
 
     private void psnGame(View view) {

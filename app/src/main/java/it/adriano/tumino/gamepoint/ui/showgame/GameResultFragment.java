@@ -76,7 +76,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
                 ((CatchGameFromSteam) game).delegate = this;
                 break;
             case "MCS":
-                game = new CatchGameFromMCS(gameSearchResult.getAppID());
+                game = new CatchGameFromMCS(gameSearchResult.getUrl());
                 logoName = "logo_steam.png";
                 ((CatchGameFromMCS) game).delegate = this;
                 break;
@@ -165,6 +165,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         if (result != null) {
 
             information.putParcelable("game", result);
+            Log.e("TEST", result.getDescription());
             for (Fragment fragment : fragments) fragment.setArguments(information);
 
             setFragmentLayout(fragments[0]); //imposto il layout da visualizzare

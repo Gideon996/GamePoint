@@ -51,6 +51,7 @@ public class DescriptionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_description, container, false);
+        Log.e("TEST", store);
         switch (store.toUpperCase()) {
             case "STEAM":
                 steamGame(view);
@@ -61,7 +62,7 @@ public class DescriptionFragment extends Fragment {
             case "PSN":
                 psnGame(view);
                 break;
-            case "MSC":
+            case "MCS":
                 mscGame(view);
                 break;
         }
@@ -73,6 +74,7 @@ public class DescriptionFragment extends Fragment {
         linearLayout.setVisibility(View.VISIBLE);
         TextView textView = view.findViewById(R.id.descriptionTextView);
         String body = game.getDescription();
+        Log.e("TEST", body);
         PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
         textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
         textView.setMovementMethod(LinkMovementMethod.getInstance());

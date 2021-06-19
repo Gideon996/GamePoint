@@ -21,7 +21,7 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
     public static final String TAG = "SearchOnMicrosoft";
 
     private final static String STORE = "MCS";
-    private final static String URL = "https://www.microsoft.com/en-us/search/shop/games?q=";
+    private final static String URL = "https://www.microsoft.com/it-it/search/shop/games?q=";
 
     public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
 
@@ -58,6 +58,7 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
         for (int j = 0; j < placementItems.size(); j++) {
             Element game = placementItems.get(j);
             Element gameUrl = game.getElementsByTag("a").first();
+            String gameUrl1 = "https://www.microsoft.com" + gameUrl.attributes().get("href");
             Element titlediv = gameUrl.getElementsByClass("c-subheading-6").first();
             String title = titlediv.text();
             String verify = Normalizer.normalize(title, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
@@ -76,7 +77,7 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
                     imageURl = image.attributes().get("data-srcset"); //decodifica in automatico
                 }
 
-                GameSearchResult gameSearchResult = new GameSearchResult(title, imageURl, null, gameID, null, STORE, "N.A.");
+                GameSearchResult gameSearchResult = new GameSearchResult(title, imageURl, gameUrl1, gameID, null, STORE, "N.A.");
                 listOfGames.add(gameSearchResult);
             }
         }

@@ -110,7 +110,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         //Cercare su PSN
         SearchOnPSN searchOnPSN = new SearchOnPSN();
         searchOnPSN.delegate = this;
-        searchOnPSN.execute(name);
+        //searchOnPSN.execute(name);
 
         //cercare su Microsoft
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
