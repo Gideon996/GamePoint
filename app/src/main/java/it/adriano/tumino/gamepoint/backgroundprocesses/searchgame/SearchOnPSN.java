@@ -78,13 +78,14 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
                     String publisher = gameInfomation.optString("provider_name");
                     String releaseData = gameInfomation.optString("release_date");
                     String gameURL = gameInfomation.optString("url");
+                    String id = gameURL.split("-")[1];
 
                     String price = "N.A.";
                     if(gameInfomation.has("default_sku")){
                         price = gameInfomation.getJSONObject("default_sku").getString("display_price");
                     }
 
-                    GameSearchResult gameSearchResult = new GameSearchResult(titleGame, imageURL, gameURL, null, console, STORE, price);
+                    GameSearchResult gameSearchResult = new GameSearchResult(titleGame, imageURL, gameURL, id, console, STORE, price);
                     listOfGame.add(gameSearchResult);
                 }
             }

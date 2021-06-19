@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.backgroundprocesses.CatchGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromEShop;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromMCS;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromPSN;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromSteam;
 import it.adriano.tumino.gamepoint.data.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
@@ -53,7 +56,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         fragments[1] = new GalleryFragment();
         fragments[2] = new GameSpecificationsFragment();
         fragments[3] = new GameCommentsFragment();
-
     }
 
     private TaskRunner<Integer, String> game;
@@ -74,12 +76,14 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
                 ((CatchGameFromSteam) game).delegate = this;
                 break;
             case "MCS":
-                game = new CatchGame();
-                //((CatchGame) game).delegate = this;
+                game = new CatchGameFromMCS(gameSearchResult.getAppID());
+                logoName = "logo_steam.png";
+                ((CatchGameFromMCS) game).delegate = this;
                 break;
             case "PSN":
-                game = new CatchGame();
-                //((CatchGame) game).delegate = this;
+                game = new CatchGameFromPSN(gameSearchResult.getUrl());
+                logoName = "logo_steam.png";
+                ((CatchGameFromPSN) game).delegate = this;
                 break;
             case "ESHOP":
                 game = new CatchGameFromEShop(gameSearchResult.getUrl(), gameSearchResult.getPrice());
@@ -159,6 +163,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     public void processFinish(Game result) {
         //aggiorno l'interfaccia grafica
         if (result != null) {
+
             information.putParcelable("game", result);
             for (Fragment fragment : fragments) fragment.setArguments(information);
 

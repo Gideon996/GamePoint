@@ -19,8 +19,8 @@ public class CatchGameFromEShop extends TaskRunner<Integer, String> {
 
     private static final String BASE_URL = "https://www.nintendo.it";
 
-    private String finalUrl;
-    private Game game;
+    private final String finalUrl;
+    private final Game game;
 
     public AsyncResponse<Game> delegate = null;
 

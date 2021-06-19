@@ -1,31 +1,29 @@
 package it.adriano.tumino.gamepoint.ui.showgame;
 
-import android.content.Context;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatTextView;
+
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.Game;
@@ -60,8 +58,36 @@ public class DescriptionFragment extends Fragment {
             case "ESHOP":
                 eShopGame(view);
                 break;
+            case "PSN":
+                psnGame(view);
+                break;
+            case "MSC":
+                mscGame(view);
+                break;
         }
         return view;
+    }
+
+    private void mscGame(View view) {
+        LinearLayout linearLayout = view.findViewById(R.id.descriptionSteam);
+        linearLayout.setVisibility(View.VISIBLE);
+        TextView textView = view.findViewById(R.id.descriptionTextView);
+        String body = game.getDescription();
+        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
+        textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setLinksClickable(true);
+    }
+
+    private void psnGame(View view) {
+        LinearLayout linearLayout = view.findViewById(R.id.descriptionPSNLayout);
+        linearLayout.setVisibility(View.VISIBLE);
+        TextView textView = view.findViewById(R.id.descriptionPSNTextView);
+        String body = game.getDescription();
+        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
+        textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setLinksClickable(true);
     }
 
     private void steamGame(View view) {
@@ -75,7 +101,7 @@ public class DescriptionFragment extends Fragment {
         textView.setLinksClickable(true);
     }
 
-    private void eShopGame(View view){
+    private void eShopGame(View view) {
         LinearLayout linearLayout = view.findViewById(R.id.descriptionEshop);
         linearLayout.setVisibility(View.VISIBLE);
         TextView textView = view.findViewById(R.id.descriptionEshopTextView);

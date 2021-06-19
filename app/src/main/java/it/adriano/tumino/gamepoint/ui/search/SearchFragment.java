@@ -105,17 +105,17 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         //Cercare su Nintendo
         SearchOnEShop searchOnEShop = new SearchOnEShop();
         searchOnEShop.delegate = this;
-        searchOnEShop.execute(name);
+        //searchOnEShop.execute(name);
 
         //Cercare su PSN
         SearchOnPSN searchOnPSN = new SearchOnPSN();
         searchOnPSN.delegate = this;
-        //searchOnPSN.execute(name);
+        searchOnPSN.execute(name);
 
         //cercare su Microsoft
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
         searchOnMicrosoft.delegate = this;
-        //searchOnMicrosoft.execute(name);
+        searchOnMicrosoft.execute(name);
     }
 
     private void closeKeyboard() {
