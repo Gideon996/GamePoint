@@ -13,11 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -26,12 +24,14 @@ import com.squareup.picasso.Target;
 
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.data.Game;
+import it.adriano.tumino.gamepoint.data.storegame.Game;
 
 public class DescriptionFragment extends Fragment {
 
     private Bundle information;
     private String store;
+    //private GameOld gameOld;
+
     private Game game;
 
     public DescriptionFragment() {
@@ -44,6 +44,7 @@ public class DescriptionFragment extends Fragment {
         if (getArguments() != null) {
             information = getArguments();
             store = information.getString("store");
+            //gameOld = information.getParcelable("game");
             game = information.getParcelable("game");
         }
     }
@@ -51,62 +52,12 @@ public class DescriptionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_description, container, false);
-        Log.e("TEST", store);
-        switch (store.toUpperCase()) {
-            case "STEAM":
-                steamGame(view);
-                break;
-            case "ESHOP":
-                eShopGame(view);
-                break;
-            case "PSN":
-                psnGame(view);
-                break;
-            case "MCS":
-                mscGame(view);
-                break;
-        }
+        showGameDescription(view);
         return view;
     }
 
-    private void mscGame(View view) {
-        LinearLayout linearLayout = view.findViewById(R.id.descriptionSteam);
-        linearLayout.setVisibility(View.VISIBLE);
+    private void  showGameDescription(View view){
         TextView textView = view.findViewById(R.id.descriptionTextView);
-        String body = game.getDescription();
-        Log.e("TEST", body);
-        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
-        textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        textView.setLinksClickable(true);
-    }
-
-    private void psnGame(View view) {
-        LinearLayout linearLayout = view.findViewById(R.id.descriptionPSNLayout);
-        linearLayout.setVisibility(View.VISIBLE);
-        TextView textView = view.findViewById(R.id.descriptionPSNTextView);
-        String body = game.getDescription();
-        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
-        textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        textView.setLinksClickable(true);
-    }
-
-    private void steamGame(View view) {
-        LinearLayout linearLayout = view.findViewById(R.id.descriptionSteam);
-        linearLayout.setVisibility(View.VISIBLE);
-        TextView textView = view.findViewById(R.id.descriptionTextView);
-        String body = game.getDescription();
-        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
-        textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        textView.setLinksClickable(true);
-    }
-
-    private void eShopGame(View view) {
-        LinearLayout linearLayout = view.findViewById(R.id.descriptionEshop);
-        linearLayout.setVisibility(View.VISIBLE);
-        TextView textView = view.findViewById(R.id.descriptionEshopTextView);
         String body = game.getDescription();
         PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);
         textView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));

@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +29,11 @@ import java.io.IOException;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.backgroundprocesses.CatchGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromEShop;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromMCS;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromPSN;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromSteam;
-import it.adriano.tumino.gamepoint.data.Game;
+import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
@@ -47,7 +45,9 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     private ImageButton sharedButton;
     private final Fragment[] fragments = new Fragment[4];
     private String logoName;
+    private View view;
 
+    private TaskRunner<Integer, String> game;
     private final Bundle information = new Bundle();
 
 
@@ -57,8 +57,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         fragments[2] = new GameSpecificationsFragment();
         fragments[3] = new GameCommentsFragment();
     }
-
-    private TaskRunner<Integer, String> game;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,8 +93,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
                 break;
         }
     }
-
-    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -158,31 +154,24 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         });
     }
 
-
     @Override
     public void processFinish(Game result) {
         //aggiorno l'interfaccia grafica
         if (result != null) {
-
             information.putParcelable("game", result);
-            Log.e("TEST", result.getDescription());
             for (Fragment fragment : fragments) fragment.setArguments(information);
-
             setFragmentLayout(fragments[0]); //imposto il layout da visualizzare
-
             ImageView imageView = view.findViewById(R.id.gameHeaderImageView);
-
-            Picasso.get().load(result.getImage())
+            Picasso.get().load(result.getImageHeaderUrl())
                     .resize(imageView.getMaxWidth(), 700)
                     .centerInside()
                     .into(imageView);
-            ((TextView) view.findViewById(R.id.titleGameTextView)).setText(result.getName());
+            ((TextView) view.findViewById(R.id.titleGameTextView)).setText(result.getTitle());
             ((TextView) view.findViewById(R.id.priceGameTextView)).setText(result.getPrice());
-            ((TextView) view.findViewById(R.id.releaseDataTextView)).setText(result.getDate());
-
+            ((TextView) view.findViewById(R.id.releaseDataTextView)).setText(result.getReleaseData());
 
             sharedButton.setOnClickListener(v -> { //listener per la condivisione
-                shareButton(result.getImageURL(), result.getName());
+                shareButton(result.getImageHeaderUrl(), result.getTitle());
             });
         }
     }

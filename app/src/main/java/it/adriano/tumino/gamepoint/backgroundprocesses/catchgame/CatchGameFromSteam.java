@@ -6,18 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.Game;
-import it.adriano.tumino.gamepoint.data.GameShow;
+import it.adriano.tumino.gamepoint.data.storegame.Game;
+import it.adriano.tumino.gamepoint.data.storegame.SteamGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
@@ -27,14 +21,17 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
 
     private final String finalURL;
     private final String appID;
-    private Game game;
+    //private GameOld game;
+    private SteamGame game;
 
+    //public AsyncResponse<GameOld> delegate = null;
     public AsyncResponse<Game> delegate = null;
 
     public CatchGameFromSteam(String appID) {
         finalURL = URL_API + appID;
         this.appID = appID;
-        game = new Game();
+        //game = new GameOld();
+        game = new SteamGame();
     }
 
     @Override
@@ -53,7 +50,7 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
         }
 
         try {
-            game = jsonParser(jsonText);
+            jsonParser(jsonText);
         } catch (JSONException exception) {
             Log.e("S", exception.getMessage());
             return null;
@@ -62,11 +59,12 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
         return null;
     }
 
-    private Game jsonParser(String json) throws JSONException {
+    private SteamGame jsonParser(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json); //creo l'oggetto
         JSONObject result = jsonObject.getJSONObject(String.valueOf(appID)); //prendo il risultato
 
-        Game game = new Game();
+        //GameOld gameOld = new GameOld();
+        //SteamGame game = new SteamGame();
 
         if (!result.getBoolean("success")) {
             return null;
@@ -97,10 +95,10 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
 
         JSONObject data;
         if (result.has("data")) {
-
             data = result.getJSONObject("data");
             if (data.has("name")) name = data.getString("name"); //titolo del gioco
-            game.setName(name);
+            //gameOld.setName(name);
+            game.setTitle(name);
 
             if (data.has("is_free")) {
                 boolean isFree = data.getBoolean("is_free");
@@ -108,21 +106,26 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
                     price = data.getJSONObject("price_overview").getString("final_formatted"); //prezzo finale
                 }
             }
+            //gameOld.setPrice(price);
             game.setPrice(price);
 
             if (data.has("detailed_description"))
                 description = data.getString("detailed_description"); //Html.fromHtml(, Html.FROM_HTML_MODE_LEGACY).toString();
+            //gameOld.setDescription(description);
             game.setDescription(description);
 
             if (data.has("supported_languages"))
                 languages = data.getString("supported_languages"); //lingue del gioco
             game.setLanguages(languages);
+            //gameOld.setLanguages(languages);
 
             if (data.has("header_image")) image = data.getString("header_image"); //copertina
-            game.setImage(image);
+            game.setImageHeaderUrl(image);
+            //gameOld.setImage(image);
 
             if (data.has("website")) website = data.getString("website"); //immagine di supporto
             game.setWebsite(website);
+            //gameOld.setWebsite(website);
 
             if (data.has("pc_requirements")) {
                 JSONObject object = data.getJSONObject("pc_requirements");
@@ -131,30 +134,38 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
             }
             game.setMinimumRequirement(minimum.replace("<strong>Minimum:</strong><br>", ""));
             game.setRecommendedRequirement(recommended.replace("<strong>Recommended:</strong><br>", ""));
+            //gameOld.setMinimumRequirement(minimum.replace("<strong>Minimum:</strong><br>", ""));
+            //gameOld.setRecommendedRequirement(recommended.replace("<strong>Recommended:</strong><br>", ""));
 
             if (data.has("developers"))
                 developers = getValuesFromJSONArray(data.getJSONArray("developers"), "");
-
             game.setDevelopers(developers);
+            //gameOld.setDevelopers(developers);
+
             if (data.has("publishers"))
                 publishers = getValuesFromJSONArray(data.getJSONArray("publishers"), "");
             game.setPublishers(publishers);
+            //gameOld.setPublishers(publishers);
 
             if (data.has("metacritic"))
                 scoreMetacritic = data.getJSONObject("metacritic").getInt("score");
-            game.setScoreMetacritic(scoreMetacritic);
+            game.setScoreMetacritic("" + scoreMetacritic);
+            //gameOld.setScoreMetacritic(scoreMetacritic);
 
             if (data.has("categories"))
                 categories = getValuesFromJSONArray(data.getJSONArray("categories"), "description");
             game.setCategories(categories);
+            //gameOld.setCategories(categories);
 
             if (data.has("genres"))
                 genres = getValuesFromJSONArray(data.getJSONArray("genres"), "description");
             game.setGenres(genres);
+            //gameOld.setGenres(genres);
 
             if (data.has("screenshots"))
                 screenshots = getValuesFromJSONArray(data.getJSONArray("screenshots"), "path_full");
-            game.setScreenshots(screenshots);
+            game.setScreenshotsUrl(screenshots);
+            //gameOld.setScreenshots(screenshots);
 
 
             if (data.has("release_date")) {
@@ -164,8 +175,10 @@ public class CatchGameFromSteam extends TaskRunner<Integer, String> {
                     date = data.getJSONObject("release_date").getString("date");
                 }
             }
-            game.setDate(date);
+            game.setReleaseData(date);
+            //gameOld.setDate(date);
 
+            //return gameOld;
             return game;
         } else {
             return null;

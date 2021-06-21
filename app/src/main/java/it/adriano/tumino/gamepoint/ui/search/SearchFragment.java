@@ -100,17 +100,17 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         //Cercare su steam
         SearchOnSteam searchOnSteam = new SearchOnSteam();
         searchOnSteam.delegate = this;
-        //searchOnSteam.execute(name);
+        searchOnSteam.execute(name);
 
         //Cercare su Nintendo
         SearchOnEShop searchOnEShop = new SearchOnEShop();
         searchOnEShop.delegate = this;
-        //searchOnEShop.execute(name);
+        searchOnEShop.execute(name);
 
         //Cercare su PSN
         SearchOnPSN searchOnPSN = new SearchOnPSN();
         searchOnPSN.delegate = this;
-        //searchOnPSN.execute(name);
+        searchOnPSN.execute(name);
 
         //cercare su Microsoft
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();

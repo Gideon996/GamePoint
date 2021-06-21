@@ -11,19 +11,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.Game;
+import it.adriano.tumino.gamepoint.data.storegame.Game;
+import it.adriano.tumino.gamepoint.data.storegame.MicrosoftGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
 public class CatchGameFromMCS extends TaskRunner<Integer, String> {
 
     private final String finalURL;
-    private final Game game;
+    private final MicrosoftGame game;
 
     public AsyncResponse<Game> delegate = null;
 
     public CatchGameFromMCS(String url) {
         finalURL = url;
-        game = new Game();
+        game = new MicrosoftGame();
     }
 
     @Override
@@ -44,15 +45,15 @@ public class CatchGameFromMCS extends TaskRunner<Integer, String> {
         Elements body = document.select("#pdp");
         Elements image = body.select(".pi-product-image");
         String imageUrl = image.select("img").get(0).attributes().get("src");
-        game.setImage(imageUrl);
+        game.setImageHeaderUrl(imageUrl);
 
         Elements titleGroup = body.select("#productTitle");
         String title = titleGroup.text();
-        game.setName(title);
+        game.setTitle(title);
 
         Elements maturityRating = body.select("#maturityRatings");
         String pegi = maturityRating.select("a").text();
-        game.setRecommendedRequirement(pegi);
+        game.setPegi(pegi);
 
         Elements productPrice = body.select("#productPrice");
         String price = productPrice.select("span").get(0).text();
@@ -61,7 +62,7 @@ public class CatchGameFromMCS extends TaskRunner<Integer, String> {
         Elements overviewTab = body.select("#pivot-OverviewTab"); //contiene la descrizione
         Elements available = overviewTab.select("#AvailableOnModule");
         String console = available.select("a").text();
-        //System.out.println(console);
+        game.setConsole(console);
 
         Elements capabilities = overviewTab.select("#CapabilitiesModule");
         Elements categoriesElements = capabilities.select("a");
@@ -84,7 +85,7 @@ public class CatchGameFromMCS extends TaskRunner<Integer, String> {
             s = s.replaceAll("//", "https://");
             schreenshots.add(s);
         }
-        game.setScreenshots(schreenshots);
+        game.setScreenshotsUrl(schreenshots);
 
         Elements information = overviewTab.select("#information");
         Elements additionalInformation = information.select(".m-additional-information");
@@ -99,7 +100,7 @@ public class CatchGameFromMCS extends TaskRunner<Integer, String> {
             string += "<p>" + span.text() + "</p>";
             metadata.add(string);
         }
-        game.setGenres(metadata);
+        game.setMetadata(metadata);
 
         Elements systemRequirement = body.select("#system-requirements");
         Elements requirement = systemRequirement.select(".c-table");
@@ -119,7 +120,7 @@ public class CatchGameFromMCS extends TaskRunner<Integer, String> {
             req += "<h3>" + captionText + "</h3>" + corpo;
         }
         req += "</section>";
-        game.setMinimumRequirement(req);
+        game.setSystemRequirement(req);
 
     }
 
