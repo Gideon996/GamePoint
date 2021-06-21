@@ -15,32 +15,39 @@ import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchGameFromMCS extends TaskRunner<Integer, String> {
+public class CatchGameFromMCS extends TaskRunner<Void, Game> {
+    private static final String TAG = "CatchGameFromMCS";
 
     private final String finalURL;
-    private final MicrosoftGame game;
 
     public AsyncResponse<Game> delegate = null;
 
     public CatchGameFromMCS(String url) {
         finalURL = url;
-        game = new MicrosoftGame();
     }
 
     @Override
-    public String doInBackground(Integer... i) {
+    public Game doInBackground(Void... i) {
         try {
-            getGame();
+            return getGame();
         } catch (IOException exception) {
             Log.e("TEST", exception.getMessage());
+            return null;
         }
-        return null;
     }
 
-    private void getGame() throws IOException {
-        Document document = Jsoup.connect(finalURL)
-                .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36")
-                .get();
+    private MicrosoftGame getGame() throws IOException {
+        Document document;
+        MicrosoftGame game = new MicrosoftGame();
+
+        try {
+            document = Jsoup.connect(finalURL)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36") //per visualizzare tutto correttamente
+                    .get();
+        } catch (IOException exception) {
+            Log.e(TAG, exception.getMessage());
+            return null;
+        }
 
         Elements body = document.select("#pdp");
         Elements image = body.select(".pi-product-image");
@@ -104,28 +111,29 @@ public class CatchGameFromMCS extends TaskRunner<Integer, String> {
 
         Elements systemRequirement = body.select("#system-requirements");
         Elements requirement = systemRequirement.select(".c-table");
-        String req = "<section>";
+        StringBuilder req = new StringBuilder("<section>");
         for (Element element : requirement) {
             Element table = element.select("table").get(0);
             Element caption = table.select("caption").get(0);
             String captionText = caption.text();
             Elements trs = table.select("tr");
-            String corpo = "";
+            StringBuilder corpo = new StringBuilder();
             for (Element tr : trs) {
                 Elements th = tr.select("th");
-                corpo += "<h4>" + th.text() + "</h4>";
+                corpo.append("<h4>").append(th.text()).append("</h4>");
                 Elements td = tr.select("td");
-                corpo += "<p>" + td.text() + "</p>";
+                corpo.append("<p>").append(td.text()).append("</p>");
             }
-            req += "<h3>" + captionText + "</h3>" + corpo;
+            req.append("<h3>").append(captionText).append("</h3>").append(corpo);
         }
-        req += "</section>";
-        game.setSystemRequirement(req);
+        req.append("</section>");
+        game.setSystemRequirement(req.toString());
 
+        return game;
     }
 
     @Override
-    public void onPostExecute(String o) {
-        delegate.processFinish(game);
+    public void onPostExecute(Game output) {
+        delegate.processFinish(output);
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromPS
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromSteam;
 import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.storegame.NintendoGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
@@ -47,7 +49,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     private String logoName;
     private View view;
 
-    private TaskRunner<Integer, String> game;
+    private TaskRunner<Void, Game> game;
     private final Bundle information = new Bundle();
 
 
@@ -88,9 +90,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
                 logoName = "logo_eshop2.png";
                 ((CatchGameFromEShop) game).delegate = this;
                 break;
-            default:
-                //nessuno di questo
-                break;
         }
     }
 
@@ -99,7 +98,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         view = inflater.inflate(R.layout.fragment_game_result, container, false);
 
         //if (gameSearchResult == null) Navigation.findNavController(view).navigate(R.id.no_game_action); //doesn't works, idk why
-        game.execute(0);
+        game.execute();
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout); //setto le impostazioni per il tabLayout
         tabLayout.addOnTabSelectedListener(this); //imposto il listener

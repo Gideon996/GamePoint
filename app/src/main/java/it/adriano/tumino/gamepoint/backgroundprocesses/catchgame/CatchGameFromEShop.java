@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.backgroundprocesses.catchgame;
 
+import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,35 +15,42 @@ import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.storegame.NintendoGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchGameFromEShop extends TaskRunner<Integer, String> {
+public class CatchGameFromEShop extends TaskRunner<Void, Game> {
+    private static final String TAG = "CatchGameFromEShop";
 
     private static final String BASE_URL = "https://www.nintendo.it";
 
-    private final String finalUrl;
-    private final NintendoGame game;
+    private final String finalURL;
+    private final String price;
 
     public AsyncResponse<Game> delegate = null;
 
     public CatchGameFromEShop(String url, String price) {
-        finalUrl = BASE_URL + url;
-        game = new NintendoGame();
-        game.setPrice(price + "€");
+        finalURL = BASE_URL + url;
+        this.price = price;
     }
 
     @Override
-    public String doInBackground(Integer... integers) {
+    public Game doInBackground(Void... integers) {
+        return getGame();
+    }
 
+    private NintendoGame getGame() {
         Document document;
+
+        NintendoGame game = new NintendoGame();
+        game.setPrice(price);
+
         try {
-            document = Jsoup.connect(finalUrl)
+            document = Jsoup.connect(finalURL)
                     .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36") //per visualizzare tutto correttamente
                     .get();
         } catch (IOException exception) {
+            Log.e(TAG, exception.getMessage());
             return null;
         }
 
         Elements content = document.getElementsByClass("tab-content");
-        //Banner information
         Elements header = content.select(".gamepage-banner");
 
         Elements video = header.select("iframe");
@@ -144,12 +153,12 @@ public class CatchGameFromEShop extends TaskRunner<Integer, String> {
         }
         game.setFeatureSheets(featureSheets);
 
-        return null;
+        return game;
     }
 
     @Override
-    public void onPostExecute(String o) {
-        delegate.processFinish(game);
+    public void onPostExecute(Game o) {
+        delegate.processFinish(o);
     }
 
 }
