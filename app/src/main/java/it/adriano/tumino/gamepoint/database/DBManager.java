@@ -23,13 +23,14 @@ public class DBManager {
         dbHelper = new DBHelper(context, tableName);
     }
 
-    public void save(String title, String imageUrl, String store, String url) {
+    public void save(String title, String imageUrl, String store, String url, String AppID) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseValues.TITLE.getName(), title);
         contentValues.put(DataBaseValues.IMAGE_URL.getName(), imageUrl);
         contentValues.put(DataBaseValues.STORE.getName(), store);
         contentValues.put(DataBaseValues.URL.getName(), url);
+        contentValues.put(DataBaseValues.APPID.getName(), AppID);
 
         try {
             database.insert(tableName, null, contentValues);
@@ -62,9 +63,20 @@ public class DBManager {
         return cursor;
     }
 
+    public boolean deleteFromNameAndStore(String name, String store){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "select * from " + tableName + " where " + DataBaseValues.TITLE.getName() + " = '" + name + "'"
+                + " AND " + DataBaseValues.STORE.getName() + " = '" + store + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        long id = cursor.getLong(cursor.getColumnIndex(DataBaseValues.ID.getName()));
+        return delete(id);
+    }
+
     public String getUrlFromName(String name) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "select * from " + tableName + " where " + DataBaseValues.TITLE.getName() + " = '" + name + "'";
+        String query = "select * from " + tableName + " where " + DataBaseValues.TITLE.getName() + " = '" + name + "'" + " AND "
+                + DataBaseValues.STORE.getName() + " = '" + "";
         Cursor cur = db.rawQuery(query, null);
         cur.moveToFirst();
         return cur.getString(cur.getColumnIndex(DataBaseValues.URL.getName()));

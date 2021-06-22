@@ -25,8 +25,8 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.GalleryHolder;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryHolder> {
 
-    private List<String> list;
-    private Context context;
+    private final List<String> list;
+    private final Context context;
 
     public GalleryAdapter(Context context, ArrayList<String> list) {
         this.context = context;
@@ -44,10 +44,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryHolder> {
     public void onBindViewHolder(@NonNull GalleryHolder holder, int position) { //imposto la vista e setto il click con il dialogo
         String url = list.get(position);
         Glide.with(context).load(url).apply(new RequestOptions().override(300, 300)).centerCrop().into(holder.getImageView());
-        holder.getLayout().setOnClickListener(v -> {
-            //ViewPager2
-            openImageDialog(position);
-        });
+        holder.getLayout().setOnClickListener(v -> openImageDialog(position));
     }
 
     @Override

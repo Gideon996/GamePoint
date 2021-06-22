@@ -15,28 +15,23 @@ import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchGameFromMCS extends TaskRunner<Void, Game> {
+public class CatchMicrosoftGame extends TaskRunner<Void, Game> {
     private static final String TAG = "CatchGameFromMCS";
 
     private final String finalURL;
 
     public AsyncResponse<Game> delegate = null;
 
-    public CatchGameFromMCS(String url) {
+    public CatchMicrosoftGame(String url) {
         finalURL = url;
     }
 
     @Override
     public Game doInBackground(Void... i) {
-        try {
-            return getGame();
-        } catch (IOException exception) {
-            Log.e("TEST", exception.getMessage());
-            return null;
-        }
+        return getGame();
     }
 
-    private MicrosoftGame getGame() throws IOException {
+    private MicrosoftGame getGame() {
         Document document;
         MicrosoftGame game = new MicrosoftGame();
 
@@ -105,6 +100,7 @@ public class CatchGameFromMCS extends TaskRunner<Void, Game> {
             string += "<h4>" + h4.text() + "</h4>";
             Elements span = div.select("span");
             string += "<p>" + span.text() + "</p>";
+            if (h4.text().equals("Data di uscita")) game.setReleaseData(span.text());
             metadata.add(string);
         }
         game.setMetadata(metadata);

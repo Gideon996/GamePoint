@@ -10,6 +10,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import it.adriano.tumino.gamepoint.database.DBManager;
+import it.adriano.tumino.gamepoint.database.DataBaseValues;
 import it.adriano.tumino.gamepoint.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        createFavoriteDatabase();
+        createLastResearchDatabase();
+        //this.deleteDatabase(DataBaseValues.FAVORITE_TABLE.getName());
+        //this.deleteDatabase(DataBaseValues.ULITME_RICERCHE.getName());
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -31,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    private void createFavoriteDatabase(){
+        DBManager manager = new DBManager(this, DataBaseValues.FAVORITE_TABLE.getName());
+    }
+
+    private void createLastResearchDatabase(){
+        DBManager manager = new DBManager(this, DataBaseValues.ULITME_RICERCHE.getName());
     }
 
 }

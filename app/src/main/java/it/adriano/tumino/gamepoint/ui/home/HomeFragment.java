@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
         favoriteGames[9] = new FavoriteGames("Binding of isaac", "https://store-images.s-microsoft.com/image/apps.58856.69039762475408619.1f9f3938-799b-4ad8-a607-676e85baba27.95ed1dc8-4ddf-43fb-8a87-f54c81f96879", "https://store.steampowered.com/app/250900/The_Binding_of_Isaac_Rebirth/", "Steam");
 
         for(FavoriteGames favorite : favoriteGames){
-            dbManager.save(favorite.getTitle(), favorite.getImageURL(), favorite.getStore(), favorite.getUrl());
+            dbManager.save(favorite.getTitle(), favorite.getImageURL(), favorite.getStore(), favorite.getUrl(), null);
         }
     }
 
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
         favoriteGames[9] = new FavoriteGames("Binding of isaac", "https://store-images.s-microsoft.com/image/apps.58856.69039762475408619.1f9f3938-799b-4ad8-a607-676e85baba27.95ed1dc8-4ddf-43fb-8a87-f54c81f96879", "https://store.steampowered.com/app/250900/The_Binding_of_Isaac_Rebirth/", "Steam");
 
         for(FavoriteGames favorite : favoriteGames){
-            dbManager.save(favorite.getTitle(), favorite.getImageURL(), favorite.getStore(), favorite.getUrl());
+            dbManager.save(favorite.getTitle(), favorite.getImageURL(), favorite.getStore(), favorite.getUrl(), null);
         }
     }
 }

@@ -15,23 +15,17 @@ import it.adriano.tumino.gamepoint.data.storegame.Game;
 
 
 public class GalleryFragment extends Fragment {
+    private Bundle information;
+    private Game game;
 
     public GalleryFragment() {
-        // Required empty public constructor
     }
-
-    private Bundle information;
-    private String store;
-    private Game game;
-    //private GameOld gameOld;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             information = getArguments();
-            store = information.getString("store");
-            //gameOld = information.getParcelable("game");
             game = information.getParcelable("game");
         }
     }
@@ -42,7 +36,6 @@ public class GalleryFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.galleryListView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
-        //recyclerView.setAdapter(new GalleryAdapter(getContext(), gameOld.getScreenshots()));
         recyclerView.setAdapter(new GalleryAdapter(getContext(), game.getScreenshotsUrl()));
         return view;
     }

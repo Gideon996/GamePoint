@@ -6,6 +6,7 @@ public enum DataBaseValues {
     IMAGE_URL("Image_Url", "TEXT"),
     STORE("Store", "TEXT"),
     URL("URL", "TEXT"),
+    APPID("APPID", "TEXT"),
     FAVORITE_TABLE("FavoriteTable", null),
     ULITME_RICERCHE("UltimeRicercheTable", null);
 
@@ -32,6 +33,7 @@ public enum DataBaseValues {
         query += DataBaseValues.TITLE.getName() + " " + DataBaseValues.TITLE.getType() + ",";
         query += DataBaseValues.IMAGE_URL.getName() + " " + DataBaseValues.IMAGE_URL.getType() + ",";
         query += DataBaseValues.STORE.getName() + " " + DataBaseValues.STORE.getType() + ",";
+        query += DataBaseValues.APPID.getName() + " " + DataBaseValues.APPID.getType() + ",";
         query += DataBaseValues.URL.getName() + " " + DataBaseValues.URL.getType() + ")";
         return query;
     }
@@ -43,6 +45,7 @@ public enum DataBaseValues {
         query += DataBaseValues.TITLE.getName() + " " + DataBaseValues.TITLE.getType() + ",";
         query += DataBaseValues.IMAGE_URL.getName() + " " + DataBaseValues.IMAGE_URL.getType() + ",";
         query += DataBaseValues.STORE.getName() + " " + DataBaseValues.STORE.getType() + ",";
+        query += DataBaseValues.APPID.getName() + " " + DataBaseValues.APPID.getType() + ",";
         query += DataBaseValues.URL.getName() + " " + DataBaseValues.URL.getType() + ")";
         return query;
     }

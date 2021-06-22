@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="gameClicked"
+            type="it.adriano.tumino.gamepoint.adapter.recyclerview.ClickItemList" />
 
         <variable
             name="lastGames"
@@ -10,11 +13,12 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/newsRowLayout"
+        android:id="@+id/lastGameLayout"
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_news">
+        android:padding="@dimen/padding_news"
+        android:onClick="@{() -> gameClicked.itemClicked(lastGames)}">
 
         <ImageView
             android:id="@+id/lastGameCoverSearchedImageView"

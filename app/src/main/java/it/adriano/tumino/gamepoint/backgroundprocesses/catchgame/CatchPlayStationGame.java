@@ -15,14 +15,14 @@ import it.adriano.tumino.gamepoint.data.storegame.PlayStationGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
-public class CatchGameFromPSN extends TaskRunner<Void, Game> {
+public class CatchPlayStationGame extends TaskRunner<Void, Game> {
     public static final String TAG = "CatchGameFromPSN";
 
     private final String finalURL;
 
     public AsyncResponse<Game> delegate = null;
 
-    public CatchGameFromPSN(String gameUrl) {
+    public CatchPlayStationGame(String gameUrl) {
         finalURL = gameUrl;
     }
 

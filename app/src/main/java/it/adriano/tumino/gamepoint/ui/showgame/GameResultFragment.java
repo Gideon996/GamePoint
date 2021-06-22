@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
@@ -27,33 +26,39 @@ import com.squareup.picasso.Target;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromEShop;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromMCS;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromPSN;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchGameFromSteam;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchNintendoGame;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchMicrosoftGame;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchPlayStationGame;
+import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchSteamGame;
 import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
-import it.adriano.tumino.gamepoint.data.storegame.NintendoGame;
+import it.adriano.tumino.gamepoint.databinding.FragmentGameResultBinding;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class GameResultFragment extends Fragment implements AsyncResponse<Game>, TabLayout.OnTabSelectedListener {
-    private GameSearchResult gameSearchResult;
-    private static final String BASE_TEXT = "Garda che bel gioco ho trovato: ";
+    public static final String TAG = "GameResultFragment";
+
+    private static final String BASE_TEXT = "Guarda che bel gioco ho trovato: ";
 
     private ImageButton sharedButton;
+    private ImageButton favoriteButton;
     private final Fragment[] fragments = new Fragment[4];
     private String logoName;
-    private View view;
+    private GameSearchResult gameSearchResult;
+
+    private FragmentGameResultBinding binding;
 
     private TaskRunner<Void, Game> game;
     private final Bundle information = new Bundle();
 
 
     public GameResultFragment() {
+        Log.i(TAG, "Inizializzazione dei fragments");
         fragments[0] = new DescriptionFragment();
         fragments[1] = new GalleryFragment();
         fragments[2] = new GameSpecificationsFragment();
@@ -66,44 +71,46 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         if (getArguments() != null && getArguments().containsKey("game"))
             gameSearchResult = getArguments().getParcelable("game");
 
+        Log.i(TAG, "Prelevate le informazioni per ottenere le informazioni");
         information.putString("store", gameSearchResult.getStore());
 
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(gameSearchResult.getTitle().toUpperCase()); //Setto il titolo del fragment
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(gameSearchResult.getTitle().toUpperCase()); //Setto il titolo del fragment
+        Log.i(TAG, "Inizializzo il cathcer di" + gameSearchResult.getStore());
         switch (gameSearchResult.getStore()) {
             case "STEAM":
-                game = new CatchGameFromSteam(gameSearchResult.getAppID());
+                game = new CatchSteamGame(gameSearchResult.getAppID());
                 logoName = "logo_steam.png";
-                ((CatchGameFromSteam) game).delegate = this;
+                ((CatchSteamGame) game).delegate = this;
                 break;
             case "MCS":
-                game = new CatchGameFromMCS(gameSearchResult.getUrl());
+                game = new CatchMicrosoftGame(gameSearchResult.getUrl());
                 logoName = "logo_steam.png";
-                ((CatchGameFromMCS) game).delegate = this;
+                ((CatchMicrosoftGame) game).delegate = this;
                 break;
             case "PSN":
-                game = new CatchGameFromPSN(gameSearchResult.getUrl());
+                game = new CatchPlayStationGame(gameSearchResult.getUrl());
                 logoName = "logo_steam.png";
-                ((CatchGameFromPSN) game).delegate = this;
+                ((CatchPlayStationGame) game).delegate = this;
                 break;
             case "ESHOP":
-                game = new CatchGameFromEShop(gameSearchResult.getUrl(), gameSearchResult.getPrice());
+                game = new CatchNintendoGame(gameSearchResult.getUrl(), gameSearchResult.getPrice());
                 logoName = "logo_eshop2.png";
-                ((CatchGameFromEShop) game).delegate = this;
+                ((CatchNintendoGame) game).delegate = this;
                 break;
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_game_result, container, false);
-
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentGameResultBinding.inflate(inflater, container, false);
         //if (gameSearchResult == null) Navigation.findNavController(view).navigate(R.id.no_game_action); //doesn't works, idk why
+        Log.i(TAG, "Inizio il processo di background");
         game.execute();
 
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout); //setto le impostazioni per il tabLayout
+        TabLayout tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
         tabLayout.addOnTabSelectedListener(this); //imposto il listener
 
-        return view;
+        return binding.getRoot();
     }
 
     private void setFragmentLayout(Fragment fragment) { //imposto che cosa mostrare nel tab layout
@@ -119,6 +126,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.i(TAG, "Inizio a riempire l'header layout");
         ImageView logo = view.findViewById(R.id.storeIconView);
         Drawable d;
         try {
@@ -129,6 +137,25 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         logo.setImageDrawable(d);
 
         sharedButton = view.findViewById(R.id.shareButton); //setto il bottone condividi
+        favoriteButton = view.findViewById(R.id.favoriteButton);
+    }
+
+    @Override
+    public void processFinish(Game result) {
+        if (result != null) {
+            binding.setGame(result);
+            information.putParcelable("game", result);
+            for (Fragment fragment : fragments) fragment.setArguments(information);
+            setFragmentLayout(fragments[0]); //imposto il layout da visualizzare
+
+            sharedButton.setOnClickListener(v -> shareButton(result.getImageHeaderUrl(), result.getTitle()));
+
+            favoriteButton.setOnClickListener(v -> favoriteRoutines());
+        }
+    }
+
+    private void favoriteRoutines() {
+
     }
 
     private void shareButton(String imageUrl, String text) {
@@ -145,34 +172,13 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
 
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) { //Nel caso non riesco a prelevare l'immagine
+                Log.e(TAG, "Impossibile prelevare l'immagine");
             }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) { //per prelevare l'immagine
             }
         });
-    }
-
-    @Override
-    public void processFinish(Game result) {
-        //aggiorno l'interfaccia grafica
-        if (result != null) {
-            information.putParcelable("game", result);
-            for (Fragment fragment : fragments) fragment.setArguments(information);
-            setFragmentLayout(fragments[0]); //imposto il layout da visualizzare
-            ImageView imageView = view.findViewById(R.id.gameHeaderImageView);
-            Picasso.get().load(result.getImageHeaderUrl())
-                    .resize(imageView.getMaxWidth(), 700)
-                    .centerInside()
-                    .into(imageView);
-            ((TextView) view.findViewById(R.id.titleGameTextView)).setText(result.getTitle());
-            ((TextView) view.findViewById(R.id.priceGameTextView)).setText(result.getPrice());
-            ((TextView) view.findViewById(R.id.releaseDataTextView)).setText(result.getReleaseData());
-
-            sharedButton.setOnClickListener(v -> { //listener per la condivisione
-                shareButton(result.getImageHeaderUrl(), result.getTitle());
-            });
-        }
     }
 
     @Override

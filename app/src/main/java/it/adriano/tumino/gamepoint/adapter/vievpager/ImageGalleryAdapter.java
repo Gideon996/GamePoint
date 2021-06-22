@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +13,12 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.adapter.recyclerview.GalleryAdapter;
 import it.adriano.tumino.gamepoint.holder.viewpager.ImageGalleryHolder;
 
 public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder> {
 
-    private List<String> list;
-    private Context context;
+    private final List<String> list;
+    private final Context context;
 
     public ImageGalleryAdapter(List<String> list, Context context) { //Costruttore per la viewPager2
         this.list = list;
@@ -36,14 +34,13 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder
 
     @Override
     public void onBindViewHolder(ImageGalleryHolder holder, int position) { //Lunghezza infinita e mostro l'img
-        position = position % list.size();
         String image = list.get(position);
         Glide.with(context).load(image).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return Integer.MAX_VALUE;
+        return list.size();
     }
 
 }

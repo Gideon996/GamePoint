@@ -15,7 +15,7 @@ import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.storegame.NintendoGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchGameFromEShop extends TaskRunner<Void, Game> {
+public class CatchNintendoGame extends TaskRunner<Void, Game> {
     private static final String TAG = "CatchGameFromEShop";
 
     private static final String BASE_URL = "https://www.nintendo.it";
@@ -25,7 +25,7 @@ public class CatchGameFromEShop extends TaskRunner<Void, Game> {
 
     public AsyncResponse<Game> delegate = null;
 
-    public CatchGameFromEShop(String url, String price) {
+    public CatchNintendoGame(String url, String price) {
         finalURL = BASE_URL + url;
         this.price = price;
     }

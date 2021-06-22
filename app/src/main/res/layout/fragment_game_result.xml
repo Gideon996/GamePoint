@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="game"
+            type="it.adriano.tumino.gamepoint.data.storegame.Game" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -34,7 +36,9 @@
                     android:layout_centerInParent="true"
                     android:cropToPadding="false"
                     android:scaleType="fitXY"
-                    tools:src="@tools:sample/avatars" />
+                    tools:src="@tools:sample/avatars"
+                    imageHeaderResult="@{game.imageHeaderUrl}"
+                    />
 
                 <LinearLayout
                     android:layout_width="70dp"
@@ -69,10 +73,11 @@
                 android:id="@+id/titleGameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="Full Metal Alchemist: Brotherhood"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="Full Metal Alchemist: Brotherhood"
+                android:text="@{game.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -98,7 +103,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center_vertical"
-                    android:text="12.99€"
+                    android:hint="12.99€"
+                    android:text="@{game.price}"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -109,9 +115,9 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="03 Ottobre 1911"
+                    android:hint="03 Ottobre 1911"
+                    android:text="@{game.releaseData}"
                     android:textColor="@color/white" />
-
             </LinearLayout>
 
 

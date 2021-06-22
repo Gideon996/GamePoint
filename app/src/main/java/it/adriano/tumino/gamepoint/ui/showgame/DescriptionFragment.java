@@ -9,9 +9,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 
+import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +27,12 @@ import com.squareup.picasso.Target;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.storegame.Game;
+import it.adriano.tumino.gamepoint.databinding.FragmentDescriptionBinding;
 
 public class DescriptionFragment extends Fragment {
 
     private Bundle information;
-    private String store;
-    //private GameOld gameOld;
+    private FragmentDescriptionBinding binding;
 
     private Game game;
 
@@ -43,20 +45,19 @@ public class DescriptionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             information = getArguments();
-            store = information.getString("store");
-            //gameOld = information.getParcelable("game");
             game = information.getParcelable("game");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_description, container, false);
+        binding = FragmentDescriptionBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         showGameDescription(view);
         return view;
     }
 
-    private void  showGameDescription(View view){
+    private void showGameDescription(View view) {
         TextView textView = view.findViewById(R.id.descriptionTextView);
         String body = game.getDescription();
         PicassoImageGetter picassoImageGetter = new PicassoImageGetter(textView);

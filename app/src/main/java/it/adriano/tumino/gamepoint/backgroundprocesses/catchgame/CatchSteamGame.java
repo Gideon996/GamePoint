@@ -15,7 +15,7 @@ import it.adriano.tumino.gamepoint.data.storegame.SteamGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
-public class CatchGameFromSteam extends TaskRunner<Void, Game> {
+public class CatchSteamGame extends TaskRunner<Void, Game> {
     public static final String TAG = "CatchGameFromSteam";
 
     private static final String URL_API = "https://store.steampowered.com/api/appdetails?appids=";
@@ -25,7 +25,7 @@ public class CatchGameFromSteam extends TaskRunner<Void, Game> {
 
     public AsyncResponse<Game> delegate = null;
 
-    public CatchGameFromSteam(String appID) {
+    public CatchSteamGame(String appID) {
         finalURL = URL_API + appID;
         this.appID = appID;
     }
@@ -176,6 +176,14 @@ public class CatchGameFromSteam extends TaskRunner<Void, Game> {
             }
         }
         return list;
+    }
+
+    private String normalizeDate(){
+        //mese giorno, Anno -> Nov 5, 2015
+        //anno-mese-giornoTorario -> 2020-11-13T00:00:00Z
+        //giorno/mese/anno
+
+        return null;
     }
 
     @Override

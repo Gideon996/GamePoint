@@ -17,13 +17,15 @@ import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.database.DBManager;
+import it.adriano.tumino.gamepoint.database.DataBaseValues;
 import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
 public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> implements ClickItemList {
     public static final String TAG = "SearchGamesAdapter";
-    private ArrayList<GameSearchResult> searchedGames;
-    private View view;
+    private final ArrayList<GameSearchResult> searchedGames;
+    private final View view;
 
     public SearchedGamesAdapter(ArrayList<GameSearchResult> searchedGames, View view) {
         Log.i(TAG, "Generazione Search Games Adapter");
@@ -60,5 +62,9 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
 
         bundle.putParcelable("game", gameSearchResult);
         Navigation.findNavController(view).navigate(R.id.select_action, bundle);
+
+        DBManager dbManager = new DBManager(view.getContext(), DataBaseValues.ULITME_RICERCHE.getName());
+        notifyDataSetChanged();
+        dbManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
     }
 }

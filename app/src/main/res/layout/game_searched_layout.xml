@@ -11,7 +11,7 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/newsRowLayout"
+        android:id="@+id/lastGameLayout"
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:orientation="horizontal"
