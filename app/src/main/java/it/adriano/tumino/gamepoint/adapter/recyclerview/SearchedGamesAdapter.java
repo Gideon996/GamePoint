@@ -64,7 +64,7 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
         Navigation.findNavController(view).navigate(R.id.select_action, bundle);
 
         DBManager dbManager = new DBManager(view.getContext(), DataBaseValues.ULITME_RICERCHE.getName());
+        if(!dbManager.checkIfElementsIsOnDataBase(gameSearchResult.getTitle(), gameSearchResult.getStore())) dbManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
         notifyDataSetChanged();
-        dbManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
     }
 }

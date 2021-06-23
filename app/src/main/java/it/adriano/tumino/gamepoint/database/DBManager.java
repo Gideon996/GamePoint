@@ -95,8 +95,9 @@ public class DBManager {
                 String imageUrl = cursor.getString(cursor.getColumnIndex(DataBaseValues.IMAGE_URL.getName()));
                 String gameUrl = cursor.getString(cursor.getColumnIndex(DataBaseValues.URL.getName()));
                 String store = cursor.getString(cursor.getColumnIndex(DataBaseValues.STORE.getName()));
+                String appID = cursor.getString(cursor.getColumnIndex(DataBaseValues.APPID.getName()));
 
-                GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, null, null, store, "");
+                GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, appID, null, store, "");
                 list.add(gameSearchResult);
             }
         }

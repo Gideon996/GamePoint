@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
             nessunElemento.setVisibility(View.VISIBLE);
         } else {
             nessunElemento.setVisibility(View.GONE);
-            FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(favoriteGames);
+            FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(favoriteGames, getChildFragmentManager());
             recyclerView.setAdapter(favoriteGamesAdapter);
         }
         homeViewModel.setRecyclerView(recyclerView);

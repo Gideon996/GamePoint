@@ -30,11 +30,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.adapter.recyclerview.FavoriteGamesAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchNintendoGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchMicrosoftGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchPlayStationGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchSteamGame;
+import it.adriano.tumino.gamepoint.data.FavoriteGames;
 import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.database.DBManager;
@@ -61,6 +63,8 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     private TaskRunner<Void, Game> game;
     private final Bundle information = new Bundle();
 
+    private FavoriteGamesAdapter adapter = null;
+
 
     public GameResultFragment() {
         Log.i(TAG, "Inizializzazione dei fragments");
@@ -68,6 +72,16 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         fragments[1] = new GalleryFragment();
         fragments[2] = new GameSpecificationsFragment();
         fragments[3] = new GameCommentsFragment();
+    }
+
+    public GameResultFragment(FavoriteGamesAdapter adapter) {
+        Log.i(TAG, "Inizializzazione dei fragments e configurazione dell'adapter");
+        fragments[0] = new DescriptionFragment();
+        fragments[1] = new GalleryFragment();
+        fragments[2] = new GameSpecificationsFragment();
+        fragments[3] = new GameCommentsFragment();
+
+        this.adapter = adapter;
     }
 
     @Override
@@ -166,21 +180,46 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     }
 
     private void favoriteRoutines() {
-        //fare il controllo se è tra i preferiti o meno
-        //si allora tolgo il cuore e lo cancello dal db
-        //no lo aggiungo al db
         if (presenteNelDB) {
             favoriteDBManager.deleteFromNameAndStore(gameSearchResult.getTitle(), gameSearchResult.getStore());
+            if(adapter != null) adapter.removeFavoriteGame(gameSearchResult);
             Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.BLACK);
             presenteNelDB = false;
         } else {
             favoriteDBManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
+            if(adapter != null) adapter.addFavoriteGame(gameSearchResult);
             Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             presenteNelDB = true;
         }
 
+        /*if (adapter != null) {
+            if (presenteNelDB) {
+
+                adapter.removeFavoriteGame(this.getContext(), gameSearchResult);
+                Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
+                favoriteButton.setColorFilter(Color.BLACK);
+                presenteNelDB = false;
+            } else {
+                adapter.addFavoriteGame(this.getContext(), gameSearchResult);
+                Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
+                favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
+                presenteNelDB = true;
+            }
+        } else {
+            if (presenteNelDB) {
+                favoriteDBManager.deleteFromNameAndStore(gameSearchResult.getTitle(), gameSearchResult.getStore());
+                Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
+                favoriteButton.setColorFilter(Color.BLACK);
+                presenteNelDB = false;
+            } else {
+                favoriteDBManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
+                Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
+                favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
+                presenteNelDB = true;
+            }
+        }*/
     }
 
     private void shareButton(String imageUrl, String text) {

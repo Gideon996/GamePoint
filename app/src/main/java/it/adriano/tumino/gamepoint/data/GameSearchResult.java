@@ -3,6 +3,8 @@ package it.adriano.tumino.gamepoint.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 public class GameSearchResult extends Information implements Parcelable {
     private String appID;
     private String piattaforme;
@@ -52,7 +54,9 @@ public class GameSearchResult extends Information implements Parcelable {
         return store;
     }
 
-    public String getPrice() { return price; }
+    public String getPrice() {
+        return price;
+    }
 
     @Override
     public int describeContents() {
@@ -65,5 +69,19 @@ public class GameSearchResult extends Information implements Parcelable {
         dest.writeString(piattaforme);
         dest.writeString(store);
         dest.writeString(price);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameSearchResult that = (GameSearchResult) o;
+        return Objects.equals(getTitle(), that.getTitle()) &&
+                Objects.equals(store, that.store);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(appID, piattaforme, store, price);
     }
 }
