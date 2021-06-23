@@ -89,7 +89,8 @@ public class DBManager {
         String selectQuery = "SELECT  * FROM " + tableName;
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            while(cursor.moveToNext()){
+            for(int i = 0; i < cursor.getCount(); i++){
+                cursor.moveToPosition(i);
                 String title = cursor.getString(cursor.getColumnIndex(DataBaseValues.TITLE.getName()));
                 String imageUrl = cursor.getString(cursor.getColumnIndex(DataBaseValues.IMAGE_URL.getName()));
                 String gameUrl = cursor.getString(cursor.getColumnIndex(DataBaseValues.URL.getName()));
@@ -103,5 +104,13 @@ public class DBManager {
         database.close();
 
         return list;
+    }
+
+    public boolean checkIfElementsIsOnDataBase(String name, String store){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "select * from " + tableName + " where " + DataBaseValues.TITLE.getName() + " = '" + name + "'"
+                + " AND " + DataBaseValues.STORE.getName() + " = '" + store + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        return (cursor.getCount() > 0);
     }
 }

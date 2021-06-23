@@ -54,6 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
+                        android:padding="5dp"
                         android:paddingRight="10dp"
                         android:src="@drawable/ic_favorite_24" />
 
@@ -63,6 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_share_24" />
 
                 </LinearLayout>

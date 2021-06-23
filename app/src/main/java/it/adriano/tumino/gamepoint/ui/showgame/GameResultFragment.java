@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
@@ -36,6 +37,8 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchPlayStatio
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchSteamGame;
 import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.database.DBManager;
+import it.adriano.tumino.gamepoint.database.DataBaseValues;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameResultBinding;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
@@ -50,6 +53,8 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     private final Fragment[] fragments = new Fragment[4];
     private String logoName;
     private GameSearchResult gameSearchResult;
+    private DBManager favoriteDBManager;
+    private boolean presenteNelDB;
 
     private FragmentGameResultBinding binding;
 
@@ -84,12 +89,12 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
                 break;
             case "MCS":
                 game = new CatchMicrosoftGame(gameSearchResult.getUrl());
-                logoName = "logo_steam.png";
+                logoName = "logo_xbox.png";
                 ((CatchMicrosoftGame) game).delegate = this;
                 break;
             case "PSN":
                 game = new CatchPlayStationGame(gameSearchResult.getUrl());
-                logoName = "logo_steam.png";
+                logoName = "logo_psn.png";
                 ((CatchPlayStationGame) game).delegate = this;
                 break;
             case "ESHOP":
@@ -107,8 +112,17 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
         Log.i(TAG, "Inizio il processo di background");
         game.execute();
 
+        favoriteDBManager = new DBManager(binding.getRoot().getContext(), DataBaseValues.FAVORITE_TABLE.getName());
+
         TabLayout tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
         tabLayout.addOnTabSelectedListener(this); //imposto il listener
+
+        sharedButton = binding.shareButton;
+        favoriteButton = binding.favoriteButton;
+        presenteNelDB = favoriteDBManager.checkIfElementsIsOnDataBase(gameSearchResult.getTitle(), gameSearchResult.getStore());
+        if (presenteNelDB) {
+            favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
+        }
 
         return binding.getRoot();
     }
@@ -135,9 +149,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
             d = new ColorDrawable(Color.CYAN);
         }
         logo.setImageDrawable(d);
-
-        sharedButton = view.findViewById(R.id.shareButton); //setto il bottone condividi
-        favoriteButton = view.findViewById(R.id.favoriteButton);
     }
 
     @Override
@@ -155,6 +166,20 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     }
 
     private void favoriteRoutines() {
+        //fare il controllo se è tra i preferiti o meno
+        //si allora tolgo il cuore e lo cancello dal db
+        //no lo aggiungo al db
+        if (presenteNelDB) {
+            favoriteDBManager.deleteFromNameAndStore(gameSearchResult.getTitle(), gameSearchResult.getStore());
+            Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
+            favoriteButton.setColorFilter(Color.BLACK);
+            presenteNelDB = false;
+        } else {
+            favoriteDBManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
+            Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
+            favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
+            presenteNelDB = true;
+        }
 
     }
 

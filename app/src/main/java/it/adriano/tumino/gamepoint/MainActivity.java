@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        createFavoriteDatabase();
-        createLastResearchDatabase();
+        //createFavoriteDatabase();
+        //createLastResearchDatabase();
         //this.deleteDatabase(DataBaseValues.FAVORITE_TABLE.getName());
         //this.deleteDatabase(DataBaseValues.ULITME_RICERCHE.getName());
 
