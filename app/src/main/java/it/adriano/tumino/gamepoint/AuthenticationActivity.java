@@ -39,7 +39,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        if (EMULATOR) {
+        if (EMULATOR) { //se uso l'emulatore imposto il localhost
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             FirebaseFirestore.getInstance().useEmulator("10.0.2.2", 8080);
             FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -74,12 +74,13 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     private void createSignInIntent() {
         //creo l'intent da visualizzare e lo lancio
+
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers)
-                .setLogo(R.drawable.common_google_signin_btn_icon_dark) // Set logo drawable
-                .setTheme(R.style.Theme_AppCompat)
+                .setLogo(R.mipmap.ic_launcher)  //impostare l'icona
+                .setTheme(R.style.Theme_AppCompat) //impostare il tema
                 .build();
         signInLauncher.launch(signInIntent);
     }
