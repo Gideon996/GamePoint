@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
-import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +39,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        if(EMULATOR){
+        if (EMULATOR) {
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             FirebaseFirestore.getInstance().useEmulator("10.0.2.2", 8080);
             FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -55,10 +54,25 @@ public class AuthenticationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        createSignInIntent();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) { //L'applicazione ha salvato un account
+            //L'app potrebbe avere un account salvato, ma non presente nel Database (cancellato manualmente)
+            mAuth.fetchSignInMethodsForEmail(user.getEmail()).addOnCompleteListener(task -> {
+                boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
+                if(isNewUser){
+                    createSignInIntent();
+                }else {
+                    Toast.makeText(this, "Bentornato " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    successfulLogin(user);
+                }
+
+            });
+        } else {
+            createSignInIntent();
+        }
     }
 
-    public void createSignInIntent() {
+    private void createSignInIntent() {
         //creo l'intent da visualizzare e lo lancio
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -73,14 +87,19 @@ public class AuthenticationActivity extends AppCompatActivity {
     // [START auth_fui_result]
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         if (result.getResultCode() == RESULT_OK) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("user", user);
-            Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
-            startActivity(intent, bundle);
-            finish(); //devo aggiungerlo altrimenti mi si sovrascrive nuovamente la schermata
+            FirebaseUser user = mAuth.getCurrentUser();
+            Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+            successfulLogin(user);
         } else {
             Toast.makeText(this, "Errore durante il login...", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void successfulLogin(FirebaseUser user) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+        Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
+        startActivity(intent, bundle);
+        finish();
     }
 }
