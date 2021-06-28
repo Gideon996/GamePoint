@@ -40,14 +40,14 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        /*if(EMULATOR){
+        if(EMULATOR){
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             FirebaseFirestore.getInstance().useEmulator("10.0.2.2", 8080);
             FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                     .setPersistenceEnabled(false)
                     .build();
             FirebaseFirestore.getInstance().setFirestoreSettings(settings);
-        }*/
+        }
 
         mAuth = FirebaseAuth.getInstance(); //prendo l'instanza di login
     }
