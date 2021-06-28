@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "687056244280",
+    "firebase_url": "https://gamepoint-ea259-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "gamepoint-ea259",
+    "storage_bucket": "gamepoint-ea259.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687056244280:android:5795e49db12d01545c20cd",
+        "android_client_info": {
+          "package_name": "it.adriano.tumino.gamepoint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687056244280-mu47ifqqpv8ivhl85meurerultpuo7s5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWFdV4GL66guj7L4Skok6D4y3K0OSSy8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687056244280-mu47ifqqpv8ivhl85meurerultpuo7s5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
