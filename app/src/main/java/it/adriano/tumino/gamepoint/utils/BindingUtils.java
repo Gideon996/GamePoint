@@ -1,15 +1,10 @@
 package it.adriano.tumino.gamepoint.utils;
 
-import android.text.Html;
-import android.text.Spanned;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
 import com.squareup.picasso.Picasso;
-
-import it.adriano.tumino.gamepoint.ui.showgame.DescriptionFragment;
 
 public class BindingUtils {
 
@@ -31,4 +26,6 @@ public class BindingUtils {
                     .into(view);
         }
     }
+
+
 }

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -63,6 +65,8 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     private final Bundle information = new Bundle();
 
     private FavoriteGamesAdapter adapter = null;
+
+    private TabLayout tabLayout;
 
 
     public GameResultFragment() {
@@ -127,7 +131,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
 
         favoriteDBManager = new DBManager(binding.getRoot().getContext(), DataBaseValues.FAVORITE_TABLE.getName());
 
-        TabLayout tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
+        tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
         tabLayout.addOnTabSelectedListener(this); //imposto il listener
 
         sharedButton = binding.shareButton;
@@ -181,13 +185,13 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
     private void favoriteRoutines() {
         if (presenteNelDB) {
             favoriteDBManager.deleteFromNameAndStore(gameSearchResult.getTitle(), gameSearchResult.getStore());
-            if(adapter != null) adapter.removeFavoriteGame(gameSearchResult);
+            if (adapter != null) adapter.removeFavoriteGame(gameSearchResult);
             Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.BLACK);
             presenteNelDB = false;
         } else {
             favoriteDBManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
-            if(adapter != null) adapter.addFavoriteGame(gameSearchResult);
+            if (adapter != null) adapter.addFavoriteGame(gameSearchResult);
             Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             presenteNelDB = true;

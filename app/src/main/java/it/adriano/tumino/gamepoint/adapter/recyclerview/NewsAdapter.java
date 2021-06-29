@@ -30,7 +30,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private final ArrayList<News> newsList;
     private int currentPage;
     private final NewsViewModel newsViewModel;
-    private Activity activity;
+    private final Activity activity;
 
     private static final int TYPE_FOOTER = 1;
 
