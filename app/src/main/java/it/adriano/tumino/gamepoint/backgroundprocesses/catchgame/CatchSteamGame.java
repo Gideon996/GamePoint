@@ -55,7 +55,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
 
     private SteamGame jsonParser(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json); //creo l'oggetto
-        JSONObject result = jsonObject.getJSONObject(String.valueOf(appID)); //prendo il risultato
+        JSONObject result = jsonObject.getJSONObject(appID); //prendo il risultato
 
         SteamGame game = new SteamGame();
 
@@ -95,7 +95,11 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
             if (data.has("is_free")) {
                 boolean isFree = data.getBoolean("is_free");
                 if (!isFree) {
-                    price = data.getJSONObject("price_overview").getString("final_formatted"); //prezzo finale
+                    if (data.has("price_overview") && data.getJSONObject("price_overview").has("final_formatted")) {
+                        price = data.getJSONObject("price_overview").getString("final_formatted"); //prezzo finale
+                    } else {
+                        price = "Disponibile a breve";
+                    }
                 }
             }
             game.setPrice(price);
@@ -178,7 +182,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
         return list;
     }
 
-    private String normalizeDate(){
+    private String normalizeDate() {
         //mese giorno, Anno -> Nov 5, 2015
         //anno-mese-giornoTorario -> 2020-11-13T00:00:00Z
         //giorno/mese/anno

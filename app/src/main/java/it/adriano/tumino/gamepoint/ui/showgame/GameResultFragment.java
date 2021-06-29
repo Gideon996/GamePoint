@@ -36,7 +36,6 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchNintendoGa
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchMicrosoftGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchPlayStationGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchSteamGame;
-import it.adriano.tumino.gamepoint.data.FavoriteGames;
 import it.adriano.tumino.gamepoint.data.storegame.Game;
 import it.adriano.tumino.gamepoint.data.GameSearchResult;
 import it.adriano.tumino.gamepoint.database.DBManager;
@@ -193,33 +192,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<Game>,
             favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             presenteNelDB = true;
         }
-
-        /*if (adapter != null) {
-            if (presenteNelDB) {
-
-                adapter.removeFavoriteGame(this.getContext(), gameSearchResult);
-                Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
-                favoriteButton.setColorFilter(Color.BLACK);
-                presenteNelDB = false;
-            } else {
-                adapter.addFavoriteGame(this.getContext(), gameSearchResult);
-                Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
-                favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
-                presenteNelDB = true;
-            }
-        } else {
-            if (presenteNelDB) {
-                favoriteDBManager.deleteFromNameAndStore(gameSearchResult.getTitle(), gameSearchResult.getStore());
-                Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
-                favoriteButton.setColorFilter(Color.BLACK);
-                presenteNelDB = false;
-            } else {
-                favoriteDBManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
-                Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
-                favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
-                presenteNelDB = true;
-            }
-        }*/
     }
 
     private void shareButton(String imageUrl, String text) {
