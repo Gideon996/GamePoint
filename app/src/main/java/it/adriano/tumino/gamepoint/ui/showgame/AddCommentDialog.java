@@ -3,36 +3,32 @@ package it.adriano.tumino.gamepoint.ui.showgame;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.adapter.recyclerview.CommentsAdapter;
 import it.adriano.tumino.gamepoint.data.Comment;
 
 public class AddCommentDialog extends DialogFragment {
 
     private final String title;
     private final String store;
-    private final RecyclerView recyclerView;
     private final String displayName;
-    private final CommentsAdapter adapter;
+    private EditText editText;
 
-    public AddCommentDialog(String title, String store, RecyclerView recyclerView, String displayName, CommentsAdapter adapter) {
+    public AddCommentDialog(String title, String store, String displayName) {
         this.title = title.replaceAll("\\s+", "");
         this.store = store;
-        this.recyclerView = recyclerView;
         this.displayName = displayName;
-        this.adapter = adapter;
     }
 
     @NonNull
@@ -41,17 +37,13 @@ public class AddCommentDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = requireActivity().getLayoutInflater().inflate(R.layout.add_comment_layout, null);
         builder.setView(view);
-        builder.setTitle("Nuovo libro");
+        builder.setTitle("Add Comment");
+        editText = view.findViewById(R.id.commentDescription);
+        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
 
         builder.setPositiveButton("Add Comment", (dialog, which) -> {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            EditText editTextTextPersonName = view.findViewById(R.id.commentDescription);
-            if (editTextTextPersonName.getText().toString().isEmpty()) {
-                Toast.makeText(getContext(), "Aggiungi un commento", Toast.LENGTH_SHORT).show();
-            } else {
-                Comment comment = new Comment(displayName, editTextTextPersonName.getText().toString(), 10, "30/06/2021");
-                saveComment(comment);
-            }
+            Comment comment = new Comment(displayName, editText.getText().toString(), ratingBar.getRating(), "30/06/2021");
+            saveComment(comment, view);
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> {
@@ -61,16 +53,44 @@ public class AddCommentDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void saveComment(Comment comment) {
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog dialog = (AlertDialog) getDialog();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty()) {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                } else {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                }
+            }
+        });
+    }
+
+    private void saveComment(Comment comment, View view) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         firestore.collection("Games").document(title + store)
                 .collection("Comments").document()
                 .set(comment)
                 .addOnSuccessListener(aVoid -> {
-                    //adapter.newCommentAdded(comment);
+                    Toast.makeText(view.getContext(), "Commento Aggiunto correttamente", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(exception -> {
-                    //Toast.makeText(getContext(), "Errore nel salvataggio", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Errore: Riprovare fra qualche secondo", Toast.LENGTH_SHORT).show();
                 });
     }
 }

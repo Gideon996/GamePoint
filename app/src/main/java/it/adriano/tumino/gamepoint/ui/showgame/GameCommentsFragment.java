@@ -100,7 +100,7 @@ public class GameCommentsFragment extends Fragment {
 
         button.setOnClickListener(v -> {
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            AddCommentDialog addCommentDialog = new AddCommentDialog(gameSearchResult.getTitle(), store, recyclerView, auth.getCurrentUser().getDisplayName(), commentsAdapter);
+            AddCommentDialog addCommentDialog = new AddCommentDialog(gameSearchResult.getTitle(), store, auth.getCurrentUser().getDisplayName());
             addCommentDialog.show(getChildFragmentManager(), "Add Comment");
         });
     }

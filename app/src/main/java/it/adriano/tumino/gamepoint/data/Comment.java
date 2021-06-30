@@ -3,13 +3,13 @@ package it.adriano.tumino.gamepoint.data;
 public class Comment {
     private String autore;
     private String descrizione;
-    private int rating;
+    private float rating;
     private String data;
 
     public Comment(){
     }
 
-    public Comment(String autore, String descrizione, int rating, String data) {
+    public Comment(String autore, String descrizione, float rating, String data) {
         this.autore = autore;
         this.descrizione = descrizione;
         this.rating = rating;
@@ -24,7 +24,7 @@ public class Comment {
         return descrizione;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
