@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.net.HttpCookie;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
@@ -44,5 +46,4 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentHolder> {
     public int getItemCount() {
         return comments.size();
     }
-
 }

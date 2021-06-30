@@ -6,20 +6,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.adapter.recyclerview.CommentsAdapter;
@@ -34,6 +34,7 @@ public class GameCommentsFragment extends Fragment {
 
     private Game gameSearchResult;
     private String store;
+    FloatingActionButton button;
 
     public GameCommentsFragment() {
     }
@@ -52,68 +53,56 @@ public class GameCommentsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        it.adriano.tumino.gamepoint.databinding.FragmentGameCommentsBinding binding = FragmentGameCommentsBinding.inflate(inflater, container, false);
+        FragmentGameCommentsBinding binding = FragmentGameCommentsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         recyclerView = binding.recyclerView;
         linearLayout = binding.linearLayoutEmpty;
-        getComments(gameSearchResult.getTitle(), store);
+        onShanpshotComments(gameSearchResult.getTitle(), store);
 
-        FloatingActionButton button = binding.addingCommentButton;
-        button.setOnClickListener(v -> {
-            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("autore", "Adriano Tumino");
-            hashMap.put("descrizione", "Che bel gioco, popo bello, molto bello, decisaemnte troppo bello, talmente bello che diventa brutto");
-            hashMap.put("rating", 10);
-            hashMap.put("data", "29/06/2021");
-            String title = gameSearchResult.getTitle().replaceAll("\\s+", "");
-            firestore.collection("Games").document(title + store)
-                    .collection("Comments").document()
-                    .set(hashMap)
-                    .addOnSuccessListener(aVoid -> Toast.makeText(v.getContext(), "Salvato con Successo", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(exception -> Toast.makeText(v.getContext(), "Errore nel salvataggio", Toast.LENGTH_SHORT).show());
-        });
+        button = binding.addingCommentButton;
+
 
         return root;
     }
 
-    private void getComments(String gameTitle, String store) {
+    private void onShanpshotComments(String gameTitle, String store) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
         String title = gameTitle.replaceAll("\\s+", "");
 
         firestore.collection("Games")
                 .document(title + store)
-                .collection("Comments")
-                .get()
-                .addOnCompleteListener(task -> { //processo asincrono su un altro thread
-                    if (task.isSuccessful()) {
-                        ArrayList<Comment> list = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            HashMap<String, Object> element = (HashMap<String, Object>) document.getData();
-                            String autore, descrizione, data;
-                            autore = (String) element.get("autore");
-                            descrizione = (String) element.get("descrizione");
-                            data = (String) element.get("data");
-                            int rating = 10;
-                            list.add(new Comment("", autore, descrizione, rating, data));
-                        }
-                        visualizzeAllComments(list);
-                    } else { //se non ci sono dati abbiamo un insuccesso
-                        linearLayout.setVisibility(View.VISIBLE);
-                    }
-                });
+                .collection("Comments").addSnapshotListener((value, e) -> {
+            if (e != null) {
+                Log.w("TEST", "Listen failed.", e);
+                return;
+            }
+
+            List<Comment> comments = new ArrayList<>();
+            for (QueryDocumentSnapshot doc : value) {
+                Comment comment = doc.toObject(Comment.class);
+                comments.add(comment);
+            }
+            visualizzeAllComments(comments);
+        });
     }
 
     private void visualizzeAllComments(List<Comment> list) {
-        recyclerView.setVisibility(View.VISIBLE);
-        linearLayout.setVisibility(View.GONE);
+        if (list.size() != 0) {
+            linearLayout.setVisibility(View.GONE);
+        }
 
         CommentsAdapter commentsAdapter = new CommentsAdapter(list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(commentsAdapter);
+
+        button.setOnClickListener(v -> {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            AddCommentDialog addCommentDialog = new AddCommentDialog(gameSearchResult.getTitle(), store, recyclerView, auth.getCurrentUser().getDisplayName(), commentsAdapter);
+            addCommentDialog.show(getChildFragmentManager(), "Add Comment");
+        });
     }
 
 

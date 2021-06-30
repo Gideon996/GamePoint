@@ -1,22 +1,19 @@
 package it.adriano.tumino.gamepoint.data;
 
 public class Comment {
-    private final String id;
-    private final String autore;
-    private final String descrizione;
-    private final int rating;
-    private final String data;
+    private String autore;
+    private String descrizione;
+    private int rating;
+    private String data;
 
-    public Comment(String id, String autore, String descrizione, int rating, String data) {
-        this.id = id;
+    public Comment(){
+    }
+
+    public Comment(String autore, String descrizione, int rating, String data) {
         this.autore = autore;
         this.descrizione = descrizione;
         this.rating = rating;
         this.data = data;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getAutore() {
