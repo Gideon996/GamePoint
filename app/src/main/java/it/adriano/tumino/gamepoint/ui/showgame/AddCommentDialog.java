@@ -1,5 +1,6 @@
 package it.adriano.tumino.gamepoint.ui.showgame;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.Comment;
@@ -42,13 +46,13 @@ public class AddCommentDialog extends DialogFragment {
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
 
         builder.setPositiveButton("Add Comment", (dialog, which) -> {
-            Comment comment = new Comment(displayName, editText.getText().toString(), ratingBar.getRating(), "30/06/2021");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String format = sdf.format(Calendar.getInstance().getTime());
+            Comment comment = new Comment(displayName, editText.getText().toString(), ratingBar.getRating(), format);
             saveComment(comment, view);
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         return builder.create();
     }
@@ -58,6 +62,7 @@ public class AddCommentDialog extends DialogFragment {
         super.onStart();
         AlertDialog dialog = (AlertDialog) getDialog();
 
+        assert dialog != null;
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,11 +77,7 @@ public class AddCommentDialog extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().trim().isEmpty()) {
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                } else {
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-                }
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty());
             }
         });
     }
@@ -86,11 +87,7 @@ public class AddCommentDialog extends DialogFragment {
         firestore.collection("Games").document(title + store)
                 .collection("Comments").document()
                 .set(comment)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(view.getContext(), "Commento Aggiunto correttamente", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(exception -> {
-                    Toast.makeText(view.getContext(), "Errore: Riprovare fra qualche secondo", Toast.LENGTH_SHORT).show();
-                });
+                .addOnSuccessListener(aVoid -> Toast.makeText(view.getContext(), "Commento Aggiunto correttamente", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(exception -> Toast.makeText(view.getContext(), "Errore: Riprovare fra qualche secondo", Toast.LENGTH_SHORT).show());
     }
 }
