@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AuthenticationActivity extends AppCompatActivity {
+    private static final String TAG = "AuthenticationActivity";
 
     private static final boolean EMULATOR = true;
 
@@ -40,6 +42,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authentication);
 
         if (EMULATOR) { //se uso l'emulatore imposto il localhost
+            Log.d(TAG, "Initializing the emulator for Firestore and for Authentication");
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             FirebaseFirestore.getInstance().useEmulator("10.0.2.2", 8080);
             FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -55,48 +58,51 @@ public class AuthenticationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         FirebaseUser user = mAuth.getCurrentUser();
+        Log.i(TAG, "Check if the user has already logged in before");
         if (user != null) { //L'applicazione ha salvato un account
             //L'app potrebbe avere un account salvato, ma non presente nel Database (cancellato manualmente)
             mAuth.fetchSignInMethodsForEmail(user.getEmail()).addOnCompleteListener(task -> {
                 boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
-                if(isNewUser){
+                if (isNewUser) {
+                    Log.d(TAG, "User not present in the database");
                     createSignInIntent();
-                }else {
-                    Toast.makeText(this, "Bentornato " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "Existing user, Autologin");
+                    Toast.makeText(this, "Welcome Back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                     successfulLogin(user);
                 }
-
             });
         } else {
+            Log.i(TAG, "New user, login interface initialization");
             createSignInIntent();
         }
     }
 
     private void createSignInIntent() {
-        //creo l'intent da visualizzare e lo lancio
-
+        Log.d(TAG, "Login interface initialization");
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers)
-                .setLogo(R.mipmap.ic_launcher)  //impostare l'icona
-                .setTheme(R.style.Theme_AppCompat) //impostare il tema
+                .setTheme(R.style.LoginTheme) //impostare il tema
                 .build();
         signInLauncher.launch(signInIntent);
     }
 
-    // [START auth_fui_result]
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         if (result.getResultCode() == RESULT_OK) {
+            Log.i(TAG, "Successful registration");
             FirebaseUser user = mAuth.getCurrentUser();
-            Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Welcom " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             successfulLogin(user);
         } else {
-            Toast.makeText(this, "Errore durante il login...", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "User registration error");
+            Toast.makeText(this, "SignIn error...", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void successfulLogin(FirebaseUser user) {
+        Log.i(TAG, "MainActivity Start");
         Bundle bundle = new Bundle();
         bundle.putParcelable("user", user);
         Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
