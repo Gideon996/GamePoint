@@ -81,7 +81,11 @@ public class CatchPlayStationGame extends TaskRunner<Void, Game> {
         if (jsonObject.has("name")) titleGame = jsonObject.getString("name");
         game.setTitle(titleGame);
 
-        if (jsonObject.has("release_date")) releaseData = jsonObject.getString("release_date");
+        if (jsonObject.has("release_date")) {
+            String tmp = jsonObject.getString("release_date");
+            String onlyDate = tmp.split("T")[0];
+            releaseData = "Data di uscita: " + onlyDate.replaceAll("-", "/");
+        }
         game.setReleaseData(releaseData);
 
         if (jsonObject.has("long_desc")) description = jsonObject.getString("long_desc");

@@ -15,12 +15,13 @@
         android:layout_margin="10dp">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/authorCommentImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/profile_image_comment" />
 
         <TextView
             android:id="@+id/displayNameComment"
@@ -33,7 +34,7 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -42,41 +43,51 @@
             android:layout_height="3dp"
             android:background="#FAD02C"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
             app:layout_constraintTop_toBottomOf="@+id/displayNameComment" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/commentRatingTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.valueOf(comment.rating)}"
             android:textColor="#ACB2B8"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintBottom_toTopOf="@+id/descriptionCommentTextView"
+            app:layout_constraintStart_toEndOf="@+id/starCommentImageView"
             app:layout_constraintTop_toBottomOf="@+id/view"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.071" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/commentDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{comment.data}"
             android:textColor="#ACB2B8"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/commentRatingTextView"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/descriptionCommentTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{comment.descrizione}"
             android:textColor="#ACB2B8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
+            app:layout_constraintTop_toBottomOf="@+id/commentDateTextView" />
 
+        <ImageView
+            android:id="@+id/starCommentImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/rating_star_image"
+            app:layout_constraintBottom_toTopOf="@+id/descriptionCommentTextView"
+            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
+            app:layout_constraintTop_toBottomOf="@+id/displayNameComment"
+            app:layout_constraintVertical_bias="0.115"
+            app:srcCompat="@drawable/ic_star_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

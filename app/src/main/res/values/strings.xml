@@ -24,4 +24,6 @@
     <string name="content_description_screenshot">Immagine contenente uno screenshot del gioco</string>
     <string name="content_description_shimmer_image">Immagine per lo shimmer</string>
     <string name="content_description_game_searched">Immagine contentente la copertina del videogioco</string>
+    <string name="rating_star_image">Immagine contenente la stella simbolo del rating</string>
+    <string name="profile_image_comment">Immagine Profilo utente che ha fatto il commento</string>
 </resources>

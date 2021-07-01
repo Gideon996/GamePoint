@@ -154,7 +154,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
                 boolean comingSoon = data.getJSONObject("release_date").getBoolean("coming_soon");
                 date = "Coming Soon";
                 if (!comingSoon) {
-                    date = data.getJSONObject("release_date").getString("date");
+                    date = "Data di uscita: " + data.getJSONObject("release_date").getString("date");
                 }
             }
             game.setReleaseData(date);
@@ -182,13 +182,8 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
         return list;
     }
 
-    private String normalizeDate() {
-        //mese giorno, Anno -> Nov 5, 2015
-        //anno-mese-giornoTorario -> 2020-11-13T00:00:00Z
-        //giorno/mese/anno
 
-        return null;
-    }
+    //BUG: QUANDO PROVO A CANCELLARE DUE ELEMENTI DI FILA CRASHA
 
     @Override
     public void onPostExecute(Game output) {
