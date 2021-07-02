@@ -13,7 +13,6 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1B2838"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,14 +30,13 @@
 
                 <ImageView
                     android:id="@+id/gameHeaderImageView"
+                    imageHeaderResult="@{game.imageHeaderUrl}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:cropToPadding="false"
                     android:scaleType="fitXY"
-                    tools:src="@tools:sample/avatars"
-                    imageHeaderResult="@{game.imageHeaderUrl}"
-                    />
+                    tools:src="@tools:sample/avatars" />
 
                 <LinearLayout
                     android:layout_width="70dp"
@@ -96,7 +94,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_account_circle_black_24" />
+                    android:src="@drawable/icon_account_fill" />
 
                 <TextView
                     android:id="@+id/priceGameTextView"
@@ -128,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="#1B2838"
+                android:background="@color/black"
                 app:tabIndicatorColor="@color/white"
                 app:tabMode="auto"
                 app:tabSelectedTextColor="@color/white"

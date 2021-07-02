@@ -1,8 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.GamePoint" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-
-        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
 
@@ -12,7 +11,7 @@
 
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:windowBackground">@color/ligth_dark_blue</item>
+        <item name="android:windowBackground">@color/black</item>
         <item name="android:textColor">@color/silver</item>
     </style>
 

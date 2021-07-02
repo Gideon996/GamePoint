@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/search_button_text"
-            app:srcCompat="@drawable/ic_search_black_24" />
+            app:srcCompat="@drawable/icon_search_fill" />
     </LinearLayout>
 
     <LinearLayout
