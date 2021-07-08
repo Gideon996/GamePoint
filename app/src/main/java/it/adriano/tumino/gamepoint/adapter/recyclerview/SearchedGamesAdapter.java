@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DataBaseValues;
 import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
@@ -24,10 +24,10 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
 public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> implements ClickItemList {
     public static final String TAG = "SearchGamesAdapter";
-    private final ArrayList<GameSearchResult> searchedGames;
+    private final ArrayList<BasicGameInformation> searchedGames;
     private final View view;
 
-    public SearchedGamesAdapter(ArrayList<GameSearchResult> searchedGames, View view) {
+    public SearchedGamesAdapter(ArrayList<BasicGameInformation> searchedGames, View view) {
         Log.i(TAG, "Generazione Search Games Adapter");
         this.searchedGames = searchedGames;
         this.view = view;
@@ -45,8 +45,8 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
     @Override
     public void onBindViewHolder(@NonNull @NotNull SearchGameHolder holder, int position) {
         Log.i(TAG, "Riempimento Item");
-        GameSearchResult gameSearchResult = searchedGames.get(position);
-        holder.bind(gameSearchResult);
+        BasicGameInformation basicGameInformation = searchedGames.get(position);
+        holder.bind(basicGameInformation);
         holder.binding.setGameClicked(this);
     }
 
@@ -57,14 +57,15 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
 
     @Override
     public void itemClicked(Object game) {
-        GameSearchResult gameSearchResult = (GameSearchResult) game;
+        BasicGameInformation basicGameInformation = (BasicGameInformation) game;
         Bundle bundle = new Bundle();
 
-        bundle.putParcelable("game", gameSearchResult);
+        bundle.putParcelable("game", basicGameInformation);
+        Log.d("TEST", basicGameInformation.getTitle() + " " + basicGameInformation.getAppID() + " " + basicGameInformation.getUrl());
         Navigation.findNavController(view).navigate(R.id.select_action, bundle);
 
         DBManager dbManager = new DBManager(view.getContext(), DataBaseValues.ULITME_RICERCHE.getName());
-        if(!dbManager.checkIfElementsIsOnDataBase(gameSearchResult.getTitle(), gameSearchResult.getStore())) dbManager.save(gameSearchResult.getTitle(), gameSearchResult.getImageURL(), gameSearchResult.getStore(), gameSearchResult.getUrl(), gameSearchResult.getAppID());
+        if(!dbManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore())) dbManager.save(basicGameInformation.getTitle(), basicGameInformation.getImageHeaderURL(), basicGameInformation.getStore(), basicGameInformation.getUrl(), basicGameInformation.getAppID());
         notifyDataSetChanged();
     }
 }

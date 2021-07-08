@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DataBaseValues;
 import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
@@ -27,11 +27,11 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.LastSearchedGamesHolder;
 
 public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> implements ClickItemList {
     public static final String TAG = "SearchGamesAdapter";
-    private final ArrayList<GameSearchResult> lastSearchedGamesList;
+    private final ArrayList<BasicGameInformation> lastSearchedGamesList;
     private final View view;
     private ImageButton cancellButton;
 
-    public LastSearchedGamesAdapter(ArrayList<GameSearchResult> lastSearchedGamesList, View view) {
+    public LastSearchedGamesAdapter(ArrayList<BasicGameInformation> lastSearchedGamesList, View view) {
         Log.i(TAG, "Generazione Last Searched Games Adapter");
         this.lastSearchedGamesList = lastSearchedGamesList;
         this.view = view;
@@ -50,17 +50,17 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
     @Override
     public void onBindViewHolder(@NonNull @NotNull LastSearchedGamesHolder holder, int position) {
         Log.i(TAG, "Riempimento Item");
-        GameSearchResult gameSearchResult = lastSearchedGamesList.get(position);
-        holder.bind(gameSearchResult);
+        BasicGameInformation basicGameInformation = lastSearchedGamesList.get(position);
+        holder.bind(basicGameInformation);
         holder.binding.setGameClicked(this);
         cancellButton.setOnClickListener(v -> {
-            Log.i(TAG, "Rimozione del gioco: " + gameSearchResult.getTitle());
+            Log.i(TAG, "Rimozione del gioco: " + basicGameInformation.getTitle());
             DBManager dbManager = new DBManager(view.getContext(), DataBaseValues.ULITME_RICERCHE.getName());
-            boolean result = dbManager.deleteFromNameAndStore(gameSearchResult.getTitle(), gameSearchResult.getStore());
+            boolean result = dbManager.deleteFromNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
             if (result) {
                 lastSearchedGamesList.remove(position);
             } else {
-                Log.e(TAG, "Impossibile rimuovere il gioco: " + gameSearchResult.getTitle());
+                Log.e(TAG, "Impossibile rimuovere il gioco: " + basicGameInformation.getTitle());
                 Toast.makeText(view.getContext(), "Impossibile cancellare l'elemento selezionato", Toast.LENGTH_SHORT).show();
             }
 
@@ -77,10 +77,10 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
 
     @Override
     public void itemClicked(Object game) {
-        GameSearchResult gameSearchResult = (GameSearchResult) game;
+        BasicGameInformation basicGameInformation = (BasicGameInformation) game;
         Bundle bundle = new Bundle();
 
-        bundle.putParcelable("game", gameSearchResult);
+        bundle.putParcelable("game", basicGameInformation);
         Navigation.findNavController(view).navigate(R.id.select_action, bundle);
     }
 }

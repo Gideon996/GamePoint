@@ -12,22 +12,22 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult>> {
+public class SearchOnSteam extends TaskRunner<String, ArrayList<BasicGameInformation>> {
     public static final String TAG = "SearchOnSteam";
 
     private final static String STORE = "STEAM";
     private final static String URL = "https://store.steampowered.com/search/?term=";
 
-    public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
+    public AsyncResponse<ArrayList<BasicGameInformation>> delegate = null;
 
     public SearchOnSteam() {
     }
 
     @Override
-    public ArrayList<GameSearchResult> doInBackground(String... input) {
+    public ArrayList<BasicGameInformation> doInBackground(String... input) {
         Log.i(TAG, "Ricerca gioco su STEAM");
         String name = input[0].toLowerCase();
 
@@ -48,7 +48,7 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
             return null;
         }
 
-        ArrayList<GameSearchResult> listOfGames = new ArrayList<>();
+        ArrayList<BasicGameInformation> listOfGames = new ArrayList<>();
         Elements links = resultsRows.getElementsByTag("a");
         for (Element link : links) {
             String title = link.getElementsByClass("title").get(0).text();
@@ -59,7 +59,7 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
                 String platfoms = getPlatform(link.getElementsByClass("platform_img"));
                 String releaseData = link.getElementsByClass("search_released").get(0).text();
                 String price = link.getElementsByClass("search_price").get(0).text();
-                GameSearchResult result = new GameSearchResult(title, imgUrl, null, gameID, platfoms, STORE, price);
+                BasicGameInformation result = new BasicGameInformation(title, imgUrl, null, gameID, platfoms, STORE, price);
                 listOfGames.add(result);
             }
         }
@@ -86,7 +86,7 @@ public class SearchOnSteam extends TaskRunner<String, ArrayList<GameSearchResult
     }
 
     @Override
-    public void onPostExecute(ArrayList<GameSearchResult> steamList) {
+    public void onPostExecute(ArrayList<BasicGameInformation> steamList) {
         if (steamList != null) delegate.processFinish(steamList);
     }
 }

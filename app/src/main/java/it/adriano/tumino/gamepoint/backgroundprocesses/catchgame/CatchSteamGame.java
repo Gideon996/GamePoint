@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.storegame.Game;
-import it.adriano.tumino.gamepoint.data.storegame.SteamGame;
+import it.adriano.tumino.gamepoint.data.storegame.SteamStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
-public class CatchSteamGame extends TaskRunner<Void, Game> {
+public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
     public static final String TAG = "CatchGameFromSteam";
 
     private static final String URL_API = "https://store.steampowered.com/api/appdetails?appids=";
@@ -23,7 +23,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
     private final String finalURL;
     private final String appID;
 
-    public AsyncResponse<Game> delegate = null;
+    public AsyncResponse<StoreGame> delegate = null;
 
     public CatchSteamGame(String appID) {
         finalURL = URL_API + appID;
@@ -31,7 +31,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
     }
 
     @Override
-    public Game doInBackground(Void... input) {
+    public StoreGame doInBackground(Void... input) {
         String jsonText;
         try {
             jsonText = Utils.getJsonFromUrl(finalURL);
@@ -53,11 +53,11 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
         }
     }
 
-    private SteamGame jsonParser(String json) throws JSONException {
+    private SteamStoreGame jsonParser(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json); //creo l'oggetto
         JSONObject result = jsonObject.getJSONObject(appID); //prendo il risultato
 
-        SteamGame game = new SteamGame();
+        SteamStoreGame game = new SteamStoreGame();
 
         if (!result.getBoolean("success")) {
             return null;
@@ -113,7 +113,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
             game.setLanguages(languages);
 
             if (data.has("header_image")) image = data.getString("header_image"); //copertina
-            game.setImageHeaderUrl(image);
+            game.setImageHeaderURL(image);
 
             if (data.has("website")) website = data.getString("website"); //immagine di supporto
             game.setWebsite(website);
@@ -186,7 +186,7 @@ public class CatchSteamGame extends TaskRunner<Void, Game> {
     //BUG: QUANDO PROVO A CANCELLARE DUE ELEMENTI DI FILA CRASHA
 
     @Override
-    public void onPostExecute(Game output) {
+    public void onPostExecute(StoreGame output) {
         delegate.processFinish(output);
     }
 }

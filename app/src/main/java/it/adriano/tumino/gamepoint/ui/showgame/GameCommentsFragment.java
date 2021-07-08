@@ -24,7 +24,7 @@ import java.util.List;
 
 import it.adriano.tumino.gamepoint.adapter.recyclerview.CommentsAdapter;
 import it.adriano.tumino.gamepoint.data.Comment;
-import it.adriano.tumino.gamepoint.data.storegame.Game;
+import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameCommentsBinding;
 
 public class GameCommentsFragment extends Fragment {
@@ -32,7 +32,7 @@ public class GameCommentsFragment extends Fragment {
     private LinearLayout linearLayout;
     private RecyclerView recyclerView;
 
-    private Game gameSearchResult;
+    private StoreGame storeGameSearchResult;
     private String store;
     FloatingActionButton button;
 
@@ -46,7 +46,7 @@ public class GameCommentsFragment extends Fragment {
 
         if (getArguments() != null) {
             if (getArguments().containsKey("game"))
-                gameSearchResult = getArguments().getParcelable("game");
+                storeGameSearchResult = getArguments().getParcelable("game");
             if (getArguments().containsKey("store")) store = getArguments().getString("store");
         }
     }
@@ -58,7 +58,7 @@ public class GameCommentsFragment extends Fragment {
 
         recyclerView = binding.recyclerView;
         linearLayout = binding.linearLayoutEmpty;
-        onShanpshotComments(gameSearchResult.getTitle(), store);
+        onShanpshotComments(storeGameSearchResult.getTitle(), store);
 
         button = binding.addingCommentButton;
 
@@ -100,7 +100,7 @@ public class GameCommentsFragment extends Fragment {
 
         button.setOnClickListener(v -> {
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            AddCommentDialog addCommentDialog = new AddCommentDialog(gameSearchResult.getTitle(), store, auth.getCurrentUser().getDisplayName());
+            AddCommentDialog addCommentDialog = new AddCommentDialog(storeGameSearchResult.getTitle(), store, auth.getCurrentUser().getDisplayName());
             addCommentDialog.show(getChildFragmentManager(), "Add Comment");
         });
     }

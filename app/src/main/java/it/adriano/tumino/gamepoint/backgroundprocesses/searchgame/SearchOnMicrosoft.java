@@ -14,22 +14,22 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchResult>> {
+public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<BasicGameInformation>> {
     public static final String TAG = "SearchOnMicrosoft";
 
     private final static String STORE = "MCS";
     private final static String URL = "https://www.microsoft.com/it-it/search/shop/games?q=";
 
-    public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
+    public AsyncResponse<ArrayList<BasicGameInformation>> delegate = null;
 
     public SearchOnMicrosoft() {
     }
 
     @Override
-    public ArrayList<GameSearchResult> doInBackground(String... input) {
+    public ArrayList<BasicGameInformation> doInBackground(String... input) {
         Log.i(TAG, "Ricerca gioco su MCS");
 
         String name = input[0].toLowerCase();
@@ -53,7 +53,7 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
             return null;
         }
 
-        ArrayList<GameSearchResult> listOfGames = new ArrayList<>();
+        ArrayList<BasicGameInformation> listOfGames = new ArrayList<>();
         Elements placementItems = grid.get(0).getElementsByClass("m-channel-placement-item");
         for (int j = 0; j < placementItems.size(); j++) {
             Element game = placementItems.get(j);
@@ -77,15 +77,15 @@ public class SearchOnMicrosoft extends TaskRunner<String, ArrayList<GameSearchRe
                     imageURl = image.attributes().get("data-srcset"); //decodifica in automatico
                 }
 
-                GameSearchResult gameSearchResult = new GameSearchResult(title, imageURl, gameUrl1, gameID, null, STORE, "N.A.");
-                listOfGames.add(gameSearchResult);
+                BasicGameInformation basicGameInformation = new BasicGameInformation(title, imageURl, gameUrl1, gameID, null, STORE, "N.A.");
+                listOfGames.add(basicGameInformation);
             }
         }
         return listOfGames;
     }
 
     @Override
-    public void onPostExecute(ArrayList<GameSearchResult> microsoftList) {
+    public void onPostExecute(ArrayList<BasicGameInformation> microsoftList) {
         if (microsoftList != null) delegate.processFinish(microsoftList);
     }
 }

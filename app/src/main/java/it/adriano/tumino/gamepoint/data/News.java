@@ -1,22 +1,45 @@
 package it.adriano.tumino.gamepoint.data;
 
-import android.widget.ImageView;
+public class News {
 
-import androidx.databinding.BindingAdapter;
-
-import com.squareup.picasso.Picasso;
-
-public class News extends Information {
-
+    private String title;
+    private String imageURL;
+    private String newsUrl;
     private String body;
     private String date;
     private String website;
 
     public News(String title, String body, String imageUrl, String date, String newsUrl, String website) {
-        super(title, imageUrl, newsUrl);
+        this.title = title;
+        this.imageURL = imageUrl;
+        this.newsUrl = newsUrl;
         this.body = body;
         this.date = date;
         this.website = website;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getNewsUrl() {
+        return newsUrl;
+    }
+
+    public void setNewsUrl(String newsUrl) {
+        this.newsUrl = newsUrl;
     }
 
     public String getDate() {

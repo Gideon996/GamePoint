@@ -19,18 +19,18 @@ import java.io.IOException;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.data.storegame.Game;
-import it.adriano.tumino.gamepoint.data.storegame.MicrosoftGame;
-import it.adriano.tumino.gamepoint.data.storegame.NintendoGame;
-import it.adriano.tumino.gamepoint.data.storegame.PlayStationGame;
-import it.adriano.tumino.gamepoint.data.storegame.SteamGame;
+import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.PlayStationStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.SteamStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 
 
 public class GameSpecificationsFragment extends Fragment {
 
     private Bundle information;
     private String store;
-    private Game game;
+    private StoreGame storeGame;
 
     public GameSpecificationsFragment() {
     }
@@ -42,7 +42,7 @@ public class GameSpecificationsFragment extends Fragment {
         if (getArguments() != null) {
             information = getArguments();
             store = information.getString("store");
-            game = information.getParcelable("game");
+            storeGame = information.getParcelable("game");
         }
     }
 
@@ -67,7 +67,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void mcsGame(View view){
-        MicrosoftGame microsoftGame = (MicrosoftGame) game;
+        MicrosoftStoreGame microsoftGame = (MicrosoftStoreGame) storeGame;
         LinearLayout linearLayout = view.findViewById(R.id.mcsSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
@@ -82,7 +82,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void steamGame(View view) {
-        SteamGame steamGame = (SteamGame) game;
+        SteamStoreGame steamGame = (SteamStoreGame) storeGame;
 
         LinearLayout linearLayout = view.findViewById(R.id.steamSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
@@ -122,7 +122,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void eShopGame(View view) {
-        NintendoGame nintendoGame = (NintendoGame) game;
+        NintendoStoreGame nintendoGame = (NintendoStoreGame) storeGame;
 
         LinearLayout linearLayout = view.findViewById(R.id.eshopSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
@@ -135,7 +135,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void psnGame(View view) {
-        PlayStationGame playStationGame = (PlayStationGame) game;
+        PlayStationStoreGame playStationGame = (PlayStationStoreGame) storeGame;
         LinearLayout linearLayout = view.findViewById(R.id.psnSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 

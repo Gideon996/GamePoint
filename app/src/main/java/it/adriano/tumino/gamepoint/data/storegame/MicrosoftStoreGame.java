@@ -5,17 +5,17 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class MicrosoftGame extends Game {
+public class MicrosoftStoreGame extends StoreGame {
     private String pegi;
     private String console;
     private String systemRequirement;
     private ArrayList<String> categories;
     private ArrayList<String> metadata;
 
-    public MicrosoftGame() {
+    public MicrosoftStoreGame() {
     }
 
-    private MicrosoftGame(Parcel in) {
+    private MicrosoftStoreGame(Parcel in) {
         super(in);
         pegi = in.readString();
         console = in.readString();
@@ -33,13 +33,13 @@ public class MicrosoftGame extends Game {
         out.writeStringList(metadata);
     }
 
-    public static final Parcelable.Creator<MicrosoftGame> CREATOR = new Parcelable.Creator<MicrosoftGame>() {
-        public MicrosoftGame createFromParcel(Parcel in) {
-            return new MicrosoftGame(in);
+    public static final Parcelable.Creator<MicrosoftStoreGame> CREATOR = new Parcelable.Creator<MicrosoftStoreGame>() {
+        public MicrosoftStoreGame createFromParcel(Parcel in) {
+            return new MicrosoftStoreGame(in);
         }
 
-        public MicrosoftGame[] newArray(int size) {
-            return new MicrosoftGame[size];
+        public MicrosoftStoreGame[] newArray(int size) {
+            return new MicrosoftStoreGame[size];
         }
     };
 

@@ -9,7 +9,7 @@
 
         <variable
             name="lastGames"
-            type="it.adriano.tumino.gamepoint.data.GameSearchResult" />
+            type="it.adriano.tumino.gamepoint.data.BasicGameInformation" />
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
 
         <ImageView
             android:id="@+id/lastGameCoverSearchedImageView"
-            profileImage="@{lastGames.imageURL}"
+            profileImage="@{lastGames.imageHeaderURL}"
             android:layout_width="125dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"

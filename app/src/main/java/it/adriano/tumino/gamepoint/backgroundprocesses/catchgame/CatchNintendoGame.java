@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.storegame.Game;
-import it.adriano.tumino.gamepoint.data.storegame.NintendoGame;
+import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchNintendoGame extends TaskRunner<Void, Game> {
+public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
     private static final String TAG = "CatchGameFromEShop";
 
     private static final String BASE_URL = "https://www.nintendo.it";
@@ -23,7 +23,7 @@ public class CatchNintendoGame extends TaskRunner<Void, Game> {
     private final String finalURL;
     private final String price;
 
-    public AsyncResponse<Game> delegate = null;
+    public AsyncResponse<StoreGame> delegate = null;
 
     public CatchNintendoGame(String url, String price) {
         finalURL = BASE_URL + url;
@@ -31,14 +31,14 @@ public class CatchNintendoGame extends TaskRunner<Void, Game> {
     }
 
     @Override
-    public Game doInBackground(Void... integers) {
+    public StoreGame doInBackground(Void... integers) {
         return getGame();
     }
 
-    private NintendoGame getGame() {
+    private NintendoStoreGame getGame() {
         Document document;
 
-        NintendoGame game = new NintendoGame();
+        NintendoStoreGame game = new NintendoStoreGame();
         game.setPrice(price);
 
         try {
@@ -61,7 +61,7 @@ public class CatchNintendoGame extends TaskRunner<Void, Game> {
         Elements img = header.select("img");
         String imageHeader = "";
         if (!img.isEmpty()) imageHeader = img.first().attributes().get("src");
-        game.setImageHeaderUrl(imageHeader.replaceAll("//", "https://"));
+        game.setImageHeaderURL(imageHeader.replaceAll("//", "https://"));
 
         Elements classification = header.select(".age-rating").select("span");
         String pegi = "";
@@ -157,7 +157,7 @@ public class CatchNintendoGame extends TaskRunner<Void, Game> {
     }
 
     @Override
-    public void onPostExecute(Game o) {
+    public void onPostExecute(StoreGame o) {
         delegate.processFinish(o);
     }
 

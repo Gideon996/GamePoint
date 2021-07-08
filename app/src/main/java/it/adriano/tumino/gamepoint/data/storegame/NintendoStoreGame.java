@@ -5,17 +5,17 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-public class NintendoGame extends Game {
+public class NintendoStoreGame extends StoreGame {
     private String videoTrailerUrl;
     private String pegi;
     private String console;
     private String systemInfo;
     private List<String> featureSheets;
 
-    public NintendoGame() {
+    public NintendoStoreGame() {
     }
 
-    private NintendoGame(Parcel in) {
+    private NintendoStoreGame(Parcel in) {
         super(in);
         videoTrailerUrl = in.readString();
         pegi = in.readString();
@@ -33,13 +33,13 @@ public class NintendoGame extends Game {
         out.writeStringList(featureSheets);
     }
 
-    public static final Parcelable.Creator<NintendoGame> CREATOR = new Parcelable.Creator<NintendoGame>() {
-        public NintendoGame createFromParcel(Parcel in) {
-            return new NintendoGame(in);
+    public static final Parcelable.Creator<NintendoStoreGame> CREATOR = new Parcelable.Creator<NintendoStoreGame>() {
+        public NintendoStoreGame createFromParcel(Parcel in) {
+            return new NintendoStoreGame(in);
         }
 
-        public NintendoGame[] newArray(int size) {
-            return new NintendoGame[size];
+        public NintendoStoreGame[] newArray(int size) {
+            return new NintendoStoreGame[size];
         }
     };
 

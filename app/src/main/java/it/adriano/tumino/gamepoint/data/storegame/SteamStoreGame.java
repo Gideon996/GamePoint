@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class SteamGame extends Game {
+public class SteamStoreGame extends StoreGame {
 
     private String languages;
     private String website;
@@ -17,10 +17,10 @@ public class SteamGame extends Game {
     private ArrayList<String> categories;
     private ArrayList<String> genres;
 
-    public SteamGame() {
+    public SteamStoreGame() {
     }
 
-    private SteamGame(Parcel in) {
+    private SteamStoreGame(Parcel in) {
         super(in);
         languages = in.readString();
         website = in.readString();
@@ -46,13 +46,13 @@ public class SteamGame extends Game {
         out.writeStringList(genres);
     }
 
-    public static final Parcelable.Creator<SteamGame> CREATOR = new Parcelable.Creator<SteamGame>() {
-        public SteamGame createFromParcel(Parcel in) {
-            return new SteamGame(in);
+    public static final Parcelable.Creator<SteamStoreGame> CREATOR = new Parcelable.Creator<SteamStoreGame>() {
+        public SteamStoreGame createFromParcel(Parcel in) {
+            return new SteamStoreGame(in);
         }
 
-        public SteamGame[] newArray(int size) {
-            return new SteamGame[size];
+        public SteamStoreGame[] newArray(int size) {
+            return new SteamStoreGame[size];
         }
     };
 

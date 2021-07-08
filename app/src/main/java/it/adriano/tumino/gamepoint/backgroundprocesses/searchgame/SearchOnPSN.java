@@ -18,24 +18,24 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>> {
+public class SearchOnPSN extends TaskRunner<String, ArrayList<BasicGameInformation>> {
     public static final String TAG = "SearchOnPSN";
 
     private final static String STORE = "PSN";
     private final static String FIRST_PIECE_URL = "https://store.playstation.com/store/api/chihiro/00_09_000/tumbler/IT/it/999/";
     private final static String SECOND_PIECE_URL = "?suggested_size=100&mode=game";
 
-    public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
+    public AsyncResponse<ArrayList<BasicGameInformation>> delegate = null;
 
     public SearchOnPSN() {
 
     }
 
     @Override
-    public ArrayList<GameSearchResult> doInBackground(String... input) {
+    public ArrayList<BasicGameInformation> doInBackground(String... input) {
         Log.i(TAG, "Ricerca gioco su PSN");
 
         String name = input[0].toLowerCase();
@@ -65,7 +65,7 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
                 return null;
             }
 
-            ArrayList<GameSearchResult> listOfGame = new ArrayList<>();
+            ArrayList<BasicGameInformation> listOfGame = new ArrayList<>();
             for (int j = 0; j < links.length(); j++) {
                 JSONObject gameInfomation = links.optJSONObject(j);
                 if (gameInfomation == null || gameInfomation.length() == 0) continue;
@@ -85,8 +85,8 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
                         price = gameInfomation.getJSONObject("default_sku").getString("display_price");
                     }
 
-                    GameSearchResult gameSearchResult = new GameSearchResult(titleGame, imageURL, gameURL, id, console, STORE, price);
-                    listOfGame.add(gameSearchResult);
+                    BasicGameInformation basicGameInformation = new BasicGameInformation(titleGame, imageURL, gameURL, id, console, STORE, price);
+                    listOfGame.add(basicGameInformation);
                 }
             }
             return listOfGame;
@@ -112,7 +112,7 @@ public class SearchOnPSN extends TaskRunner<String, ArrayList<GameSearchResult>>
     }
 
     @Override
-    public void onPostExecute(ArrayList<GameSearchResult> psnList) {
+    public void onPostExecute(ArrayList<BasicGameInformation> psnList) {
         if (psnList != null) delegate.processFinish(psnList);
     }
 }

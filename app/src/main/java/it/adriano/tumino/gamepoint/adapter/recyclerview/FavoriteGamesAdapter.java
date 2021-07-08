@@ -14,17 +14,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.databinding.FavoriteGameLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.FavoriteGamesHolder;
 import it.adriano.tumino.gamepoint.ui.showgame.GameResultFragment;
 
 public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHolder> implements ClickItemList {
-    public static final String TAG = "FavoriteAdapter";
-    private final List<GameSearchResult> favoriteGames;
+    private static final String TAG = "FavoriteAdapter";
+
+    private final List<BasicGameInformation> favoriteGames;
     private final FragmentManager fragmentManager;
 
-    public FavoriteGamesAdapter(List<GameSearchResult> favoriteGames, FragmentManager fragmentManager) {
+    public FavoriteGamesAdapter(List<BasicGameInformation> favoriteGames, FragmentManager fragmentManager) {
         Log.i(TAG, "Generazione Favorite Adapter");
         this.favoriteGames = favoriteGames;
         this.fragmentManager = fragmentManager;
@@ -34,7 +35,6 @@ public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHold
     @Override
     public FavoriteGamesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.i(TAG, "Inserimento Favorite Layout");
-
         FavoriteGameLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.favorite_game_layout, parent, false);
         return new FavoriteGamesHolder(binding);
     }
@@ -42,9 +42,10 @@ public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHold
     @Override
     public void onBindViewHolder(@NotNull FavoriteGamesHolder holder, int position) {
         Log.i(TAG, "Riempimento Favorite Item");
-        GameSearchResult gameSearchResult = favoriteGames.get(position);
-        holder.bind(gameSearchResult);
+        BasicGameInformation basicGameInformation = favoriteGames.get(position);
+        holder.bind(basicGameInformation);
         holder.binding.setGameClicked(this);
+
     }
 
     @Override
@@ -52,25 +53,21 @@ public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHold
         return favoriteGames.size();
     }
 
-    public void removeFavoriteGame(GameSearchResult gameSearchResult) {
-        favoriteGames.remove(gameSearchResult);
-        notifyItemRemoved(favoriteGames.indexOf(gameSearchResult));
-        notifyItemRangeChanged(favoriteGames.indexOf(gameSearchResult), favoriteGames.size());
-        notifyDataSetChanged();
+    public void removeFavoriteGame(BasicGameInformation basicGameInformation) {
+        favoriteGames.remove(basicGameInformation);
+        notifyItemRemoved(favoriteGames.indexOf(basicGameInformation));
     }
 
-    public void addFavoriteGame(GameSearchResult gameSearchResult) {
-        favoriteGames.add(gameSearchResult);
-        notifyItemInserted(favoriteGames.indexOf(gameSearchResult));
-        notifyItemRangeChanged(favoriteGames.indexOf(gameSearchResult), favoriteGames.size());
-        notifyDataSetChanged();
+    public void addFavoriteGame(BasicGameInformation basicGameInformation) {
+        favoriteGames.add(basicGameInformation);
+        notifyItemInserted(favoriteGames.indexOf(basicGameInformation));
     }
 
     @Override
     public void itemClicked(Object game) {
-        GameSearchResult gameSearchResult = (GameSearchResult) game;
+        BasicGameInformation basicGameInformation = (BasicGameInformation) game;
         Bundle bundle = new Bundle();
-        bundle.putParcelable("game", gameSearchResult);
+        bundle.putParcelable("game", basicGameInformation);
         GameResultFragment fragment = new GameResultFragment(this);
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction()

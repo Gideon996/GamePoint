@@ -11,29 +11,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.storegame.Game;
-import it.adriano.tumino.gamepoint.data.storegame.MicrosoftGame;
+import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
+import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class CatchMicrosoftGame extends TaskRunner<Void, Game> {
+public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> {
     private static final String TAG = "CatchGameFromMCS";
 
     private final String finalURL;
 
-    public AsyncResponse<Game> delegate = null;
+    public AsyncResponse<StoreGame> delegate = null;
 
     public CatchMicrosoftGame(String url) {
         finalURL = url;
     }
 
     @Override
-    public Game doInBackground(Void... i) {
+    public StoreGame doInBackground(Void... i) {
         return getGame();
     }
 
-    private MicrosoftGame getGame() {
+    private MicrosoftStoreGame getGame() {
         Document document;
-        MicrosoftGame game = new MicrosoftGame();
+        MicrosoftStoreGame game = new MicrosoftStoreGame();
 
         try {
             document = Jsoup.connect(finalURL)
@@ -47,7 +47,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, Game> {
         Elements body = document.select("#pdp");
         Elements image = body.select(".pi-product-image");
         String imageUrl = image.select("img").get(0).attributes().get("src");
-        game.setImageHeaderUrl(imageUrl);
+        game.setImageHeaderURL(imageUrl);
 
         Elements titleGroup = body.select("#productTitle");
         String title = titleGroup.text();
@@ -129,7 +129,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, Game> {
     }
 
     @Override
-    public void onPostExecute(Game output) {
+    public void onPostExecute(StoreGame output) {
         delegate.processFinish(output);
     }
 }

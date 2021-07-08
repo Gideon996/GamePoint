@@ -30,18 +30,18 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnEShop;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnMicrosoft;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnPSN;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnSteam;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DataBaseValues;
 
-public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<GameSearchResult>> {
+public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<BasicGameInformation>> {
     private DBManager dbManager;
     private View view;
     private EditText editText;
     private ShimmerFrameLayout shimmerFrameLayout;
 
     private SearchedGamesAdapter searchedGamesAdapter;
-    private ArrayList<GameSearchResult> listOfResult = new ArrayList<>();
+    private ArrayList<BasicGameInformation> listOfResult = new ArrayList<>();
 
     public SearchFragment() {
     }
@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
     }
 
     private void setUpRecyclerView() {
-        ArrayList<GameSearchResult> list = dbManager.getAll();
+        ArrayList<BasicGameInformation> list = dbManager.getAll();
         RecyclerView latestResearchGameRecyclerView = view.findViewById(R.id.latestResearchGameRecyclerView);
         LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list, view);
 
@@ -155,7 +155,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
     }
 
     @Override
-    public void processFinish(ArrayList<GameSearchResult> result) {
+    public void processFinish(ArrayList<BasicGameInformation> result) {
         if (shimmerFrameLayout.isShimmerStarted()) {
             shimmerFrameLayout.stopShimmer();
             view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.VISIBLE);

@@ -7,7 +7,7 @@
             type="it.adriano.tumino.gamepoint.adapter.recyclerview.ClickItemList" />
         <variable
             name="game"
-            type="it.adriano.tumino.gamepoint.data.GameSearchResult" />
+            type="it.adriano.tumino.gamepoint.data.BasicGameInformation" />
     </data>
 
     <LinearLayout
@@ -20,7 +20,7 @@
 
         <ImageView
             android:id="@+id/gameCoverSearchedImageView"
-            profileImage="@{game.imageURL}"
+            profileImage="@{game.imageHeaderURL}"
             android:layout_width="125dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"

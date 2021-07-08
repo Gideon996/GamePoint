@@ -9,8 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import it.adriano.tumino.gamepoint.data.FavoriteGames;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 
 public class DBManager {
     public static final String TAG = "DBManager";
@@ -73,17 +72,8 @@ public class DBManager {
         return delete(id);
     }
 
-    public String getUrlFromName(String name) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "select * from " + tableName + " where " + DataBaseValues.TITLE.getName() + " = '" + name + "'" + " AND "
-                + DataBaseValues.STORE.getName() + " = '" + "";
-        Cursor cur = db.rawQuery(query, null);
-        cur.moveToFirst();
-        return cur.getString(cur.getColumnIndex(DataBaseValues.URL.getName()));
-    }
-
-    public ArrayList<GameSearchResult> getAll() {
-        ArrayList<GameSearchResult> list = new ArrayList<>();
+    public ArrayList<BasicGameInformation> getAll() {
+        ArrayList<BasicGameInformation> list = new ArrayList<>();
 
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + tableName;
@@ -97,8 +87,8 @@ public class DBManager {
                 String store = cursor.getString(cursor.getColumnIndex(DataBaseValues.STORE.getName()));
                 String appID = cursor.getString(cursor.getColumnIndex(DataBaseValues.APPID.getName()));
 
-                GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, appID, null, store, "");
-                list.add(gameSearchResult);
+                BasicGameInformation basicGameInformation = new BasicGameInformation(title, imageUrl, gameUrl, appID, null, store, "");
+                list.add(basicGameInformation);
             }
         }
         cursor.close();
@@ -114,4 +104,6 @@ public class DBManager {
         Cursor cursor = db.rawQuery(query, null);
         return (cursor.getCount() > 0);
     }
+
+
 }

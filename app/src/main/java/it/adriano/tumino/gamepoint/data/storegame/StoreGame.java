@@ -5,42 +5,31 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public abstract class Game implements Parcelable {
+import it.adriano.tumino.gamepoint.data.Game;
 
-    private String title;
+public abstract class StoreGame extends Game implements Parcelable {
+
+
     private String description;
-    private String imageHeaderUrl;
-    private String price;
+
     private String releaseData;
     private ArrayList<String> screenshotsUrl;
 
-    public Game() {
+    public StoreGame() {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(title);
+        super.writeToParcel(out, flags);
         out.writeString(description);
-        out.writeString(imageHeaderUrl);
-        out.writeString(price);
         out.writeString(releaseData);
         out.writeStringList(screenshotsUrl);
     }
 
-    protected Game(Parcel in) { //devono essere in ordine di come li scrivo
-        title = in.readString();
+    protected StoreGame(Parcel in) { //devono essere in ordine di come li scrivo
+        super(in);
         description = in.readString();
-        imageHeaderUrl = in.readString();
-        price = in.readString();
         releaseData = in.readString();
         screenshotsUrl = in.createStringArrayList();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -49,22 +38,6 @@ public abstract class Game implements Parcelable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getImageHeaderUrl() {
-        return imageHeaderUrl;
-    }
-
-    public void setImageHeaderUrl(String imageHeaderUrl) {
-        this.imageHeaderUrl = imageHeaderUrl;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 
     public String getReleaseData() {

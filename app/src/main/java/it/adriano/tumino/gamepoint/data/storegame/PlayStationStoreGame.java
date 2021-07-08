@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class PlayStationGame extends Game {
+public class PlayStationStoreGame extends StoreGame {
     private String rating;
     private String numberOfPlayers;
     private String inGamePurchases;
@@ -18,10 +18,10 @@ public class PlayStationGame extends Game {
     private ArrayList<String> subGenreList;
 
 
-    public PlayStationGame() {
+    public PlayStationStoreGame() {
     }
 
-    private PlayStationGame(Parcel in) {
+    private PlayStationStoreGame(Parcel in) {
         super(in);
         rating = in.readString();
         numberOfPlayers = in.readString();
@@ -49,13 +49,13 @@ public class PlayStationGame extends Game {
         out.writeStringList(subGenreList);
     }
 
-    public static final Parcelable.Creator<PlayStationGame> CREATOR = new Parcelable.Creator<PlayStationGame>() {
-        public PlayStationGame createFromParcel(Parcel in) {
-            return new PlayStationGame(in);
+    public static final Parcelable.Creator<PlayStationStoreGame> CREATOR = new Parcelable.Creator<PlayStationStoreGame>() {
+        public PlayStationStoreGame createFromParcel(Parcel in) {
+            return new PlayStationStoreGame(in);
         }
 
-        public PlayStationGame[] newArray(int size) {
-            return new PlayStationGame[size];
+        public PlayStationStoreGame[] newArray(int size) {
+            return new PlayStationStoreGame[size];
         }
     };
 

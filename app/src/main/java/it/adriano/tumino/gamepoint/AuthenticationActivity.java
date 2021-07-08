@@ -106,7 +106,8 @@ public class AuthenticationActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("user", user);
         Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
-        startActivity(intent, bundle);
+        intent.putExtras(bundle);
+        startActivity(intent);
         finish();
     }
 }

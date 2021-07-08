@@ -1,9 +1,11 @@
 package it.adriano.tumino.gamepoint;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -17,12 +19,21 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ActivityMainBinding binding;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Initialization Main activity and Bottom Navigation View");
 
+        FirebaseUser user = getIntent().getParcelableExtra("user");
+
+        sharedPreferences = getSharedPreferences(user.getUid(), MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString("displayName", user.getDisplayName());
+        edit.putString("email", user.getEmail());
+        edit.apply();
+        
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

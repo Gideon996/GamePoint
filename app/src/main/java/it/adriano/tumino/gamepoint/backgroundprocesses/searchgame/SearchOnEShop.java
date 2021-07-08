@@ -18,23 +18,23 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.data.GameSearchResult;
+import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 
-public class SearchOnEShop extends TaskRunner<String, ArrayList<GameSearchResult>> {
+public class SearchOnEShop extends TaskRunner<String, ArrayList<BasicGameInformation>> {
     public static final String TAG = "SearchOnEshop";
 
     private final static String STORE = "ESHOP";
     private final static String FIRST_PIECE_URL = "https://search.nintendo-europe.com/it/select?q=";
     private final static String SECOND_PIECE_URL = "&fq=type%3A*%20AND%20*%3A*&start=0&rows=24&wt=json&group=true&group.field=pg_s&group.limit=100&group.sort=score%20desc,%20date_from%20desc&sort=score%20desc,%20date_from%20desc";
 
-    public AsyncResponse<ArrayList<GameSearchResult>> delegate = null;
+    public AsyncResponse<ArrayList<BasicGameInformation>> delegate = null;
 
     public SearchOnEShop() {
     }
 
     @Override
-    public ArrayList<GameSearchResult> doInBackground(String... input) {
+    public ArrayList<BasicGameInformation> doInBackground(String... input) {
         Log.i(TAG, "Ricerca gioco su EShop");
 
         String name = input[0].toLowerCase();
@@ -67,7 +67,7 @@ public class SearchOnEShop extends TaskRunner<String, ArrayList<GameSearchResult
             }
 
             if (games != null) {
-                ArrayList<GameSearchResult> listOfGames = new ArrayList<>();
+                ArrayList<BasicGameInformation> listOfGames = new ArrayList<>();
                 for (int j = 0; j < games.length(); j++) {
                     JSONObject object = games.optJSONObject(j);
                     if (object == null) continue;
@@ -87,8 +87,8 @@ public class SearchOnEShop extends TaskRunner<String, ArrayList<GameSearchResult
                         for (int k = 0; k < consoleArray.length(); k++) {
                             console.append(consoleArray.optString(j));
                         }
-                        GameSearchResult gameSearchResult = new GameSearchResult(title, imageUrl, gameUrl, null, console.toString(), STORE, finalPrice);
-                        listOfGames.add(gameSearchResult);
+                        BasicGameInformation basicGameInformation = new BasicGameInformation(title, imageUrl, gameUrl, null, console.toString(), STORE, finalPrice);
+                        listOfGames.add(basicGameInformation);
                     }
                 }
                 return listOfGames;
@@ -118,7 +118,7 @@ public class SearchOnEShop extends TaskRunner<String, ArrayList<GameSearchResult
     }
 
     @Override
-    public void onPostExecute(ArrayList<GameSearchResult> nintendoList) {
+    public void onPostExecute(ArrayList<BasicGameInformation> nintendoList) {
         if (nintendoList != null) delegate.processFinish(nintendoList);
     }
 }

@@ -26,4 +26,5 @@
     <string name="content_description_game_searched">Immagine contentente la copertina del videogioco</string>
     <string name="rating_star_image">Immagine contenente la stella simbolo del rating</string>
     <string name="profile_image_comment">Immagine Profilo utente che ha fatto il commento</string>
+    <string name="nessun_preferito">Nessun Preferito</string>
 </resources>
