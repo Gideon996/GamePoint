@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
-import it.adriano.tumino.gamepoint.database.DataBaseValues;
+import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.LastSearchedGamesHolder;
 
@@ -55,8 +55,8 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
         holder.binding.setGameClicked(this);
         cancellButton.setOnClickListener(v -> {
             Log.i(TAG, "Rimozione del gioco: " + basicGameInformation.getTitle());
-            DBManager dbManager = new DBManager(view.getContext(), DataBaseValues.ULITME_RICERCHE.getName());
-            boolean result = dbManager.deleteFromNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
+            DBManager dbManager = new DBManager(view.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
+            boolean result = dbManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
             if (result) {
                 lastSearchedGamesList.remove(position);
             } else {

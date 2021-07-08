@@ -17,10 +17,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if(tableName.equals(DataBaseValues.FAVORITE_TABLE.getName())){
-            db.execSQL(DataBaseValues.generateFavoriteTable());
+        if(tableName.equals(DBUtils.FAVORITE_TABLE_TITLE)){
+            db.execSQL(DBUtils.generateFavoriteTable());
         }else{
-            db.execSQL(DataBaseValues.generateUltimeRicercheTable());
+            db.execSQL(DBUtils.generateLastResearcTable());
         }
 
     }

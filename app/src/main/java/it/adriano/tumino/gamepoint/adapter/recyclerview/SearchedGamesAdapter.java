@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
-import it.adriano.tumino.gamepoint.database.DataBaseValues;
+import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
@@ -64,7 +64,7 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
         Log.d("TEST", basicGameInformation.getTitle() + " " + basicGameInformation.getAppID() + " " + basicGameInformation.getUrl());
         Navigation.findNavController(view).navigate(R.id.select_action, bundle);
 
-        DBManager dbManager = new DBManager(view.getContext(), DataBaseValues.ULITME_RICERCHE.getName());
+        DBManager dbManager = new DBManager(view.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
         if(!dbManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore())) dbManager.save(basicGameInformation.getTitle(), basicGameInformation.getImageHeaderURL(), basicGameInformation.getStore(), basicGameInformation.getUrl(), basicGameInformation.getAppID());
         notifyDataSetChanged();
     }

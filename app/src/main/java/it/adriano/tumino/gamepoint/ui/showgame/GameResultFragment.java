@@ -39,7 +39,7 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchSteamGame;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.database.DBManager;
-import it.adriano.tumino.gamepoint.database.DataBaseValues;
+import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameResultBinding;
 import it.adriano.tumino.gamepoint.utils.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
@@ -127,7 +127,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         Log.i(TAG, "Inizio il processo di background");
         game.execute();
 
-        favoriteDBManager = new DBManager(binding.getRoot().getContext(), DataBaseValues.FAVORITE_TABLE.getName());
+        favoriteDBManager = new DBManager(binding.getRoot().getContext(), DBUtils.FAVORITE_TABLE_TITLE);
 
         tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
         tabLayout.addOnTabSelectedListener(this); //imposto il listener
@@ -182,7 +182,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     private void favoriteRoutines() {
         if (presenteNelDB) {
-            favoriteDBManager.deleteFromNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
+            favoriteDBManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
             if (adapter != null) adapter.removeFavoriteGame(basicGameInformation);
             Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.BLACK);

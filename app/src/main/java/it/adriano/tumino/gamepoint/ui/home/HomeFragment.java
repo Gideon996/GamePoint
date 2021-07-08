@@ -18,7 +18,7 @@ import java.util.List;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.FavoriteGamesAdapter;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
-import it.adriano.tumino.gamepoint.database.DataBaseValues;
+import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -47,8 +47,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        DBManager dbManager = new DBManager(this.getContext(), DataBaseValues.FAVORITE_TABLE.getName());
-        List<BasicGameInformation> favoriteGames = dbManager.getAll();
+        DBManager dbManager = new DBManager(this.getContext(), DBUtils.FAVORITE_TABLE_TITLE);
+        List<BasicGameInformation> favoriteGames = dbManager.getAllElements();
         if (favoriteGames.size() != 0) {
             FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(favoriteGames, getChildFragmentManager());
             recyclerView.setAdapter(favoriteGamesAdapter);

@@ -32,7 +32,7 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnPSN;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnSteam;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
-import it.adriano.tumino.gamepoint.database.DataBaseValues;
+import it.adriano.tumino.gamepoint.database.DBUtils;
 
 public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<BasicGameInformation>> {
     private DBManager dbManager;
@@ -58,7 +58,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         ImageButton searchButton = view.findViewById(R.id.searchGameButton);
         editText = view.findViewById(R.id.searchGameEditText);
 
-        dbManager = new DBManager(getContext(), DataBaseValues.ULITME_RICERCHE.getName()); //ultime ricerche
+        dbManager = new DBManager(getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE); //ultime ricerche
 
         setUpRecyclerView(); //setup tutte le recyclerView
 
@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
     }
 
     private void setUpRecyclerView() {
-        ArrayList<BasicGameInformation> list = dbManager.getAll();
+        ArrayList<BasicGameInformation> list = dbManager.getAllElements();
         RecyclerView latestResearchGameRecyclerView = view.findViewById(R.id.latestResearchGameRecyclerView);
         LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list, view);
 
