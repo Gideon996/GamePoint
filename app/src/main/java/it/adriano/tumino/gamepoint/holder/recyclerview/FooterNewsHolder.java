@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.holder.recyclerview;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -20,8 +22,13 @@ public class FooterNewsHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Object obj) {
+        binding.loadingOtherNewsTextView.setVisibility(View.GONE);
+        binding.viewMoreNewsButton.setVisibility(View.VISIBLE);
+
         binding.executePendingBindings();
         binding.viewMoreNewsButton.setOnClickListener(v -> {
+            binding.loadingOtherNewsTextView.setVisibility(View.VISIBLE);
+            binding.viewMoreNewsButton.setVisibility(View.GONE);
             int nextPage = ((Integer) obj) + 1;
             CatchNews updateNews = new CatchNews(delegate);
             updateNews.execute(nextPage);

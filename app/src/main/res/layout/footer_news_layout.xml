@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:id="@+id/footerNewsLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="@dimen/padding_news">
+
+        <TextView
+            android:id="@+id/loadingOtherNewsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Caricamento..."
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/viewMoreNewsButton"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"

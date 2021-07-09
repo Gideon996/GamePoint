@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable
-            name="newsClickListener"
-            type="it.adriano.tumino.gamepoint.adapter.recyclerview.ClickItemList" />
         <variable
             name="news"
             type="it.adriano.tumino.gamepoint.data.News" />
@@ -19,7 +17,6 @@
             android:id="@+id/lastGameLayout"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:onClick="@{() -> newsClickListener.itemClicked(news.newsUrl)}"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
@@ -59,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingStart="10dp">
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry">
 
                 <TextView
                     android:id="@+id/newsTitleTextView"
@@ -73,7 +71,8 @@
                     android:text="@{news.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
 
                 <TextView
                     android:id="@+id/newsDescriptionTextView"
@@ -91,9 +90,8 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/view2"
             android:layout_width="300dp"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_gravity="center"
             android:background="@color/Gray" />
     </LinearLayout>

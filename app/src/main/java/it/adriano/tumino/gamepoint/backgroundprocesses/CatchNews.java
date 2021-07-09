@@ -3,6 +3,8 @@ package it.adriano.tumino.gamepoint.backgroundprocesses;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -12,6 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.utils.Utils;
@@ -27,21 +34,40 @@ public class CatchNews extends TaskRunner<Integer, List<News>> {
     public AsyncResponse<List<News>> delegate;
 
     public CatchNews(AsyncResponse<List<News>> delegate) {
-        Log.i(TAG, "Creazione Catch News");
         this.delegate = delegate;
     }
 
     @Override
-    public List<News> doInBackground(Integer... integers) {
-        Log.i(TAG, "Prelevamento Notizie");
-        ArrayList<News> list = getEveryeye(integers[0]);
+    public List<News> doInBackground(@NonNull Integer... integers) {
+        Log.i(TAG, "Starting catch news");
+        Callable<List<News>> callable1 = () -> getEveryeye(integers[0]);
+        Callable<List<News>> callable2 = () -> getMultiplayer(integers[0]);
+
+        List<Callable<List<News>>> taskList = new ArrayList<>();
+        taskList.add(callable1);
+        taskList.add(callable2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        try {
+            //start the threads and wait for them to finish
+            List<Future<List<News>>> results = executor.invokeAll(taskList);
+            ArrayList<News> list = new ArrayList<>();
+            for (Future<List<News>> result : results) {
+                list.addAll(result.get());
+            }
+            return list;
+        } catch (InterruptedException | ExecutionException ie) {
+            //do something if you care about interruption;
+            return new ArrayList<>();
+        }
+
+        /*ArrayList<News> list = getEveryeye(integers[0]);
         list.addAll(getMultiplayer(integers[0]));
-        return list;
+        return list;*/
     }
 
     @Override
     public void onPostExecute(List<News> gameNewsList) {
-        Log.i(TAG, "Inserimento Notizie");
+        Log.i(TAG, "Retrived News, started delegation");
         delegate.processFinish(gameNewsList);
     }
 
@@ -50,12 +76,10 @@ public class CatchNews extends TaskRunner<Integer, List<News>> {
         ArrayList<News> list = new ArrayList<>();
         try {
             Document document = Utils.getDocumentFromUrl(url);
-
-            //Se il documento presenta la classe fvideogioco allora al proprio interno ci possono essere 0 o più notizie
+            Log.i(TAG, "Starting parsing Everyeye's HTML for the news");
             Elements elements = document.getElementsByClass("fvideogioco");
             for (Element element : elements) {
                 String imageURL = element.getElementsByClass("lazy").get(0).attributes().get("data-src");
-
                 Element news = element.getElementsByClass("testi_notizia").get(0);
                 String date = news.getElementsByTag("span").get(0).text().split(",")[1].substring(1);
                 String[] a = date.split(" ");
@@ -72,19 +96,18 @@ public class CatchNews extends TaskRunner<Integer, List<News>> {
             }
 
         } catch (IOException e) {
-            Log.e(TAG, "Errore Prelevamento Notizie Everyeye: " + e.getMessage());
+            Log.e(TAG, "Error on Everyeye: " + e.getMessage());
         }
         return list;
     }
 
     @SuppressLint("SimpleDateFormat")
     private ArrayList<News> getMultiplayer(int page) {
-        Log.i(TAG, "Prelevamento Notizie da Multiplayer");
         String url = URL_MULTIPLAYER + page;
         ArrayList<News> list = new ArrayList<>();
         try {
             Document document = Utils.getDocumentFromUrl(url);
-
+            Log.i(TAG, "Starting parsing Multiplayer's HTML for the news");
             Elements elements = document.getElementsByClass("media");
             for (Element element : elements) {
                 String imageURL = element.getElementsByTag("img").get(0).attributes().get("data-src"); //nullo se non è possibile trovare il tag
@@ -106,7 +129,7 @@ public class CatchNews extends TaskRunner<Integer, List<News>> {
                 }
             }
         } catch (IOException e) {
-            Log.e(TAG, "Errore Prelevamento Notizie Multiplayer: " + e.getMessage());
+            Log.e(TAG, "Error on Multiplayer: " + e.getMessage());
         }
         return list;
     }
