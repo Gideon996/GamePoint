@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.adapter.recyclerview.FavoriteGamesAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchNintendoGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchMicrosoftGame;
@@ -41,7 +40,7 @@ import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameResultBinding;
-import it.adriano.tumino.gamepoint.utils.TaskRunner;
+import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class GameResultFragment extends Fragment implements AsyncResponse<StoreGame>, TabLayout.OnTabSelectedListener {
@@ -62,8 +61,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     private TaskRunner<Void, StoreGame> game;
     private final Bundle information = new Bundle();
 
-    private FavoriteGamesAdapter adapter = null;
-
     private TabLayout tabLayout;
 
 
@@ -73,16 +70,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         fragments[1] = new GalleryFragment();
         fragments[2] = new GameSpecificationsFragment();
         fragments[3] = new GameCommentsFragment();
-    }
-
-    public GameResultFragment(FavoriteGamesAdapter adapter) {
-        Log.i(TAG, "Inizializzazione dei fragments e configurazione dell'adapter");
-        fragments[0] = new DescriptionFragment();
-        fragments[1] = new GalleryFragment();
-        fragments[2] = new GameSpecificationsFragment();
-        fragments[3] = new GameCommentsFragment();
-
-        this.adapter = adapter;
     }
 
     @Override
@@ -183,13 +170,11 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     private void favoriteRoutines() {
         if (presenteNelDB) {
             favoriteDBManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
-            if (adapter != null) adapter.removeFavoriteGame(basicGameInformation);
             Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.BLACK);
             presenteNelDB = false;
         } else {
             favoriteDBManager.save(basicGameInformation.getTitle(), basicGameInformation.getImageHeaderURL(), basicGameInformation.getStore(), basicGameInformation.getUrl(), basicGameInformation.getAppID());
-            if (adapter != null) adapter.addFavoriteGame(basicGameInformation);
             Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             presenteNelDB = true;

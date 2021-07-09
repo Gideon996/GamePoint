@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.PlayStationStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
-import it.adriano.tumino.gamepoint.utils.TaskRunner;
+import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {

@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.news.NewsFragment">
 
-    <TextView
-        android:id="@+id/newsTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsRecycleView"
         android:layout_width="0dp"
@@ -26,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsTextView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/newsShimmerLayout"
@@ -37,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsTextView"
+        app:layout_constraintTop_toTopOf="parent"
         app:shimmer_repeat_mode="restart"
         app:shimmer_shape="radial">
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
-import it.adriano.tumino.gamepoint.utils.TaskRunner;
+import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
 
 public class SearchOnPSN extends TaskRunner<String, ArrayList<BasicGameInformation>> {
     public static final String TAG = "SearchOnPSN";

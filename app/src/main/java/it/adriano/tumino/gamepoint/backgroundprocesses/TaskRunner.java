@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.utils;
+package it.adriano.tumino.gamepoint.backgroundprocesses;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -14,19 +14,19 @@ public abstract class TaskRunner<I, O> {
     }
 
     @SafeVarargs
-    public final void startBackground(I... i) {
+    public final void startBackground(I... input) {
         executor.execute(() -> {
-            O o = doInBackground(i);
-            handler.post(() -> onPostExecute(o));
+            O output = doInBackground(input);
+            handler.post(() -> onPostExecute(output));
         });
     }
 
     @SafeVarargs
-    public final void execute(I... i) {
-        startBackground(i);
+    public final void execute(I... input) {
+        startBackground(input);
     }
 
-    public abstract O doInBackground(I... i);
+    public abstract O doInBackground(I... input);
 
-    public abstract void onPostExecute(O o);
+    public abstract void onPostExecute(O output);
 }

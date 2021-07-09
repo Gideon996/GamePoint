@@ -11,72 +11,92 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/lastGameLayout"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_news"
-        android:onClick="@{() -> newsClickListener.itemClicked(news.newsUrl)}">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="125dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/newsImageView"
-                android:layout_width="125dp"
-                android:layout_height="100dp"
-                android:contentDescription="@string/content_description_image_view"
-                profileImage="@{news.imageURL}"/>
-
-            <TextView
-                android:id="@+id/newsSiteTextView"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@{news.website}" />
-
-            <TextView
-                android:id="@+id/dateTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@{news.date}" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/lastGameLayout"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:orientation="vertical"
-            android:paddingStart="10dp">
+            android:layout_height="170dp"
+            android:onClick="@{() -> newsClickListener.itemClicked(news.newsUrl)}"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="5dp">
 
-            <TextView
-                android:id="@+id/newsTitleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeStepGranularity="1dp"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal|left"
-                android:text="@{news.title}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/newsDescriptionTextView"
+                <ImageView
+                    android:id="@+id/newsImageView"
+                    profileImage="@{news.imageURL}"
+                    android:layout_width="125dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/content_description_image_view" />
+
+                <TextView
+                    android:id="@+id/newsSiteTextView"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@{news.website}"
+                    android:textColor="@color/silver" />
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@{news.date}"
+                    android:textColor="@color/silver" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="4dp"
-                android:autoSizeStepGranularity="1dp"
-                android:autoSizeTextType="uniform"
-                android:text="@{news.body}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/Gray" />
+                android:orientation="vertical"
+                android:paddingStart="10dp">
+
+                <TextView
+                    android:id="@+id/newsTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:autoSizeMaxTextSize="20dp"
+                    android:autoSizeMinTextSize="8dp"
+                    android:autoSizeStepGranularity="1dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal|left"
+                    android:text="@{news.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/newsDescriptionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autoSizeMaxTextSize="20dp"
+                    android:autoSizeMinTextSize="4dp"
+                    android:autoSizeStepGranularity="1dp"
+                    android:autoSizeTextType="uniform"
+                    android:text="@{news.body}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/silver" />
+            </LinearLayout>
+
         </LinearLayout>
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/Gray" />
     </LinearLayout>
+
 </layout>
 

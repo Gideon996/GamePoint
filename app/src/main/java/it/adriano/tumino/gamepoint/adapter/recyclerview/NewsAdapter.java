@@ -1,45 +1,36 @@
 package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.databinding.FooterNewsLayoutBinding;
 import it.adriano.tumino.gamepoint.databinding.NewsLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.FooterNewsHolder;
-import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.holder.recyclerview.NewsHolder;
-import it.adriano.tumino.gamepoint.ui.news.NewsViewModel;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ClickItemList {
+public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AsyncResponse<List<News>> {
     public static final String TAG = "NewsAdapter";
 
-    private final ArrayList<News> newsList;
+    private final List<News> newsList;
     private int currentPage;
-    private final NewsViewModel newsViewModel;
-    private final Activity activity;
 
     private static final int TYPE_FOOTER = 1;
 
-    public NewsAdapter(ArrayList<News> newsList, int currentPage, Activity activity, NewsViewModel newsViewModel) {
+    public NewsAdapter(List<News> newsList, int currentPage) {
         Log.i(TAG, "Generazione News Adapter");
         this.newsList = newsList;
         this.currentPage = currentPage;
-        this.activity = activity;
-        this.newsViewModel = newsViewModel;
     }
 
     @NotNull
@@ -47,8 +38,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_FOOTER) {
             Log.i(TAG, "Inserimento Footer Layout");
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_news_layout, parent, false);
-            return new FooterNewsHolder(itemView);
+            FooterNewsLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.footer_news_layout, parent, false);
+            return new FooterNewsHolder(binding, this);
         }
         Log.i(TAG, "Inserimento Item Layout");
         NewsLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.news_layout, parent, false);
@@ -59,23 +50,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterNewsHolder) {
             Log.i(TAG, "Riempimento Footer Layout e aggiunta onClickListener");
-
-            FooterNewsHolder footerViewHolder = (FooterNewsHolder) holder;
-            Button visualizzaAltro = footerViewHolder.getButton();
-            visualizzaAltro.setOnClickListener(v -> {
-                currentPage++;
-                CatchNews updateNews = new CatchNews(newsViewModel, this);
-                updateNews.execute(currentPage);
-            });
+            FooterNewsHolder holderBinding = (FooterNewsHolder) holder;
+            holderBinding.bind(currentPage);
+            currentPage++;
         } else if (holder instanceof NewsHolder) {
             Log.i(TAG, "Riempimento News Layout e aggiunta onClickListener");
-
             NewsHolder holderBinding = (NewsHolder) holder;
             News news = newsList.get(position);
             holderBinding.bind(news);
-            holderBinding.binding.setNewsClickListener(this);
         }
-
     }
 
     @Override
@@ -92,10 +75,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     }
 
     @Override
-    public void itemClicked(Object urlNews) {
-        String url = (String) urlNews;
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        activity.startActivity(intent);
+    public void processFinish(List<News> result) {
+        newsList.addAll(result);
+        notifyItemRangeInserted(newsList.size() - result.size(), result.size());
     }
 }
 

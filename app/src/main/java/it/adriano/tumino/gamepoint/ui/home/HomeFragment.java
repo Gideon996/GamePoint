@@ -26,8 +26,6 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-    //private ShimmerFrameLayout shimmerFrameLayout;
-    private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "Home Generation");
@@ -38,7 +36,8 @@ public class HomeFragment extends Fragment {
 
         //shimmerFrameLayout = binding.shimmerFavoriteLayout;
         TextView noFavoriteGamesTextView = binding.noFavoriteGamesTextView;
-        recyclerView = binding.favoriteGamesRecycleView;
+        //private ShimmerFrameLayout shimmerFrameLayout;
+        RecyclerView recyclerView = binding.favoriteGamesRecycleView;
 
         //shimmerFrameLayout.startShimmer(); //start shimmer for favorite games
 
@@ -50,7 +49,7 @@ public class HomeFragment extends Fragment {
         DBManager dbManager = new DBManager(this.getContext(), DBUtils.FAVORITE_TABLE_TITLE);
         List<BasicGameInformation> favoriteGames = dbManager.getAllElements();
         if (favoriteGames.size() != 0) {
-            FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(favoriteGames, getChildFragmentManager());
+            FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(favoriteGames);
             recyclerView.setAdapter(favoriteGamesAdapter);
             noFavoriteGamesTextView.setVisibility(View.GONE);
         }

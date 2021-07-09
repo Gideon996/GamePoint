@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
-import it.adriano.tumino.gamepoint.utils.TaskRunner;
+import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
 
 public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> {
     private static final String TAG = "CatchGameFromMCS";
