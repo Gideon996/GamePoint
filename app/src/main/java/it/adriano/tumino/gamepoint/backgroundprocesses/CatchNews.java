@@ -48,7 +48,6 @@ public class CatchNews extends TaskRunner<Integer, List<News>> {
         taskList.add(callable2);
         ExecutorService executor = Executors.newFixedThreadPool(2);
         try {
-            //start the threads and wait for them to finish
             List<Future<List<News>>> results = executor.invokeAll(taskList);
             ArrayList<News> list = new ArrayList<>();
             for (Future<List<News>> result : results) {
@@ -56,13 +55,8 @@ public class CatchNews extends TaskRunner<Integer, List<News>> {
             }
             return list;
         } catch (InterruptedException | ExecutionException ie) {
-            //do something if you care about interruption;
             return new ArrayList<>();
         }
-
-        /*ArrayList<News> list = getEveryeye(integers[0]);
-        list.addAll(getMultiplayer(integers[0]));
-        return list;*/
     }
 
     @Override

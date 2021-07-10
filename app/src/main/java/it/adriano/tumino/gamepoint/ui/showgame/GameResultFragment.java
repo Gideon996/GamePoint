@@ -174,7 +174,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             favoriteButton.setColorFilter(Color.BLACK);
             presenteNelDB = false;
         } else {
-            favoriteDBManager.save(basicGameInformation.getTitle(), basicGameInformation.getImageHeaderURL(), basicGameInformation.getStore(), basicGameInformation.getUrl(), basicGameInformation.getAppID());
+            favoriteDBManager.save(basicGameInformation);
             Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
             favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             presenteNelDB = true;

@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/lastGameLayout"
+            android:id="@+id/newsLayout"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:orientation="horizontal"

@@ -23,17 +23,18 @@ public class DBManager {
         dbHelper = new DBHelper(context, tableName);
     }
 
-    public void save(String title, String imageUrl, String store, String url, String AppID) {
+
+    public void save(BasicGameInformation basicGameInformation){
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DBUtils.TITLE, title);
-        contentValues.put(DBUtils.IMAGE_URL, imageUrl);
-        contentValues.put(DBUtils.STORE, store);
-        contentValues.put(DBUtils.URL, url);
-        contentValues.put(DBUtils.APPID, AppID);
+        contentValues.put(DBUtils.TITLE, basicGameInformation.getTitle());
+        contentValues.put(DBUtils.IMAGE_URL, basicGameInformation.getImageHeaderURL());
+        contentValues.put(DBUtils.STORE, basicGameInformation.getStore());
+        contentValues.put(DBUtils.URL, basicGameInformation.getUrl());
+        contentValues.put(DBUtils.APPID, basicGameInformation.getAppID());
 
         try {
-            Log.i(TAG, "Save game " + title + " in " + tableName);
+            Log.i(TAG, "Save game " + basicGameInformation.getTitle() + " in " + tableName);
             database.insert(tableName, null, contentValues);
         } catch (SQLiteException exception) {
             Log.e(TAG, exception.toString());
