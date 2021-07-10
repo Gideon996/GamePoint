@@ -4,10 +4,6 @@
 
     <data>
         <variable
-            name="gameClicked"
-            type="it.adriano.tumino.gamepoint.adapter.recyclerview.ClickItemList" />
-
-        <variable
             name="lastGames"
             type="it.adriano.tumino.gamepoint.data.BasicGameInformation" />
     </data>
@@ -17,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_news"
-        android:onClick="@{() -> gameClicked.itemClicked(lastGames)}">
+        android:padding="@dimen/padding_news">
 
         <ImageView
             android:id="@+id/lastGameCoverSearchedImageView"

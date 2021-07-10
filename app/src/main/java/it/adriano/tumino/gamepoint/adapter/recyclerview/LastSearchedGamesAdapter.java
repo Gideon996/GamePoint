@@ -25,7 +25,7 @@ import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.LastSearchedGamesHolder;
 
 
-public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> implements ClickItemList {
+public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> {
     public static final String TAG = "SearchGamesAdapter";
     private final ArrayList<BasicGameInformation> lastSearchedGamesList;
     private final View view;
@@ -52,7 +52,6 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
         Log.i(TAG, "Riempimento Item");
         BasicGameInformation basicGameInformation = lastSearchedGamesList.get(position);
         holder.bind(basicGameInformation);
-        holder.binding.setGameClicked(this);
         cancellButton.setOnClickListener(v -> {
             Log.i(TAG, "Rimozione del gioco: " + basicGameInformation.getTitle());
             DBManager dbManager = new DBManager(view.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
@@ -73,14 +72,5 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
     @Override
     public int getItemCount() {
         return lastSearchedGamesList.size();
-    }
-
-    @Override
-    public void itemClicked(Object game) {
-        BasicGameInformation basicGameInformation = (BasicGameInformation) game;
-        Bundle bundle = new Bundle();
-
-        bundle.putParcelable("game", basicGameInformation);
-        Navigation.findNavController(view).navigate(R.id.select_action, bundle);
     }
 }

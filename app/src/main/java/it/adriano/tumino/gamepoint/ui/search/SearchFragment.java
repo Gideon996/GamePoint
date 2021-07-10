@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.SearchedGamesAdapter;
@@ -41,7 +42,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
     private ShimmerFrameLayout shimmerFrameLayout;
 
     private SearchedGamesAdapter searchedGamesAdapter;
-    private ArrayList<BasicGameInformation> listOfResult = new ArrayList<>();
+    private final ArrayList<BasicGameInformation> listOfResult = new ArrayList<>();
 
     public SearchFragment() {
     }
@@ -53,16 +54,15 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search"); //Necessario per quando torno indietro dalla schermata di gioco
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Search");
         view = inflater.inflate(R.layout.fragment_search_game, container, false);
         ImageButton searchButton = view.findViewById(R.id.searchGameButton);
         editText = view.findViewById(R.id.searchGameEditText);
 
         dbManager = new DBManager(getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE); //ultime ricerche
 
-        setUpRecyclerView(); //setup tutte le recyclerView
+        setUpRecyclerView();
 
-        //listener per la ricerca
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 enterKey(editText.getText().toString());
@@ -132,25 +132,14 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         } else {
             shimmerFrameLayout.setVisibility(View.VISIBLE);
             shimmerFrameLayout.startShimmer();
-            listOfResult.clear(); //svuoto la lista precedente
+            listOfResult.clear();
 
-            //faccio scomparire la tastiera dallo schermo
             closeKeyboard();
 
-            //mostrare possibili valori -> andrebbe inserito lo shimmer
             view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.GONE);
             view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
 
-            //Cercare Sui vari siti i valori
             catchInformation(text);
-
-            //Inserire listener al click
-            //Aggiungere il gioco ai preferiti
-            //Aprire informazioni [
-            //Bundle bundle = new Bundle();
-            //bundle.putString("test", "sto provando a passare un valore");
-            //Navigation.findNavController(v).navigate(R.id.search_action, bundle);
-            //]
         }
     }
 

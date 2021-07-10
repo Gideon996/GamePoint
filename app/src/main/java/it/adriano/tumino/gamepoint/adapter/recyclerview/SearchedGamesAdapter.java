@@ -1,6 +1,5 @@
 package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +15,10 @@ import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
-import it.adriano.tumino.gamepoint.database.DBManager;
-import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
-public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> implements ClickItemList {
+public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> {
     public static final String TAG = "SearchGamesAdapter";
     private final ArrayList<BasicGameInformation> searchedGames;
     private final View view;
@@ -47,7 +43,6 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
         Log.i(TAG, "Riempimento Item");
         BasicGameInformation basicGameInformation = searchedGames.get(position);
         holder.bind(basicGameInformation);
-        holder.binding.setGameClicked(this);
     }
 
     @Override
@@ -55,17 +50,4 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
         return searchedGames.size();
     }
 
-    @Override
-    public void itemClicked(Object game) {
-        BasicGameInformation basicGameInformation = (BasicGameInformation) game;
-        Bundle bundle = new Bundle();
-
-        bundle.putParcelable("game", basicGameInformation);
-        Log.d("TEST", basicGameInformation.getTitle() + " " + basicGameInformation.getAppID() + " " + basicGameInformation.getUrl());
-        Navigation.findNavController(view).navigate(R.id.select_action, bundle);
-
-        DBManager dbManager = new DBManager(view.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
-        if(!dbManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore())) dbManager.save(basicGameInformation);
-        notifyDataSetChanged();
-    }
 }
