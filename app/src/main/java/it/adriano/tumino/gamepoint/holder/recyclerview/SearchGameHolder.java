@@ -1,9 +1,7 @@
 package it.adriano.tumino.gamepoint.holder.recyclerview;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +11,6 @@ import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
-import it.adriano.tumino.gamepoint.ui.showgame.GameResultFragment;
 
 public class SearchGameHolder extends RecyclerView.ViewHolder {
     public GameSearchedLayoutBinding binding;
@@ -29,17 +26,9 @@ public class SearchGameHolder extends RecyclerView.ViewHolder {
         binding.searchedGameLayout.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             Bundle bundle = new Bundle();
-
             bundle.putParcelable("game", basicGameInformation);
-            Log.d("TEST", basicGameInformation.getTitle() + " " + basicGameInformation.getAppID() + " " + basicGameInformation.getUrl());
 
-            GameResultFragment fragment = new GameResultFragment();
-            fragment.setArguments(bundle);
-            FragmentActivity activity = (FragmentActivity) binding.searchedGameLayout.getContext();
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.searchLayout, fragment)
-                    .setReorderingAllowed(true)
-                    .commit();
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.navigate_to_searched, bundle);
 
             DBManager dbManager = new DBManager(binding.getRoot().getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
             if (!dbManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore())) {

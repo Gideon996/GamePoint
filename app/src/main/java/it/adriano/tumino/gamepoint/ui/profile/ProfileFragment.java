@@ -1,6 +1,5 @@
 package it.adriano.tumino.gamepoint.ui.profile;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -24,7 +23,6 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import it.adriano.tumino.gamepoint.AuthenticationActivity;
-import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -65,11 +63,7 @@ public class ProfileFragment extends Fragment {
                 }));
 
         binding.impostazioniBottone.setOnClickListener(v -> {
-            SettingsFragment settingsFragment = new SettingsFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.profileLayout, settingsFragment)
-                    .setReorderingAllowed(true)
-                    .commit();
+
         });
 
     }
