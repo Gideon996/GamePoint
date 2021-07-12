@@ -18,13 +18,12 @@
         tools:layout="@layout/fragment_news" />
 
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="it.adriano.tumino.gamepoint.ui.search.SearchHostFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search_host" />
-    <fragment
         android:id="@+id/navigation_profile"
         android:name="it.adriano.tumino.gamepoint.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="it.adriano.tumino.gamepoint.ui.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <MultiSelectListPreference
+        android:background="@color/black"
+        android:defaultValue="@array/store_list"
+        android:entries="@array/store_for_settings_list"
+        android:entryValues="@array/store_list"
+        android:key="pref_regionsToInclude"
+        android:persistent="true"
+        android:summary="qualocosa mi inventerò"
+        android:title="Scegli gli store che più ti interessano" />
+
+</androidx.preference.PreferenceScreen>

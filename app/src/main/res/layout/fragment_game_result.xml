@@ -4,161 +4,168 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="game"
             type="it.adriano.tumino.gamepoint.data.storegame.StoreGame" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView2"
+    <FrameLayout
+        android:id="@+id/gameResultLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/gameHeaderImageView"
-                    imageHeaderResult="@{game.imageHeaderURL}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:cropToPadding="false"
-                    android:scaleType="fitXY"
-                    tools:src="@tools:sample/avatars" />
-
-                <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="horizontal"
-                    android:paddingRight="10dp">
-
-                    <ImageButton
-                        android:id="@+id/favoriteButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:padding="5dp"
-                        android:paddingRight="10dp"
-                        android:src="@drawable/ic_favorite_24" />
-
-                    <ImageButton
-                        android:id="@+id/shareButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_share_24" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/titleGameTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Full Metal Alchemist: Brotherhood"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@{game.title}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/storeIconView"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/icon_account_fill" />
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/gameHeaderImageView"
+                        imageHeaderResult="@{game.imageHeaderURL}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:cropToPadding="false"
+                        android:scaleType="fitXY"
+                        tools:src="@tools:sample/avatars" />
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal"
+                        android:paddingRight="10dp">
+
+                        <ImageButton
+                            android:id="@+id/favoriteButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:padding="5dp"
+                            android:paddingRight="10dp"
+                            android:src="@drawable/ic_favorite_24" />
+
+                        <ImageButton
+                            android:id="@+id/shareButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_share_24" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/priceGameTextView"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/titleGameTextView"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical"
-                    android:hint="12.99€"
-                    android:text="@{game.price}"
-                    android:textColor="@color/white" />
+                    android:hint="Full Metal Alchemist: Brotherhood"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@{game.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/releaseDataTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:hint="03 Ottobre 1911"
-                    android:text="@{game.releaseData}"
-                    android:textColor="@color/white" />
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/storeIconView"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/icon_account_fill" />
+
+                    <TextView
+                        android:id="@+id/priceGameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical"
+                        android:hint="12.99€"
+                        android:text="@{game.price}"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/releaseDataTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:hint="03 Ottobre 1911"
+                        android:text="@{game.releaseData}"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/black"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabMode="auto"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/Gray">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Descrizione" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Galleria" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Specifiche" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Commenti" />
+                </com.google.android.material.tabs.TabLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="50dp" />
             </LinearLayout>
-
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/black"
-                app:tabIndicatorColor="@color/white"
-                app:tabMode="auto"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/Gray">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Descrizione" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Galleria" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Specifiche" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Commenti" />
-            </com.google.android.material.tabs.TabLayout>
-
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="50dp" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 </layout>

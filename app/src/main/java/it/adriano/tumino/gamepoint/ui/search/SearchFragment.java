@@ -54,22 +54,28 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //change title
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Search");
+
+        //setup the view
         view = inflater.inflate(R.layout.fragment_search_game, container, false);
         ImageButton searchButton = view.findViewById(R.id.searchGameButton);
         editText = view.findViewById(R.id.searchGameEditText);
 
-        dbManager = new DBManager(getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE); //ultime ricerche
+        dbManager = new DBManager(getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE); //get db manager
 
-        setUpRecyclerView();
+        setUpRecyclerView(); //setup recyclerviews layout
 
-        editText.setOnEditorActionListener((v, actionId, event) -> {
+        editText.setOnEditorActionListener((v, actionId, event) -> { //setup changelistener for the search
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 enterKey(editText.getText().toString());
             }
             return false;
         });
-        searchButton.setOnClickListener(v -> {
+
+        searchButton.setColorFilter(R.color.silver); //set color of button
+        searchButton.setOnClickListener(v -> { //search button
             String text = editText.getText().toString();
             enterKey(text);
         });
@@ -81,7 +87,6 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         ArrayList<BasicGameInformation> list = dbManager.getAllElements();
         RecyclerView latestResearchGameRecyclerView = view.findViewById(R.id.latestResearchGameRecyclerView);
         LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list, view);
-
         latestResearchGameRecyclerView.setHasFixedSize(true);
         latestResearchGameRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         latestResearchGameRecyclerView.setAdapter(lastSearchedGamesAdapter);
@@ -93,7 +98,31 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         gameSearchResultsRecyclerView.setAdapter(searchedGamesAdapter);
 
         shimmerFrameLayout = view.findViewById(R.id.searchedGamesShimmerLayout);
+    }
 
+    private void enterKey(String text) {
+        if (text.isEmpty()) {
+            view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
+            closeKeyboard();
+            Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show();
+        } else {
+            shimmerFrameLayout.setVisibility(View.VISIBLE);
+            shimmerFrameLayout.startShimmer();
+            listOfResult.clear();
+
+            closeKeyboard();
+
+            view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.GONE);
+            view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
+
+            catchInformation(text);
+        }
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     private void catchInformation(String name) {
@@ -116,31 +145,6 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
         searchOnMicrosoft.delegate = this;
         searchOnMicrosoft.execute(name);
-    }
-
-    private void closeKeyboard() {
-        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
-
-    private void enterKey(String text) {
-        if (text.isEmpty()) {
-            view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
-            closeKeyboard();
-            Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show();
-        } else {
-            shimmerFrameLayout.setVisibility(View.VISIBLE);
-            shimmerFrameLayout.startShimmer();
-            listOfResult.clear();
-
-            closeKeyboard();
-
-            view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.GONE);
-            view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
-
-            catchInformation(text);
-        }
     }
 
     @Override

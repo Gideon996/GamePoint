@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="store_list">
+        <item>Steam</item>
+        <item>Microsoft Store</item>
+        <item>Nintendo Shop</item>
+        <item>PlayStation Store</item>
+    </string-array>
+
+    <string-array name="store_for_settings_list">
+        <item>STEAM</item>
+        <item>MCS</item>
+        <item>ESHOP</item>
+        <item>PSN</item>
+    </string-array>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+</resources>

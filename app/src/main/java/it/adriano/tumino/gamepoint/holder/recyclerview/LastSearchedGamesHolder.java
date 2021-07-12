@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import it.adriano.tumino.gamepoint.BR;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
+import it.adriano.tumino.gamepoint.ui.showgame.GameResultFragment;
 
 public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
 
@@ -27,9 +29,15 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
         binding.lastGameLayout.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             Bundle bundle = new Bundle();
-
             bundle.putParcelable("game", basicGameInformation);
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.select_action, bundle);
+
+            GameResultFragment fragment = new GameResultFragment();
+            fragment.setArguments(bundle);
+            FragmentActivity activity = (FragmentActivity) binding.lastGameLayout.getContext();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.searchLayout, fragment)
+                    .setReorderingAllowed(true)
+                    .commit();
         });
     }
 }
