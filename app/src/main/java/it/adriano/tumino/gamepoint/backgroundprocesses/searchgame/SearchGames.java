@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses;
+package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,6 +19,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 
 public class SearchGames extends TaskRunner<Void, List<BasicGameInformation>> {
@@ -39,7 +41,7 @@ public class SearchGames extends TaskRunner<Void, List<BasicGameInformation>> {
         String[] defaultValues = context.getResources().getStringArray(R.array.store_values);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> selections = sharedPreferences.getStringSet("shop", new HashSet<>(Arrays.asList(defaultValues)));
+        Set<String> selections = sharedPreferences.getStringSet("shopSelection", new HashSet<>(Arrays.asList(defaultValues)));
         Log.d(TAG, "Get Shop Preferences. Current preferences are: " + selections.toString());
 
         if (selections.size() == 0) return null;
@@ -53,19 +55,16 @@ public class SearchGames extends TaskRunner<Void, List<BasicGameInformation>> {
         for (String selection : selections) {
             switch (selection) {
                 case "STEAM":
-                    //taskList.add(callableSteam);
+                    taskList.add(callableSteam);
                     break;
-
                 case "ESHOP":
-                    //taskList.add(callableNintendo);
+                    taskList.add(callableNintendo);
                     break;
-
                 case "MCS":
                     taskList.add(callableMicrosoft);
                     break;
-
                 case "PSN":
-                    //taskList.add(callablePlayStation);
+                    taskList.add(callablePlayStation);
                     break;
             }
         }
