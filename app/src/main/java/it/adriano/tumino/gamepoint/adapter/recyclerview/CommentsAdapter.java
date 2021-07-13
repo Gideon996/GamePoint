@@ -22,7 +22,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentHolder> {
     private final List<Comment> comments;
 
     public CommentsAdapter(List<Comment> comments) {
-        Log.i(TAG, "Generazione Comments Adapter");
         this.comments = comments;
     }
 

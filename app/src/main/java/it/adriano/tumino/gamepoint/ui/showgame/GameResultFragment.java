@@ -95,7 +95,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
                 break;
             case "ESHOP":
                 game = new CatchNintendoGame(basicGameInformation.getUrl(), basicGameInformation.getPrice());
-                logoName = "logo_eshop2.png";
+                logoName = "logo_eshop.png";
                 ((CatchNintendoGame) game).delegate = this;
                 break;
         }

@@ -24,13 +24,14 @@ public class DBManager {
     }
 
 
-    public void save(BasicGameInformation basicGameInformation){
+    public void save(BasicGameInformation basicGameInformation) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBUtils.TITLE, basicGameInformation.getTitle());
         contentValues.put(DBUtils.IMAGE_URL, basicGameInformation.getImageHeaderURL());
         contentValues.put(DBUtils.STORE, basicGameInformation.getStore());
         contentValues.put(DBUtils.URL, basicGameInformation.getUrl());
+        contentValues.put(DBUtils.PRICE, basicGameInformation.getPrice());
         contentValues.put(DBUtils.APPID, basicGameInformation.getAppID());
 
         try {
@@ -59,6 +60,8 @@ public class DBManager {
         try {
             SQLiteDatabase database = dbHelper.getReadableDatabase();
             cursor = database.query(tableName, null, null, null, null, null, null, null);
+            database.close();
+            cursor.close();
         } catch (SQLiteException exception) {
             Log.e(TAG, exception.toString());
             return null;
@@ -72,10 +75,13 @@ public class DBManager {
 
         String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name, store);
         Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-        long id = cursor.getLong(cursor.getColumnIndex(DBUtils.ID));
-        Log.d(TAG, "Delete game " + id + " in " + tableName);
-        return delete(id);
+        if (cursor != null && cursor.moveToFirst()) {
+            long id = cursor.getLong(cursor.getColumnIndex(DBUtils.ID));
+            Log.d(TAG, "Delete game " + id + " in " + tableName);
+            cursor.close();
+            return delete(id);
+        }
+        return false;
     }
 
     public ArrayList<BasicGameInformation> getAllElements() {
@@ -92,14 +98,13 @@ public class DBManager {
                 String imageUrl = cursor.getString(cursor.getColumnIndex(DBUtils.IMAGE_URL));
                 String gameUrl = cursor.getString(cursor.getColumnIndex(DBUtils.URL));
                 String store = cursor.getString(cursor.getColumnIndex(DBUtils.STORE));
+                String price = cursor.getString(cursor.getColumnIndex(DBUtils.PRICE));
                 String appID = cursor.getString(cursor.getColumnIndex(DBUtils.APPID));
 
-                BasicGameInformation basicGameInformation = new BasicGameInformation(title, imageUrl, gameUrl, appID, null, store, "");
+                BasicGameInformation basicGameInformation = new BasicGameInformation(title, imageUrl, gameUrl, appID, null, store, price);
                 list.add(basicGameInformation);
             }
         }
-        cursor.close();
-        database.close();
         Log.d(TAG, "Get all games from " + tableName);
 
         return list;

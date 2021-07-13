@@ -87,7 +87,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
     private void setUpRecyclerView() {
         ArrayList<BasicGameInformation> list = dbManager.getAllElements();
         RecyclerView latestResearchGameRecyclerView = view.findViewById(R.id.latestResearchGameRecyclerView);
-        LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list, view);
+        LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list);
         latestResearchGameRecyclerView.setHasFixedSize(true);
         latestResearchGameRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         latestResearchGameRecyclerView.setAdapter(lastSearchedGamesAdapter);

@@ -3,7 +3,6 @@ package it.adriano.tumino.gamepoint.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 import androidx.annotation.Nullable;
 

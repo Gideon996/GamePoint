@@ -41,4 +41,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="no_games">NESUN ELEMENTO TROVATO</string>
+
+    <string name="description_store_icon">Immagine contenente il logo dello store %s</string>
+    <string name="cancell_item">Cancell Item</string>
 </resources>

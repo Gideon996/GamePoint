@@ -14,7 +14,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchUtils;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.utils.Utils;
 

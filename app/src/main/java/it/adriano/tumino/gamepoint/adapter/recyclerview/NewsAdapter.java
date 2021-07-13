@@ -28,7 +28,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private static final int TYPE_FOOTER = 1;
 
     public NewsAdapter(List<News> newsList, int currentPage) {
-        Log.i(TAG, "Generazione News Adapter");
         this.newsList = newsList;
         this.currentPage = currentPage;
     }
@@ -37,11 +36,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_FOOTER) {
-            Log.i(TAG, "Inserimento Footer Layout");
             FooterNewsLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.footer_news_layout, parent, false);
             return new FooterNewsHolder(binding, this);
         }
-        Log.i(TAG, "Inserimento Item Layout");
         NewsLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.news_layout, parent, false);
         return new NewsHolder(binding);
     }
@@ -49,12 +46,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     @Override
     public void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterNewsHolder) {
-            Log.i(TAG, "Riempimento Footer Layout e aggiunta onClickListener");
             FooterNewsHolder holderBinding = (FooterNewsHolder) holder;
             holderBinding.bind(currentPage);
             currentPage++;
         } else if (holder instanceof NewsHolder) {
-            Log.i(TAG, "Riempimento News Layout e aggiunta onClickListener");
             NewsHolder holderBinding = (NewsHolder) holder;
             News news = newsList.get(position);
             holderBinding.bind(news);

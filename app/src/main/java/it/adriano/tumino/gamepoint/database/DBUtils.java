@@ -9,7 +9,8 @@ public class DBUtils {
     public static final String IMAGE_URL = "Image_Url";
     public static final String STORE = "Store";
     public static final String URL = "URL";
-    public static final String APPID = "APPID";
+    public static final String APPID = "AppID";
+    public static final String PRICE = "Price";
 
     public static final String FAVORITE_TABLE_TITLE = "FavoriteTable";
     public static final String LAST_RESEARCH_TABLE_TITLE = "UltimeRicercheTable";
@@ -25,6 +26,7 @@ public class DBUtils {
         query += IMAGE_URL + " " + "TEXT" + ",";
         query += STORE + " " + "TEXT" + ",";
         query += APPID + " " + "TEXT" + ",";
+        query += PRICE + " " + "TEXT" + ",";
         query += URL + " " + "TEXT" + ")";
         return query;
     }
@@ -37,6 +39,7 @@ public class DBUtils {
         query += IMAGE_URL + " " + "TEXT" + ",";
         query += STORE + " " + "TEXT" + ",";
         query += APPID + " " + "TEXT" + ",";
+        query += PRICE + " " + "TEXT" + ",";
         query += URL + " " + "TEXT" + ")";
         return query;
     }

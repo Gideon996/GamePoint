@@ -25,7 +25,6 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotHolder> {
     private ArrayList<String> screenshotsList;
 
     public ScreenshotAdapter(ArrayList<String> screenshotsList) {
-        Log.i(TAG, "Generazione Search Games Adapter");
         this.screenshotsList = screenshotsList;
     }
 
@@ -33,7 +32,6 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotHolder> {
     @NotNull
     @Override
     public ScreenshotHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        Log.i(TAG, "Inserimento Layout");
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.screenshot_layout, parent, false);
         return new ScreenshotHolder(view);
@@ -41,7 +39,6 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ScreenshotHolder holder, int position) {
-        Log.i(TAG, "Riempimento Item");
         position = position % screenshotsList.size();
         if (!screenshotsList.get(position).isEmpty()) {
             Picasso.get()
@@ -50,7 +47,6 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotHolder> {
                     .onlyScaleDown()
                     .into(holder.getImageView());
         } else {
-            Log.i(TAG, "Immagine non disponibile, inserimento placeholder");
             GradientDrawable gd = new GradientDrawable();
             gd.setShape(GradientDrawable.RECTANGLE);
             gd.setColor(Color.BLACK);

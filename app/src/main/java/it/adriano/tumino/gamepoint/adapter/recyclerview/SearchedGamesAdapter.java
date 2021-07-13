@@ -24,7 +24,6 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
     private final View view;
 
     public SearchedGamesAdapter(ArrayList<BasicGameInformation> searchedGames, View view) {
-        Log.i(TAG, "Generazione Search Games Adapter");
         this.searchedGames = searchedGames;
         this.view = view;
     }
@@ -33,14 +32,12 @@ public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder>
     @NotNull
     @Override
     public SearchGameHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        Log.i(TAG, "Inserimento Layout");
         GameSearchedLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.game_searched_layout, parent, false);
         return new SearchGameHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull SearchGameHolder holder, int position) {
-        Log.i(TAG, "Riempimento Item");
         BasicGameInformation basicGameInformation = searchedGames.get(position);
         holder.bind(basicGameInformation);
     }
