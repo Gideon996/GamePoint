@@ -25,11 +25,15 @@
         android:id="@+id/navigation_profile"
         android:name="it.adriano.tumino.gamepoint.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/navigate_to_settings"
+            app:destination="@id/navigation_settings" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_search"
         android:name="it.adriano.tumino.gamepoint.ui.search.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="@string/title_search">
         <action
             android:id="@+id/navigate_to_searched"
             app:destination="@id/navigation_game_information" />
@@ -37,5 +41,9 @@
     <fragment
         android:id="@+id/navigation_game_information"
         android:name="it.adriano.tumino.gamepoint.ui.showgame.GameResultFragment"
-        android:label="GameResultFragment" />
+        android:label="Result" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="it.adriano.tumino.gamepoint.ui.profile.SettingsFragment"
+        android:label="Settings" />
 </navigation>

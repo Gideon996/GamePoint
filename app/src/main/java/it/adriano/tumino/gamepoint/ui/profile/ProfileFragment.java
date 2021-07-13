@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import it.adriano.tumino.gamepoint.AuthenticationActivity;
+import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -63,8 +65,7 @@ public class ProfileFragment extends Fragment {
                 }));
 
         binding.impostazioniBottone.setOnClickListener(v -> {
-
+            Navigation.findNavController(v).navigate(R.id.navigate_to_settings);
         });
-
     }
 }

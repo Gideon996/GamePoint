@@ -1,7 +1,5 @@
 package it.adriano.tumino.gamepoint.ui.showgame;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,8 +56,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     private TaskRunner<Void, StoreGame> game;
     private final Bundle information = new Bundle();
-
-    private TabLayout tabLayout;
 
 
     public GameResultFragment() {
@@ -116,7 +110,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
         favoriteDBManager = new DBManager(binding.getRoot().getContext(), DBUtils.FAVORITE_TABLE_TITLE);
 
-        tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
+        TabLayout tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
         tabLayout.addOnTabSelectedListener(this); //imposto il listener
 
         sharedButton = binding.shareButton;
@@ -161,7 +155,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             for (Fragment fragment : fragments) fragment.setArguments(information);
             setFragmentLayout(fragments[0]); //imposto il layout da visualizzare
 
-            sharedButton.setOnClickListener(v -> shareButton(result.getImageHeaderURL(), result.getTitle()));
+            sharedButton.setOnClickListener(v -> Utils.shareContent(getContext(), result.getImageHeaderURL(), BASE_TEXT + result.getTitle()));
 
             favoriteButton.setOnClickListener(v -> favoriteRoutines());
         }
@@ -179,29 +173,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             presenteNelDB = true;
         }
-    }
-
-    private void shareButton(String imageUrl, String text) {
-        Picasso.get().load(imageUrl).into(new Target() { //carico l'immagine in cache
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Intent i = new Intent(Intent.ACTION_SEND); //Inizializzo Intent da fare
-                i.setType("image/*"); //setto il tipo del contenuto
-                i.putExtra(Intent.EXTRA_STREAM, Utils.getLocalBitmapUri(requireContext(), bitmap)); //Inserisco l'immagine
-                i.putExtra(Intent.EXTRA_TEXT, BASE_TEXT + text); //Inserisco il testo per l'immagine
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //Uso i permessi
-                startActivity(Intent.createChooser(i, "Share Image")); //Inizio l'activity
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) { //Nel caso non riesco a prelevare l'immagine
-                Log.e(TAG, "Impossibile prelevare l'immagine");
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) { //per prelevare l'immagine
-            }
-        });
     }
 
     @Override

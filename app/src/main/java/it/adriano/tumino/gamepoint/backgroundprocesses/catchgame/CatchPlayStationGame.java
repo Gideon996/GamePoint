@@ -28,7 +28,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... i) {
-        String jsonText;
+        /*String jsonText;
         try {
             jsonText = Utils.getJsonFromUrl(finalURL);
             Log.d("TEST", jsonText);
@@ -47,7 +47,8 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {
         } catch (JSONException exception) {
             Log.e(TAG, exception.getMessage());
             return null;
-        }
+        }*/
+        return null;
     }
 
     private PlayStationStoreGame jsonParser(String json) throws JSONException {

@@ -1,5 +1,6 @@
 package it.adriano.tumino.gamepoint;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -11,7 +12,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import it.adriano.tumino.gamepoint.backgroundprocesses.StoresSearchManager;
 import it.adriano.tumino.gamepoint.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

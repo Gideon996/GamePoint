@@ -32,7 +32,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... input) {
-        String jsonText;
+        /*String jsonText;
         try {
             jsonText = Utils.getJsonFromUrl(finalURL);
         } catch (IOException exception) {
@@ -50,7 +50,8 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
         } catch (JSONException exception) {
             Log.e(TAG, exception.getMessage());
             return null;
-        }
+        }*/
+        return null;
     }
 
     private SteamStoreGame jsonParser(String json) throws JSONException {

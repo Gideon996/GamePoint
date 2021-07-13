@@ -16,17 +16,20 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.SearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.LastSearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.backgroundprocesses.SearchGames;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnEShop;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnMicrosoft;
 import it.adriano.tumino.gamepoint.backgroundprocesses.searchgame.SearchOnPSN;
@@ -35,11 +38,12 @@ import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;
 
-public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<BasicGameInformation>> {
+public class SearchFragment extends Fragment implements AsyncResponse<List<BasicGameInformation>> {
     private DBManager dbManager;
     private View view;
     private EditText editText;
     private ShimmerFrameLayout shimmerFrameLayout;
+    private TextView anyResultTextView;
 
     private SearchedGamesAdapter searchedGamesAdapter;
     private final ArrayList<BasicGameInformation> listOfResult = new ArrayList<>();
@@ -62,6 +66,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         view = inflater.inflate(R.layout.fragment_search_game, container, false);
         ImageButton searchButton = view.findViewById(R.id.searchGameButton);
         editText = view.findViewById(R.id.searchGameEditText);
+        anyResultTextView = view.findViewById(R.id.anyResultTextView);
 
         dbManager = new DBManager(getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE); //get db manager
 
@@ -126,7 +131,12 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
     }
 
     private void catchInformation(String name) {
-        //Cercare su steam
+
+        SearchGames searchGames = new SearchGames(name, getContext());
+        searchGames.delegate = this;
+        searchGames.execute();
+
+        /*//Cercare su steam
         SearchOnSteam searchOnSteam = new SearchOnSteam();
         searchOnSteam.delegate = this;
         searchOnSteam.execute(name);
@@ -144,17 +154,28 @@ public class SearchFragment extends Fragment implements AsyncResponse<ArrayList<
         //cercare su Microsoft
         SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
         searchOnMicrosoft.delegate = this;
-        searchOnMicrosoft.execute(name);
+        searchOnMicrosoft.execute(name);*/
     }
 
     @Override
-    public void processFinish(ArrayList<BasicGameInformation> result) {
-        if (shimmerFrameLayout.isShimmerStarted()) {
+    public void processFinish(List<BasicGameInformation> result) {
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
+
+        if (result.size() == 0) {
+            anyResultTextView.setVisibility(View.VISIBLE);
+        } else {
+            view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.VISIBLE);
+            listOfResult.addAll(result);
+            searchedGamesAdapter.notifyDataSetChanged();
+        }
+
+        /*if (shimmerFrameLayout.isShimmerStarted()) {
             shimmerFrameLayout.stopShimmer();
             view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.VISIBLE);
             shimmerFrameLayout.setVisibility(View.GONE);
         }
         listOfResult.addAll(result);
-        searchedGamesAdapter.notifyDataSetChanged();
+        searchedGamesAdapter.notifyDataSetChanged();*/
     }
 }
