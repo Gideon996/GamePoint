@@ -1,20 +1,19 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses.catchgame;
+package it.adriano.tumino.gamepoint.processes.catchgame;
 
-import android.util.Log;
-
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.JsonParser;
 import it.adriano.tumino.gamepoint.data.storegame.SteamStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
-import it.adriano.tumino.gamepoint.utils.Utils;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 
-public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
+public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonParser<SteamStoreGame> {
     public static final String TAG = "CatchGameFromSteam";
 
     private static final String URL_API = "https://store.steampowered.com/api/appdetails?appids=";
@@ -31,22 +30,11 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... input) {
-
-        String json = Utils.getJsonFromUrl(finalURL);
-        if (json.isEmpty()) {
-            Log.e(TAG, "Unable to open the game");
-            return null;
-        }
-
-        try {
-            return jsonParser(json);
-        } catch (JSONException exception) {
-            Log.e(TAG, exception.getMessage());
-            return null;
-        }
+        return getJsonAndParsing(finalURL, TAG);
     }
 
-    private SteamStoreGame jsonParser(String json) throws JSONException {
+    @Override
+    public SteamStoreGame jsonParser(@NotNull String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json); //creo l'oggetto
         JSONObject result = jsonObject.getJSONObject(appID); //prendo il risultato
 
@@ -59,7 +47,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
         String name = "N.A.";
         String description = "N.A.";
         String languages = "N.A.";
-        String image = "https://i2.wp.com/www.meganerd.it/wp-content/uploads/2020/11/full-metal-alchemisy-kanzeban.jpg?fit=2560%2C1680&ssl=1";
+        String image = "https://www.pdvg.it/wp-content/uploads/2021/05/Steam-2.jpeg";
         String website = "https://store.steampowered.com/";
         String minimum = "N.A.";
         String recommended = "";

@@ -1,6 +1,5 @@
 package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.databinding.FooterNewsLayoutBinding;
 import it.adriano.tumino.gamepoint.databinding.NewsLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.FooterNewsHolder;

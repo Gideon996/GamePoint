@@ -1,22 +1,19 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses.catchgame;
+package it.adriano.tumino.gamepoint.processes.catchgame;
 
-import android.util.Log;
-
-import org.jsoup.Jsoup;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.WebScrapping;
 import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
-import it.adriano.tumino.gamepoint.utils.Utils;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 
-public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
+public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements WebScrapping<NintendoStoreGame> {
     private static final String TAG = "CatchGameFromEShop";
 
     private static final String BASE_URL = "https://www.nintendo.it";
@@ -33,16 +30,11 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... integers) {
-        Document document = Utils.getDocumentFromUrl(finalURL);
-        if (document == null) {
-            Log.e(TAG, "Unable to open the game");
-            return null;
-        }
-
-        return getGame(document);
+        return getWebPageAndParsing(finalURL, TAG);
     }
 
-    private NintendoStoreGame getGame(Document document) {
+    @Override
+    public NintendoStoreGame scrapping(@NotNull Document document) {
         NintendoStoreGame game = new NintendoStoreGame();
         game.setPrice(price);
 
@@ -156,5 +148,4 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
     public void onPostExecute(StoreGame output) {
         delegate.processFinish(output);
     }
-
 }

@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
+package it.adriano.tumino.gamepoint.processes.searchgame;
 
 import android.util.Log;
 

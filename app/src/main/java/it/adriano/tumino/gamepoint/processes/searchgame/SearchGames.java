@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses.searchgame;
+package it.adriano.tumino.gamepoint.processes.searchgame;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,8 +19,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 
 public class SearchGames extends TaskRunner<Void, List<BasicGameInformation>> {

@@ -1,20 +1,21 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses.catchgame;
+package it.adriano.tumino.gamepoint.processes.catchgame;
 
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.JsonParser;
 import it.adriano.tumino.gamepoint.data.storegame.PlayStationStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
-import it.adriano.tumino.gamepoint.utils.Utils;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 
-public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {
+public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements JsonParser<PlayStationStoreGame> {
     public static final String TAG = "CatchGameFromPSN";
 
     private final String finalURL;
@@ -27,22 +28,11 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... i) {
-
-        String json = Utils.getJsonFromUrl(finalURL);
-        if (json.isEmpty()) {
-            Log.e(TAG, "Unable to open the game");
-            return null;
-        }
-
-        try {
-            return jsonParser(json);
-        } catch (JSONException exception) {
-            Log.e(TAG, exception.getMessage());
-            return null;
-        }
+        return getJsonAndParsing(finalURL, TAG);
     }
 
-    private PlayStationStoreGame jsonParser(String json) throws JSONException {
+    @Override
+    public PlayStationStoreGame jsonParser(@NotNull String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
 
         PlayStationStoreGame game = new PlayStationStoreGame();

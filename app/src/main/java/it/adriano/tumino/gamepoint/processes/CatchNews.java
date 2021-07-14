@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses;
+package it.adriano.tumino.gamepoint.processes;
 
 import android.annotation.SuppressLint;
 import android.util.Log;

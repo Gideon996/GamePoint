@@ -1,20 +1,19 @@
-package it.adriano.tumino.gamepoint.backgroundprocesses.catchgame;
+package it.adriano.tumino.gamepoint.processes.catchgame;
 
-import android.util.Log;
-
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.WebScrapping;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
-import it.adriano.tumino.gamepoint.utils.Utils;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 
-public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> {
+public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements WebScrapping<MicrosoftStoreGame> {
     private static final String TAG = "CatchGameFromMCS";
 
     private final String finalURL;
@@ -27,16 +26,11 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... i) {
-        Document document = Utils.getDocumentFromUrl(finalURL);
-        if (document == null) {
-            Log.e(TAG, "Unable to open the game");
-            return null;
-        }
-
-        return getGame(document);
+        return getWebPageAndParsing(finalURL, TAG);
     }
 
-    private MicrosoftStoreGame getGame(Document document) {
+    @Override
+    public MicrosoftStoreGame scrapping(@NotNull Document document) {
         MicrosoftStoreGame game = new MicrosoftStoreGame();
 
         Elements body = document.select("#pdp");

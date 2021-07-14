@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.CatchNews;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.databinding.FooterNewsLayoutBinding;
 

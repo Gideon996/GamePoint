@@ -26,17 +26,17 @@ import java.io.IOException;
 import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchNintendoGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchMicrosoftGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchPlayStationGame;
-import it.adriano.tumino.gamepoint.backgroundprocesses.catchgame.CatchSteamGame;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.catchgame.CatchNintendoGame;
+import it.adriano.tumino.gamepoint.processes.catchgame.CatchMicrosoftGame;
+import it.adriano.tumino.gamepoint.processes.catchgame.CatchPlayStationGame;
+import it.adriano.tumino.gamepoint.processes.catchgame.CatchSteamGame;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameResultBinding;
-import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class GameResultFragment extends Fragment implements AsyncResponse<StoreGame>, TabLayout.OnTabSelectedListener {

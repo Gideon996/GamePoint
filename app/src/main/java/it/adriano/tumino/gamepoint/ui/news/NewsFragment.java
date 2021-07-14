@@ -17,10 +17,10 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.adapter.recyclerview.NewsAdapter;
-import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
-import it.adriano.tumino.gamepoint.backgroundprocesses.CatchNews;
+import it.adriano.tumino.gamepoint.processes.CatchNews;
 
 public class NewsFragment extends Fragment implements AsyncResponse<List<News>> {
     public static final String TAG = "NewsFragment";
