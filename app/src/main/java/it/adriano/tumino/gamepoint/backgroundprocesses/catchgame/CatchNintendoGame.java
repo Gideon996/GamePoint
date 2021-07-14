@@ -14,6 +14,7 @@ import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
+import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
     private static final String TAG = "CatchGameFromEShop";
@@ -32,23 +33,18 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... integers) {
-        return getGame();
-    }
-
-    private NintendoStoreGame getGame() {
-        Document document;
-
-        NintendoStoreGame game = new NintendoStoreGame();
-        game.setPrice(price);
-
-        try {
-            document = Jsoup.connect(finalURL)
-                    .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36") //per visualizzare tutto correttamente
-                    .get();
-        } catch (IOException exception) {
-            Log.e(TAG, exception.getMessage());
+        Document document = Utils.getDocumentFromUrl(finalURL);
+        if (document == null) {
+            Log.e(TAG, "Unable to open the game");
             return null;
         }
+
+        return getGame(document);
+    }
+
+    private NintendoStoreGame getGame(Document document) {
+        NintendoStoreGame game = new NintendoStoreGame();
+        game.setPrice(price);
 
         Elements content = document.getElementsByClass("tab-content");
         Elements header = content.select(".gamepage-banner");
@@ -157,8 +153,8 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> {
     }
 
     @Override
-    public void onPostExecute(StoreGame o) {
-        delegate.processFinish(o);
+    public void onPostExecute(StoreGame output) {
+        delegate.processFinish(output);
     }
 
 }

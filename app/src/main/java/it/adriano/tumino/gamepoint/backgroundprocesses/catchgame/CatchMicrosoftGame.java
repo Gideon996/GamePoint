@@ -2,18 +2,17 @@ package it.adriano.tumino.gamepoint.backgroundprocesses.catchgame;
 
 import android.util.Log;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.backgroundprocesses.TaskRunner;
+import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> {
     private static final String TAG = "CatchGameFromMCS";
@@ -28,21 +27,17 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... i) {
-        return getGame();
-    }
-
-    private MicrosoftStoreGame getGame() {
-        Document document;
-        MicrosoftStoreGame game = new MicrosoftStoreGame();
-
-        try {
-            document = Jsoup.connect(finalURL)
-                    .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36") //per visualizzare tutto correttamente
-                    .get();
-        } catch (IOException exception) {
-            Log.e(TAG, exception.getMessage());
+        Document document = Utils.getDocumentFromUrl(finalURL);
+        if (document == null) {
+            Log.e(TAG, "Unable to open the game");
             return null;
         }
+
+        return getGame(document);
+    }
+
+    private MicrosoftStoreGame getGame(Document document) {
+        MicrosoftStoreGame game = new MicrosoftStoreGame();
 
         Elements body = document.select("#pdp");
         Elements image = body.select(".pi-product-image");

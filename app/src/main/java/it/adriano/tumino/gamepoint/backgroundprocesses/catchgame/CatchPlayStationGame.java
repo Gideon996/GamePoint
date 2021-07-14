@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
@@ -28,27 +27,19 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... i) {
-        /*String jsonText;
-        try {
-            jsonText = Utils.getJsonFromUrl(finalURL);
-            Log.d("TEST", jsonText);
-        } catch (IOException exception) {
-            Log.e(TAG, exception.getMessage());
-            return null;
-        }
 
-        if (jsonText.isEmpty()) {
-            Log.e(TAG, "Nessun elemento prelevato dall'ulr: " + finalURL);
+        String json = Utils.getJsonFromUrl(finalURL);
+        if (json.isEmpty()) {
+            Log.e(TAG, "Unable to open the game");
             return null;
         }
 
         try {
-            return jsonParser(jsonText);
+            return jsonParser(json);
         } catch (JSONException exception) {
             Log.e(TAG, exception.getMessage());
             return null;
-        }*/
-        return null;
+        }
     }
 
     private PlayStationStoreGame jsonParser(String json) throws JSONException {
@@ -152,7 +143,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> {
             Log.d("TEST", price);
 
             JSONObject entitlements = skus.getJSONArray("entitlements").getJSONObject(0);
-            if(!entitlements.isNull("metadata")){
+            if (!entitlements.isNull("metadata")) {
                 JSONObject lingue = entitlements.getJSONObject("metadata");
                 if (lingue.has("voiceLanguageCode")) {
                     voiceLaunguage.clear();

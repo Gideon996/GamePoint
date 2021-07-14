@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.backgroundprocesses.AsyncResponse;
@@ -32,26 +31,19 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
 
     @Override
     public StoreGame doInBackground(Void... input) {
-        /*String jsonText;
-        try {
-            jsonText = Utils.getJsonFromUrl(finalURL);
-        } catch (IOException exception) {
-            Log.e(TAG, exception.getMessage());
-            return null;
-        }
 
-        if (jsonText.isEmpty()) {
-            Log.e(TAG, "Nessun elemento prelevato dall'ulr: " + finalURL);
+        String json = Utils.getJsonFromUrl(finalURL);
+        if (json.isEmpty()) {
+            Log.e(TAG, "Unable to open the game");
             return null;
         }
 
         try {
-            return jsonParser(jsonText);
+            return jsonParser(json);
         } catch (JSONException exception) {
             Log.e(TAG, exception.getMessage());
             return null;
-        }*/
-        return null;
+        }
     }
 
     private SteamStoreGame jsonParser(String json) throws JSONException {
@@ -182,9 +174,6 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> {
         }
         return list;
     }
-
-
-    //BUG: QUANDO PROVO A CANCELLARE DUE ELEMENTI DI FILA CRASHA
 
     @Override
     public void onPostExecute(StoreGame output) {

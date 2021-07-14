@@ -59,7 +59,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/latestResearchGameRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/last_search_layout"/>
     </LinearLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -116,7 +117,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gameSearchResultsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/last_search_layout"/>
     </LinearLayout>
 
 </LinearLayout>

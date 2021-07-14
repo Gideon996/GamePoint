@@ -46,7 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|center_horizontal|center_vertical"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:listitem="@layout/favorite_game_layout"/>
             </RelativeLayout>
 
             <com.facebook.shimmer.ShimmerFrameLayout

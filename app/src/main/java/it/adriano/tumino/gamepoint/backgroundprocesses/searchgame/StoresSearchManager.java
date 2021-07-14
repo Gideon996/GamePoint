@@ -205,13 +205,13 @@ public class StoresSearchManager {
                     JSONObject gameInfomation = links.getJSONObject(j);
                     if (gameInfomation == null || gameInfomation.length() == 0) continue;
 
-                    String titleGame = gameInfomation.optString("name");
+                    String titleGame = gameInfomation.getString("name");
 
                     if (SearchUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
 
                         String imageURL = "https://upload.wikimedia.org/wikipedia/it/thumb/4/4e/Playstation_logo_colour.svg/1200px-Playstation_logo_colour.svg.png";
                         if (gameInfomation.has("images"))
-                            imageURL = gameInfomation.optJSONArray("images").getJSONObject(0).optString("url");
+                            imageURL = gameInfomation.getJSONArray("images").getJSONObject(0).getString("url");
 
                         String console = "N.A.";
                         if (gameInfomation.has("playable_platform"))

@@ -54,10 +54,8 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         //change title
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Search");
-
         //setup the view
         view = inflater.inflate(R.layout.fragment_search_game, container, false);
         ImageButton searchButton = view.findViewById(R.id.searchGameButton);
@@ -66,16 +64,15 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
 
         dbManager = new DBManager(getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE); //get db manager
 
-        setUpRecyclerView(); //setup recyclerviews layout
+        setUpRecyclerView(); //setup recyclerview layout
 
-        editText.setOnEditorActionListener((v, actionId, event) -> { //setup changelistener for the search
+        editText.setOnEditorActionListener((v, actionId, event) -> { //setup change listener for the search
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 enterKey(editText.getText().toString());
             }
             return false;
         });
 
-        searchButton.setColorFilter(R.color.silver); //set color of button
         searchButton.setOnClickListener(v -> { //search button
             String text = editText.getText().toString();
             enterKey(text);
@@ -106,7 +103,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
             view.findViewById(R.id.latestResearchGamesLayout).setVisibility(View.VISIBLE);
             view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.GONE);
             closeKeyboard();
-            Toast.makeText(getContext(), "Ricerca Vuota, inserisci il nome del gioco", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter the title of the game you want to search...", Toast.LENGTH_SHORT).show();
         } else {
             shimmerFrameLayout.setVisibility(View.VISIBLE);
             shimmerFrameLayout.startShimmer();
@@ -127,30 +124,9 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
     }
 
     private void catchInformation(String name) {
-
         SearchGames searchGames = new SearchGames(name, getContext());
         searchGames.delegate = this;
         searchGames.execute();
-
-        /*//Cercare su steam
-        SearchOnSteam searchOnSteam = new SearchOnSteam();
-        searchOnSteam.delegate = this;
-        searchOnSteam.execute(name);
-
-        //Cercare su Nintendo
-        SearchOnEShop searchOnEShop = new SearchOnEShop();
-        searchOnEShop.delegate = this;
-        searchOnEShop.execute(name);
-
-        //Cercare su PSN
-        SearchOnPSN searchOnPSN = new SearchOnPSN();
-        searchOnPSN.delegate = this;
-        searchOnPSN.execute(name);
-
-        //cercare su Microsoft
-        SearchOnMicrosoft searchOnMicrosoft = new SearchOnMicrosoft();
-        searchOnMicrosoft.delegate = this;
-        searchOnMicrosoft.execute(name);*/
     }
 
     @Override
@@ -165,13 +141,5 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
             listOfResult.addAll(result);
             searchedGamesAdapter.notifyDataSetChanged();
         }
-
-        /*if (shimmerFrameLayout.isShimmerStarted()) {
-            shimmerFrameLayout.stopShimmer();
-            view.findViewById(R.id.gameSearchResultsLayout).setVisibility(View.VISIBLE);
-            shimmerFrameLayout.setVisibility(View.GONE);
-        }
-        listOfResult.addAll(result);
-        searchedGamesAdapter.notifyDataSetChanged();*/
     }
 }
