@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.ui.showgame;
+package it.adriano.tumino.gamepoint.ui.showgame.gallery;
 
 import android.os.Bundle;
 
@@ -15,7 +15,6 @@ import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 
 
 public class GalleryFragment extends Fragment {
-    private Bundle information;
     private StoreGame storeGame;
 
     public GalleryFragment() {
@@ -25,7 +24,7 @@ public class GalleryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            information = getArguments();
+            Bundle information = getArguments();
             storeGame = information.getParcelable("game");
         }
     }

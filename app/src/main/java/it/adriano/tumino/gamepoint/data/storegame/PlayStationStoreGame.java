@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class PlayStationStoreGame extends StoreGame {
+
     private String rating;
     private String numberOfPlayers;
     private String inGamePurchases;
@@ -19,6 +20,7 @@ public class PlayStationStoreGame extends StoreGame {
 
 
     public PlayStationStoreGame() {
+        setStore("PSN");
     }
 
     private PlayStationStoreGame(Parcel in) {
@@ -143,4 +145,5 @@ public class PlayStationStoreGame extends StoreGame {
     public void setSubGenreList(ArrayList<String> subGenreList) {
         this.subGenreList = subGenreList;
     }
+
 }

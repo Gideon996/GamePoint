@@ -28,24 +28,23 @@ import java.nio.charset.StandardCharsets;
 public class Utils {
     private static final String TAG = "Utils";
 
-    public static Uri getLocalBitmapUri(Context context, Bitmap bmp) { //Salvo l'img in locale e ne prelevo l'url per la condivisione
+    public static Uri getLocalBitmapUri(Context context, Bitmap bmp) {
         Uri bmpUri;
-        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png"); //Creo il file
+        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
 
         try (FileOutputStream out = new FileOutputStream(file)) {
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out); //Salvo l'img
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String FILE_AUTHORITY = "it.adriano.tumino.gamepoint"; //Prendo l'autorizzazione
-        bmpUri = FileProvider.getUriForFile(context, FILE_AUTHORITY, file); //uso il fileProvider per prelevare l'uri dell'img
+        String FILE_AUTHORITY = "it.adriano.tumino.gamepoint";
+        bmpUri = FileProvider.getUriForFile(context, FILE_AUTHORITY, file);
 
         return bmpUri;
     }
 
     public static String getJsonFromUrl(String url) {
-        //I need to do two tries to set the request headers
         try {
             URL connection = new URL(url);
             HttpURLConnection myURLConnection = (HttpURLConnection) connection.openConnection();
@@ -60,12 +59,10 @@ public class Utils {
                 }
                 return sb.toString();
             }
-        } catch (IOException e) { //catch all exception from BufferedReader and URL
+        } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             return "";
         }
-
-
     }
 
     public static Document getDocumentFromUrl(String url) {
@@ -82,24 +79,24 @@ public class Utils {
     }
 
     public static void shareContent(Context context, String imageUrl, String text) {
-        Picasso.get().load(imageUrl).into(new Target() { //carico l'immagine in cache
+        Picasso.get().load(imageUrl).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Intent i = new Intent(Intent.ACTION_SEND); //Inizializzo Intent da fare
-                i.setType("image/*"); //setto il tipo del contenuto
-                i.putExtra(Intent.EXTRA_STREAM, Utils.getLocalBitmapUri(context, bitmap)); //Inserisco l'immagine
-                i.putExtra(Intent.EXTRA_TEXT, text); //Inserisco il testo per l'immagine
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //Uso i permessi
-                context.startActivity(Intent.createChooser(i, "Share Image")); //Inizio l'activity
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("image/*");
+                i.putExtra(Intent.EXTRA_STREAM, Utils.getLocalBitmapUri(context, bitmap));
+                i.putExtra(Intent.EXTRA_TEXT, text);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                context.startActivity(Intent.createChooser(i, "Share Image"));
             }
 
             @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) { //Nel caso non riesco a prelevare l'immagine
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                 Log.e(TAG, "Impossibile prelevare l'immagine");
             }
 
             @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) { //per prelevare l'immagine
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         });
     }

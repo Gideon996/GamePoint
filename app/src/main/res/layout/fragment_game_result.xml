@@ -10,20 +10,38 @@
             type="it.adriano.tumino.gamepoint.data.storegame.StoreGame" />
     </data>
 
-    <FrameLayout
-        android:id="@+id/gameResultLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/gameResultShimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:animationCache="true"
+            android:visibility="visible"
+            app:shimmer_repeat_mode="restart"
+            app:shimmer_shape="radial">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_game_result" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView2"
+            android:id="@+id/gameResultLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,6 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:contentDescription="@{String.format(@string/content_description_image_header_result, game.title)}"
                         android:cropToPadding="false"
                         android:scaleType="fitXY"
                         tools:src="@tools:sample/avatars" />
@@ -48,10 +67,11 @@
                     <LinearLayout
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:orientation="horizontal"
-                        android:paddingRight="10dp">
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
 
                         <ImageButton
                             android:id="@+id/favoriteButton"
@@ -59,8 +79,10 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
+                            android:contentDescription="@string/favorite_content_description"
                             android:padding="5dp"
-                            android:paddingRight="10dp"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
                             android:src="@drawable/ic_favorite_24" />
 
                         <ImageButton
@@ -69,6 +91,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
+                            android:contentDescription="@string/share_content_description"
                             android:padding="5dp"
                             android:src="@drawable/ic_share_24" />
 
@@ -80,9 +103,9 @@
                     android:id="@+id/titleGameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Full Metal Alchemist: Brotherhood"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="10dp"
                     android:paddingBottom="10dp"
                     android:text="@{game.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -97,11 +120,12 @@
 
                     <ImageView
                         android:id="@+id/storeIconView"
+                        storeImage="@{game.store}"
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/icon_account_fill" />
+                        android:contentDescription="@{String.format(@string/description_store_icon, game.store)}" />
 
                     <TextView
                         android:id="@+id/priceGameTextView"
@@ -110,19 +134,17 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:gravity="center_vertical"
-                        android:hint="12.99€"
                         android:text="@{game.price}"
                         android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/releaseDataTextView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:hint="03 Ottobre 1911"
                         android:text="@{game.releaseData}"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -142,22 +164,22 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Descrizione" />
+                        android:text="@string/description_tab_item" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Galleria" />
+                        android:text="@string/gallery_tab_item" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Specifiche" />
+                        android:text="@string/specifications_tab_item" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Commenti" />
+                        android:text="@string/comments_tab_item" />
                 </com.google.android.material.tabs.TabLayout>
 
                 <FrameLayout
@@ -167,5 +189,15 @@
                     android:paddingBottom="50dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-    </FrameLayout>
+
+        <TextView
+            android:id="@+id/noGameResulTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_result"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
 </layout>

@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
-import it.adriano.tumino.gamepoint.processes.WebScrapping;
 import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
@@ -42,21 +41,20 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         Elements header = content.select(".gamepage-banner");
 
         Elements video = header.select("iframe");
-        String videoUrl = "";
+        String videoUrl = "https://www.youtube.com/watch?v=DKBK4OnvjX0";
         if (!video.isEmpty()) videoUrl = video.first().attributes().get("src");
         game.setVideoTrailerUrl(videoUrl);
 
-        Elements img = header.select("img");
-        String imageHeader = "";
-        if (!img.isEmpty()) imageHeader = img.first().attributes().get("src");
+        Elements imageElements = header.select("img");
+        String imageHeader = "https://cdn02.nintendo-europe.com/media/images/10_share_images/others_3/nintendo_eshop_5/H2x1_NintendoeShop_WebsitePortal_itIT.jpg";
+        if (!imageElements.isEmpty()) imageHeader = imageElements.first().attributes().get("src");
         game.setImageHeaderURL(imageHeader.replaceAll("//", "https://"));
 
         Elements classification = header.select(".age-rating").select("span");
-        String pegi = "";
+        String pegi = "pegi3";
         if (!classification.isEmpty()) pegi = classification.text();
         game.setPegi(pegi);
 
-        //GamePageHeader
         Elements gamePageHeader = content.select("#gamepage-header").select(".gamepage-header-info");
         String title = gamePageHeader.select("h1").text();
         String console = gamePageHeader.select("span").first().text();
@@ -65,22 +63,19 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         game.setConsole(console);
         game.setReleaseData(releaseDate);
 
-        //Panoramica
         Elements panoramica = content.select("#Panoramica");
         Element gameSectionContents = panoramica.select("div").first();
         Element div = gameSectionContents.children().first();
 
         Elements information = div.children().select(".row-content");
         String text = information.text();
-        String[] sezioni = text.split(" {2}"); //l'unica soluzione possibile per prendere i testi -> pe fozza
+        String[] sezioni = text.split(" {2}");
         StringBuilder builder = new StringBuilder();
         for (String sezione : sezioni) {
             if (!sezione.isEmpty()) builder.append(sezione).append("<br/>");
         }
         game.setDescription(builder.toString());
 
-
-        //Galleria_immagini
         Elements immagini = content.select("#Galleria_immagini");
         ArrayList<String> screenshotsUrl = new ArrayList<>();
         if (immagini != null && !immagini.isEmpty()) {
@@ -93,7 +88,6 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         }
         game.setScreenshotsUrl(screenshotsUrl);
 
-        //gameDetails
         Elements dettagli = content.select("#gameDetails");
         Elements systemInfo = dettagli.select(".system_info").not("div.amiibo_info");
         StringBuilder stringBuilder = new StringBuilder();

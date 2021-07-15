@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.processes;
+package it.adriano.tumino.gamepoint.processes.catchgame;
 
 import android.util.Log;
 

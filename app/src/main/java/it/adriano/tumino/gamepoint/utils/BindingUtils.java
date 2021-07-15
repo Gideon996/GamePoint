@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import it.adriano.tumino.gamepoint.R;
+
 public class BindingUtils {
 
     @BindingAdapter("profileImage")
@@ -18,6 +20,7 @@ public class BindingUtils {
         if (url != null && !url.isEmpty()) {
             Picasso.get().load(url).fit()
                     .centerInside()
+                    .placeholder(new ColorDrawable(Color.CYAN))
                     .into(view);
         }
     }
@@ -28,6 +31,7 @@ public class BindingUtils {
             Picasso.get().load(url)
                     .resize(view.getMaxWidth(), 700)
                     .centerInside()
+                    .placeholder(new ColorDrawable(Color.CYAN))
                     .into(view);
         }
     }
@@ -60,6 +64,4 @@ public class BindingUtils {
                 return "icon.png";
         }
     }
-
-
 }

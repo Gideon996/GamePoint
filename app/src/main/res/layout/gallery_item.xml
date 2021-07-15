@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="screenshot"
+            type="java.lang.String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,8 +17,10 @@
 
         <ImageView
             android:id="@+id/screenImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            profileImage="@{screenshot}"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/content_description_screenshot"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

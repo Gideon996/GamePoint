@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
-import it.adriano.tumino.gamepoint.processes.WebScrapping;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;

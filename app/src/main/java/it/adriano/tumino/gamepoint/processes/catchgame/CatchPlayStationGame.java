@@ -1,7 +1,5 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
-import android.util.Log;
-
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +8,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
-import it.adriano.tumino.gamepoint.processes.JsonParser;
 import it.adriano.tumino.gamepoint.data.storegame.PlayStationStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
@@ -35,6 +32,12 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
     public PlayStationStoreGame jsonParser(@NotNull String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
 
+        //Only when the game doesn't exist
+        //Theoretically impossible because the link comes directly from playstation
+        if (jsonObject.has("codeName")) {
+            return null;
+        }
+
         PlayStationStoreGame game = new PlayStationStoreGame();
 
         String titleGame = "N.A.";
@@ -47,23 +50,29 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         String inGamePurchases = "N.A.";
         String onlinePlayMode = "N.A.";
         String imageHeader = "https://images6.alphacoders.com/591/thumb-1920-591158.jpg";
+
         ArrayList<String> screenshotsUrl = new ArrayList<>();
         screenshotsUrl.add("https://wallpaperaccess.com/full/4419873.png");
+
         ArrayList<String> genres = new ArrayList<>();
         genres.add("N.A.");
+
         ArrayList<String> categories = new ArrayList<>();
         categories.add("N.A.");
-        ArrayList<String> voiceLaunguage = new ArrayList<>();
-        voiceLaunguage.add("N.A.");
-        ArrayList<String> subtitleLanguage = new ArrayList<>();
-        subtitleLanguage.add("N.A.");
+
+        ArrayList<String> voiceLanguages = new ArrayList<>();
+        voiceLanguages.add("N.A.");
+
+        ArrayList<String> subtitleLanguages = new ArrayList<>();
+        subtitleLanguages.add("N.A.");
+
         ArrayList<String> platforms = new ArrayList<>();
         platforms.add("N.A.");
+
         ArrayList<String> subGenreList = new ArrayList<>();
 
         if (jsonObject.has("name")) titleGame = jsonObject.getString("name");
         game.setTitle(titleGame);
-        Log.d("TEST", titleGame);
 
         if (jsonObject.has("release_date")) {
             String tmp = jsonObject.getString("release_date");
@@ -71,14 +80,14 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
             releaseData = "Data di uscita: " + onlyDate.replaceAll("-", "/");
         }
         game.setReleaseData(releaseData);
-        Log.d("TEST", releaseData);
 
         if (jsonObject.has("long_desc")) description = jsonObject.getString("long_desc");
 
         if (jsonObject.has("legal_text")) legalText = jsonObject.getString("legal_text");
+
         if (!legalText.isEmpty()) description += "<br/>" + legalText + "<br/>";
         game.setDescription(description);
-        Log.d("TEST", description);
+
 
         if (jsonObject.has("images")) {
             JSONArray jsonArray = jsonObject.getJSONArray("images");
@@ -88,7 +97,6 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
             }
         }
         game.setImageHeaderURL(imageHeader);
-        Log.d("TEST", imageHeader);
 
         if (jsonObject.has("mediaList") && jsonObject.getJSONObject("mediaList").has("screenshots")) {
             screenshotsUrl.clear();
@@ -98,70 +106,61 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
             }
         }
         game.setScreenshotsUrl(screenshotsUrl);
-        Log.d("TEST", screenshotsUrl.toString());
 
         if (jsonObject.has("content_rating"))
             rating = jsonObject.getJSONObject("content_rating").getString("description");
         game.setRating(rating);
-        Log.d("TEST", rating);
 
-        if (jsonObject.has("attributes") && jsonObject.getJSONObject("attributes").has("facets") && jsonObject.getJSONObject("attributes").getJSONObject("facets").has("genre")) {
-            JSONArray jsonArray = jsonObject.getJSONObject("attributes").getJSONObject("facets").getJSONArray("genre"); //non c'è sempre sia attributes che genre
+        if (jsonObject.has("attributes") && jsonObject.getJSONObject("attributes").has("facets") &&
+                jsonObject.getJSONObject("attributes").getJSONObject("facets").has("genre")) {
+
             genres.clear();
+            JSONArray jsonArray = jsonObject.getJSONObject("attributes").getJSONObject("facets").getJSONArray("genre");
             for (int i = 0; i < jsonArray.length(); i++) {
                 genres.add(jsonArray.getJSONObject(i).getString("name"));
             }
         }
         game.setGenres(genres);
-        Log.d("TEST", genres.toString());
 
         if (jsonObject.has("content_descriptors")) {
-            JSONArray jsonArray = jsonObject.getJSONArray("content_descriptors");
             categories.clear();
+            JSONArray jsonArray = jsonObject.getJSONArray("content_descriptors");
             for (int i = 0; i < jsonArray.length(); i++) {
                 categories.add(jsonArray.getJSONObject(i).getString("name"));
             }
         }
         game.setCategories(categories);
-        Log.d("TEST", categories.toString());
 
-        //lingue
         if (jsonObject.has("skus")) {
             JSONObject skus = jsonObject.getJSONArray("skus").getJSONObject(0);
 
-            if (skus.has("display_price")) price = skus.getString("display_price"); //this
-            Log.d("TEST", price);
+            if (skus.has("display_price")) price = skus.getString("display_price");
 
             JSONObject entitlements = skus.getJSONArray("entitlements").getJSONObject(0);
             if (!entitlements.isNull("metadata")) {
-                JSONObject lingue = entitlements.getJSONObject("metadata");
-                if (lingue.has("voiceLanguageCode")) {
-                    voiceLaunguage.clear();
-                    JSONArray jsonArray = lingue.getJSONArray("voiceLanguageCode"); //non sempre c'è
+                JSONObject languages = entitlements.getJSONObject("metadata");
+
+                if (languages.has("voiceLanguageCode")) {
+                    voiceLanguages.clear();
+                    JSONArray jsonArray = languages.getJSONArray("voiceLanguageCode");
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        voiceLaunguage.add(jsonArray.getString(i));
+                        voiceLanguages.add(jsonArray.getString(i));
                     }
                 }
 
-                if (lingue.has("subtitleLanguageCode")) {
-                    subtitleLanguage.clear();
-                    JSONArray jsonArray = lingue.getJSONArray("subtitleLanguageCode");
+                if (languages.has("subtitleLanguageCode")) {
+                    subtitleLanguages.clear();
+                    JSONArray jsonArray = languages.getJSONArray("subtitleLanguageCode");
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        subtitleLanguage.add(jsonArray.getString(i));
+                        subtitleLanguages.add(jsonArray.getString(i));
                     }
                 }
             }
-
         }
-        game.setVoiceLaunguage(voiceLaunguage);
-        game.setSubtitleLanguage(subtitleLanguage);
+        game.setVoiceLaunguage(voiceLanguages);
+        game.setSubtitleLanguage(subtitleLanguages);
         game.setPrice(price);
 
-        Log.d("TEST", price);
-        Log.d("TEST", voiceLaunguage.toString());
-        Log.d("TEST", subtitleLanguage.toString());
-
-        //console supportate
         if (jsonObject.has("playable_platform")) {
             platforms.clear();
             JSONArray jsonArray = jsonObject.getJSONArray("playable_platform");

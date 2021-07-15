@@ -1,8 +1,6 @@
 package it.adriano.tumino.gamepoint.ui.showgame;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,19 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
@@ -37,29 +31,28 @@ import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameResultBinding;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
+import it.adriano.tumino.gamepoint.ui.showgame.comment.GameCommentsFragment;
+import it.adriano.tumino.gamepoint.ui.showgame.gallery.GalleryFragment;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class GameResultFragment extends Fragment implements AsyncResponse<StoreGame>, TabLayout.OnTabSelectedListener {
     public static final String TAG = "GameResultFragment";
 
-    private static final String BASE_TEXT = "Guarda che bel gioco ho trovato: ";
-
-    private ImageButton sharedButton;
-    private ImageButton favoriteButton;
-    private final Fragment[] fragments = new Fragment[4];
-    private String logoName;
     private BasicGameInformation basicGameInformation;
-    private DBManager favoriteDBManager;
-    private boolean presenteNelDB;
-
     private FragmentGameResultBinding binding;
+    private final GameResultViewModel viewModel;
+
+    private DBManager favoriteDBManager;
+    private boolean isOnDatabase;
+    private final Fragment[] fragments = new Fragment[4];
 
     private TaskRunner<Void, StoreGame> game;
     private final Bundle information = new Bundle();
 
 
     public GameResultFragment() {
-        Log.i(TAG, "Inizializzazione dei fragments");
+        viewModel = new GameResultViewModel();
+        viewModel.getHasResult().setValue(false);
         fragments[0] = new DescriptionFragment();
         fragments[1] = new GalleryFragment();
         fragments[2] = new GameSpecificationsFragment();
@@ -69,33 +62,28 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null && getArguments().containsKey("game"))
             basicGameInformation = getArguments().getParcelable("game");
 
-        Log.i(TAG, "Prelevate le informazioni per ottenere le informazioni");
         information.putString("store", basicGameInformation.getStore());
 
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(basicGameInformation.getTitle().toUpperCase()); //Setto il titolo del fragment
-        Log.i(TAG, "Inizializzo il cathcer di" + basicGameInformation.getStore());
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(basicGameInformation.getTitle().toUpperCase());
         switch (basicGameInformation.getStore()) {
             case "STEAM":
                 game = new CatchSteamGame(basicGameInformation.getAppID());
-                logoName = "logo_steam.png";
                 ((CatchSteamGame) game).delegate = this;
                 break;
             case "MCS":
                 game = new CatchMicrosoftGame(basicGameInformation.getUrl());
-                logoName = "logo_xbox.png";
                 ((CatchMicrosoftGame) game).delegate = this;
                 break;
             case "PSN":
                 game = new CatchPlayStationGame(basicGameInformation.getUrl());
-                logoName = "logo_psn.png";
                 ((CatchPlayStationGame) game).delegate = this;
                 break;
             case "ESHOP":
                 game = new CatchNintendoGame(basicGameInformation.getUrl(), basicGameInformation.getPrice());
-                logoName = "logo_eshop.png";
                 ((CatchNintendoGame) game).delegate = this;
                 break;
         }
@@ -104,80 +92,52 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGameResultBinding.inflate(inflater, container, false);
-        //if (gameSearchResult == null) Navigation.findNavController(view).navigate(R.id.no_game_action); //doesn't works, idk why
-        Log.i(TAG, "Inizio il processo di background");
         game.execute();
-
         favoriteDBManager = new DBManager(binding.getRoot().getContext(), DBUtils.FAVORITE_TABLE_TITLE);
+        binding.gameResultShimmerLayout.startShimmer();
+        binding.tabLayout.addOnTabSelectedListener(this);
+        isOnDatabase = favoriteDBManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore());
 
-        TabLayout tabLayout = binding.tabLayout; //setto le impostazioni per il tabLayout
-        tabLayout.addOnTabSelectedListener(this); //imposto il listener
-
-        sharedButton = binding.shareButton;
-        favoriteButton = binding.favoriteButton;
-        presenteNelDB = favoriteDBManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore());
-        if (presenteNelDB) {
-            favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
-        }
+        binding.favoriteButton.setColorFilter((isOnDatabase) ? Color.rgb(255,69,0) : Color.BLACK);
 
         return binding.getRoot();
     }
 
-    private void setFragmentLayout(Fragment fragment) { //imposto che cosa mostrare nel tab layout
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager(); //avvio la tansizione per cosa inserire
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.frameLayout, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-    }
-
-
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Log.i(TAG, "Inizio a riempire l'header layout");
-        ImageView logo = view.findViewById(R.id.storeIconView);
-        Drawable d;
-        try {
-            d = Drawable.createFromStream(requireContext().getAssets().open(logoName), null);
-        } catch (IOException exception) {
-            d = new ColorDrawable(Color.CYAN);
-        }
-        logo.setImageDrawable(d);
+    public void onResume() {
+        super.onResume();
+        if (viewModel.getHasResult().getValue())
+            setFragmentLayout(fragments[viewModel.getCurrentFragment().getValue()]);
     }
 
     @Override
     public void processFinish(StoreGame result) {
+        binding.gameResultShimmerLayout.stopShimmer();
+        binding.gameResultShimmerLayout.setVisibility(View.GONE);
+
         if (result != null) {
+            viewModel.getHasResult().setValue(true);
+            viewModel.getResult().setValue(result);
+
+            binding.gameResultLayout.setVisibility(View.VISIBLE);
             binding.setGame(result);
             information.putParcelable("game", result);
             for (Fragment fragment : fragments) fragment.setArguments(information);
-            setFragmentLayout(fragments[0]); //imposto il layout da visualizzare
 
-            sharedButton.setOnClickListener(v -> Utils.shareContent(getContext(), result.getImageHeaderURL(), BASE_TEXT + result.getTitle()));
+            viewModel.getCurrentFragment().setValue(0);
+            setFragmentLayout(fragments[0]);
 
-            favoriteButton.setOnClickListener(v -> favoriteRoutines());
-        }
-    }
-
-    private void favoriteRoutines() {
-        if (presenteNelDB) {
-            favoriteDBManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
-            Toast.makeText(this.getContext(), "Gioco rimosso dai preferiti", Toast.LENGTH_SHORT).show();
-            favoriteButton.setColorFilter(Color.BLACK);
-            presenteNelDB = false;
+            binding.shareButton.setOnClickListener(v -> Utils.shareContent(getContext(), result.getImageHeaderURL(), R.string.share_game_text + result.getTitle()));
+            binding.favoriteButton.setOnClickListener(v -> favoriteRoutines());
         } else {
-            favoriteDBManager.save(basicGameInformation);
-            Toast.makeText(this.getContext(), "Gioco aggiunto ai preferiti", Toast.LENGTH_SHORT).show();
-            favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
-            presenteNelDB = true;
+            binding.noGameResulTextView.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab) { //Listener per capire che Layout mostrare
-        setFragmentLayout(fragments[tab.getPosition()]); //imposto il frammento
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewModel.getCurrentFragment().setValue(tab.getPosition());
+        setFragmentLayout(fragments[tab.getPosition()]);
     }
 
     @Override
@@ -190,5 +150,25 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     }
 
+    private void favoriteRoutines() {
+        if (isOnDatabase) {
+            favoriteDBManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
+            Toast.makeText(this.getContext(), R.string.added_on_favorite, Toast.LENGTH_SHORT).show();
+            binding.favoriteButton.setColorFilter(R.color.black);
+            isOnDatabase = false;
+        } else {
+            favoriteDBManager.save(basicGameInformation);
+            Toast.makeText(this.getContext(), R.string.removed_from_favorite, Toast.LENGTH_SHORT).show();
+            binding.favoriteButton.setColorFilter(Color.rgb(255,69,0));
+            isOnDatabase = true;
+        }
+    }
 
+    private void setFragmentLayout(Fragment fragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.frameLayout, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
 }

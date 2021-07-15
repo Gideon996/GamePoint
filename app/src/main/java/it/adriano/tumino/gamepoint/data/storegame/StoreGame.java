@@ -9,10 +9,9 @@ import it.adriano.tumino.gamepoint.data.Game;
 
 public abstract class StoreGame extends Game implements Parcelable {
 
-
     private String description;
-
     private String releaseData;
+    private String store;
     private ArrayList<String> screenshotsUrl;
 
     public StoreGame() {
@@ -22,6 +21,7 @@ public abstract class StoreGame extends Game implements Parcelable {
         super.writeToParcel(out, flags);
         out.writeString(description);
         out.writeString(releaseData);
+        out.writeString(store);
         out.writeStringList(screenshotsUrl);
     }
 
@@ -29,6 +29,7 @@ public abstract class StoreGame extends Game implements Parcelable {
         super(in);
         description = in.readString();
         releaseData = in.readString();
+        store = in.readString();
         screenshotsUrl = in.createStringArrayList();
     }
 
@@ -46,6 +47,14 @@ public abstract class StoreGame extends Game implements Parcelable {
 
     public void setReleaseData(String releaseData) {
         this.releaseData = releaseData;
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public void setStore(String store) {
+        this.store = store;
     }
 
     public ArrayList<String> getScreenshotsUrl() {

@@ -27,7 +27,7 @@ public class DBManager {
     public void save(BasicGameInformation basicGameInformation) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DBUtils.TITLE, basicGameInformation.getTitle());
+        contentValues.put(DBUtils.TITLE, basicGameInformation.getTitle().replaceAll("'", ""));
         contentValues.put(DBUtils.IMAGE_URL, basicGameInformation.getImageHeaderURL());
         contentValues.put(DBUtils.STORE, basicGameInformation.getStore());
         contentValues.put(DBUtils.URL, basicGameInformation.getUrl());
@@ -73,7 +73,7 @@ public class DBManager {
     public boolean deleteWithNameAndStore(String name, String store) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name, store);
+        String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name.replaceAll("'", ""), store);
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null && cursor.moveToFirst()) {
             long id = cursor.getLong(cursor.getColumnIndex(DBUtils.ID));
@@ -114,7 +114,7 @@ public class DBManager {
     public boolean checkIfElementsIsOnDataBase(String name, String store) {
         Log.d(TAG, "Check existing game " + name + " in " + tableName);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name, store);
+        String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name.replaceAll("'", ""), store);
         Cursor cursor = db.rawQuery(query, null);
         return (cursor.getCount() > 0);
     }

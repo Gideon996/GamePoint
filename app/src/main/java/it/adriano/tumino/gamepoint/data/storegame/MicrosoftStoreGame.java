@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class MicrosoftStoreGame extends StoreGame {
+
     private String pegi;
     private String console;
     private String systemRequirement;
@@ -13,6 +14,7 @@ public class MicrosoftStoreGame extends StoreGame {
     private ArrayList<String> metadata;
 
     public MicrosoftStoreGame() {
+        setStore("MCS");
     }
 
     private MicrosoftStoreGame(Parcel in) {

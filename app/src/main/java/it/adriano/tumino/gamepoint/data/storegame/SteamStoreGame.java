@@ -18,6 +18,7 @@ public class SteamStoreGame extends StoreGame {
     private ArrayList<String> genres;
 
     public SteamStoreGame() {
+        setStore("STEAM");
     }
 
     private SteamStoreGame(Parcel in) {

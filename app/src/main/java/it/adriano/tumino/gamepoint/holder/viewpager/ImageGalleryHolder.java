@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import it.adriano.tumino.gamepoint.R;
 
-public class ImageGalleryHolder extends RecyclerView.ViewHolder { //Holder per l'img
+public class ImageGalleryHolder extends RecyclerView.ViewHolder {
 
     public ImageView imageView;
 

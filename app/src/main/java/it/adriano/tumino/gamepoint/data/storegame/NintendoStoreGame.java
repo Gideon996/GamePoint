@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class NintendoStoreGame extends StoreGame {
+
     private String videoTrailerUrl;
     private String pegi;
     private String console;
@@ -13,6 +14,7 @@ public class NintendoStoreGame extends StoreGame {
     private List<String> featureSheets;
 
     public NintendoStoreGame() {
+        setStore("ESHOP");
     }
 
     private NintendoStoreGame(Parcel in) {

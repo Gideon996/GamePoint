@@ -227,6 +227,7 @@ public class StoresSearchManager {
                         String price = "N.A.";
                         if (gameInfomation.has("default_sku")) {
                             price = gameInfomation.getJSONObject("default_sku").getString("display_price");
+                            price = price.replaceAll("€", "") + "€";
                         }
 
                         BasicGameInformation basicGameInformation = new BasicGameInformation(titleGame, imageURL, gameURL, id, console, "PSN", price);

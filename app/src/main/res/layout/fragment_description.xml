@@ -16,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Testo Contenente La descrizione del Gioco"
-            android:textColor="#ACB2B8" />
+            android:textColor="@color/silver" />
 
     </LinearLayout>
 </layout>

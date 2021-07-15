@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.ui.showgame;
+package it.adriano.tumino.gamepoint.ui.showgame.comment;
 
 import android.os.Bundle;
 
