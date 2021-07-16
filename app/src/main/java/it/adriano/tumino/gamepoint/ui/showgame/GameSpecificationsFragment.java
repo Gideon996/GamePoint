@@ -165,12 +165,16 @@ public class GameSpecificationsFragment extends Fragment {
         LinearLayout linearLayout = view.findViewById(R.id.mcsSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        TextView pegi = view.findViewById(R.id.pegiMCSTextView);
-        pegi.setText(microsoftGame.getPegi());
+        ImageView pegi = view.findViewById(R.id.pegiMCSImageView);
+        Drawable pegiImage = getRatingImage(microsoftGame.getPegi());
+        pegi.setImageDrawable(pegiImage);
+
         TextView categories = view.findViewById(R.id.categoriesMCSTextView);
         categories.setText(Html.fromHtml(fromListToHTML(microsoftGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
+
         TextView metadata = view.findViewById(R.id.metadataMCSTextView);
         metadata.setText(Html.fromHtml(fromListToHTML(microsoftGame.getMetadata()), Html.FROM_HTML_MODE_LEGACY));
+
         TextView requirement = view.findViewById(R.id.requirementMCSTextView);
         requirement.setText(Html.fromHtml(microsoftGame.getSystemRequirement(), Html.FROM_HTML_MODE_LEGACY));
     }
@@ -201,7 +205,7 @@ public class GameSpecificationsFragment extends Fragment {
         return d;
     }
 
-    private String fromListToHTML(List<String> list) {
+    private static String fromListToHTML(List<String> list) {
         StringBuilder string = new StringBuilder("<ul>");
         for (int i = 0; i < list.size(); i++)
             string.append("<li>").append(list.get(i)).append("</li>");
@@ -209,7 +213,7 @@ public class GameSpecificationsFragment extends Fragment {
         return string.toString();
     }
 
-    private List<String> fromAcronimoToEsteso(List<String> list) {
+    private static List<String> fromAcronimoToEsteso(List<String> list) {
         List<String> estesi = new ArrayList<>();
         if (list.size() == 1 && list.get(0).equals("N.A.")) {
             estesi.addAll(list);

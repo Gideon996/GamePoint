@@ -292,7 +292,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -342,7 +342,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SubGenres:"
+                    android:text="@string/subgenres_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/white"
                     android:textStyle="italic" />
@@ -359,7 +359,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@string/content_description_pegi"/>
 
         </LinearLayout>
 
@@ -389,7 +390,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Voice"
+                android:text="@string/voice_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
                 android:textStyle="italic" />
@@ -399,7 +400,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Subtitle"
+                android:text="@string/subtitle_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
                 android:textStyle="italic" />
@@ -447,7 +448,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Console Supportate"
+            android:text="@string/console_supportate_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textStyle="italic" />
@@ -468,47 +469,82 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <TextView
-            android:id="@+id/pegiMCSTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PEGI"
-            android:textColor="#ACB2B8" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CATEGORIES"
-            android:textColor="#ACB2B8" />
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:focusedByDefault="false"
+                android:padding="1dp"
+                app:columnCount="2"
+                app:useDefaultMargins="true">
 
-        <TextView
-            android:id="@+id/categoriesMCSTextView"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/genres_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/categoriesMCSTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/silver" />
+            </androidx.gridlayout.widget.GridLayout>
+
+            <ImageView
+                android:id="@+id/pegiMCSImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@string/content_description_pegi"/>
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CATEGORIES"
-            android:textColor="#ACB2B8" />
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <TextView
             android:id="@+id/metadataMCSTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="METADATA"
-            android:textColor="#ACB2B8" />
+            android:textColor="@color/silver" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="REQUIREMENT"
-            android:textColor="#ACB2B8" />
+            android:gravity="center"
+            android:text="@string/requisiti"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/white"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/requirementMCSTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="requirement"
-            android:textColor="#ACB2B8" />
+            android:textColor="@color/silver" />
     </LinearLayout>
 
 </LinearLayout>

@@ -66,4 +66,8 @@
     <string name="nessun_elemento">N.A.</string>
     <string name="content_description_pegi">Immagine contenente il pegi del gioco</string>
     <string name="caratteristiche_per_console_title">Caratteristiche per console</string>
+    <string name="subgenres_title">SubGenres:</string>
+    <string name="voice_title">Voice</string>
+    <string name="subtitle_title">Subtitle</string>
+    <string name="console_supportate_title">Console Supportate</string>
 </resources>
