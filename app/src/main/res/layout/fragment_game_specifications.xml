@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.showgame.GameSpecificationsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/steamSpecificationLayout"
         android:layout_width="match_parent"
@@ -26,145 +25,175 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sviluppatore"
-                android:textColor="#ACB2B8" />
+                android:text="@string/developers_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/developerTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ubisoft"
-                android:textColor="#ACB2B8" />
+                android:layout_marginStart="10dp"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="8dp"
+                android:autoSizeStepGranularity="1dp"
+                android:autoSizeTextType="uniform"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/silver" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editore"
-                android:textColor="#ACB2B8" />
+                android:text="@string/publishers_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/publisherTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ubisoft"
-                android:textColor="#ACB2B8" />
+                android:layout_marginStart="10dp"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="8dp"
+                android:autoSizeStepGranularity="1dp"
+                android:autoSizeTextType="uniform"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/silver" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sito Web"
-                android:textColor="#ACB2B8" />
+                android:text="@string/web_site_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/webSiteTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:autoLink="web"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="8dp"
+                android:autoSizeStepGranularity="1dp"
+                android:autoSizeTextType="uniform"
                 android:clickable="true"
-                android:text="www.ubisoft.com"
-                android:textColor="#ACB2B8" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/silver" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/metacritic_score_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/metacriticScoreTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="8dp"
+                android:autoSizeStepGranularity="1dp"
+                android:autoSizeTextType="uniform"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/silver" />
 
         </androidx.gridlayout.widget.GridLayout>
 
-        <LinearLayout
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
+
+        <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            app:columnCount="2"
+            app:useDefaultMargins="true">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Categorie"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#ACB2B8"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Generi"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#ACB2B8"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingBottom="15dp">
+                android:text="@string/categories_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/categoryTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Ho tipo 1 categoria"
-                android:textColor="#ACB2B8" />
+                android:layout_marginStart="10dp"
+                android:text="@string/nessun_elemento"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/silver" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/genres_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/generiTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Sono un machietto"
-                android:textColor="#ACB2B8" />
-        </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/silver" />
+        </androidx.gridlayout.widget.GridLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="Lingue Supportate"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#ACB2B8" />
+            android:text="@string/languages_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/languagesTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="15dp"
-            android:text="Non so parlare"
-            android:textColor="#ACB2B8" />
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:textColor="@color/silver" />
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Requisiti"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#ACB2B8"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Minimi:"
-                android:textColor="#ACB2B8" />
-
-            <TextView
-                android:id="@+id/scrittaRaccomandatiTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Raccomandati:"
-                android:textColor="#ACB2B8" />
-
-        </LinearLayout>
+            android:text="@string/requisiti"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/white"
+            android:textStyle="italic" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -177,9 +206,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="avere un computer"
-                android:textColor="#ACB2B8" />
+                android:gravity="start"
+                android:textColor="@color/silver" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@color/Gray" />
 
             <TextView
                 android:id="@+id/reccommendetTextView"
@@ -187,9 +222,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="Avere un compiuter più melgio"
-                android:textColor="#ACB2B8" />
+                android:gravity="start"
+                android:textColor="@color/silver" />
         </LinearLayout>
 
     </LinearLayout>
@@ -201,32 +235,55 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/caratteristicheTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:paddingBottom="5dp"
-            android:text="TextView"
-            android:textColor="#ACB2B8" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/caratteristicheTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/silver" />
+
+            <ImageView
+                android:id="@+id/pegiNintendo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_pegi"
+                tools:src="@tools:sample/avatars" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
-            android:text="Caratteristiche per console"
+            android:text="@string/caratteristiche_per_console_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/serieDiConsole"
+        <LinearLayout
+            android:id="@+id/caratterostocheConsoleLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="TextView"
-            android:textColor="#ACB2B8" />
+            android:orientation="vertical" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -235,7 +292,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"

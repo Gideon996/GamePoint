@@ -16,13 +16,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.jetbrains.annotations.NotNull;
 
+import it.adriano.tumino.gamepoint.data.storegame.SteamStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.databinding.FragmentDescriptionBinding;
 
@@ -60,6 +63,16 @@ public class DescriptionFragment extends Fragment {
         descriptionTextView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
         descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
         descriptionTextView.setLinksClickable(true);
+
+        /*RelativeLayout relativeLayout = binding.relative;
+        VideoView videoView = binding.videoView;
+        if (storeGame instanceof SteamStoreGame) {
+            videoView.setVideoPath(((SteamStoreGame) storeGame).getVideoUrl());
+        }
+        relativeLayout.setOnClickListener(v -> {
+            videoView.setVisibility(View.VISIBLE);
+            videoView.start();
+        });*/
     }
 
     public class PicassoImageGetter implements Html.ImageGetter {

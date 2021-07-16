@@ -26,8 +26,8 @@ public class GalleryDialog extends DialogFragment {
     private final List<String> screenshots;
     private final ImageView[] dots;
 
-    private Drawable dot;
-    private Drawable sferaDelDrago;
+    private Drawable away;
+    private Drawable medium;
 
     public GalleryDialog(int initialPosition, List<String> screenshots) {
         this.initialPosition = initialPosition;
@@ -48,10 +48,10 @@ public class GalleryDialog extends DialogFragment {
         viewPager2.setAdapter(new ImageGalleryAdapter(screenshots));
         viewPager2.setCurrentItem(initialPosition);
 
-        dot = getResources().getDrawable(R.drawable.ic_pallina, requireContext().getTheme());
-        sferaDelDrago = getResources().getDrawable(R.drawable.sfera_del_drago, requireContext().getTheme());
+        away = getResources().getDrawable(R.drawable.circle_away, requireContext().getTheme());
+        medium = getResources().getDrawable(R.drawable.circle_medium, requireContext().getTheme());
 
-        setIndicators(view);
+        setIndicators(view, initialPosition);
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -61,26 +61,25 @@ public class GalleryDialog extends DialogFragment {
             }
         });
 
-
-        Button chiudi = view.findViewById(R.id.chiudiBottone);
-        chiudi.setOnClickListener(k -> Objects.requireNonNull(getDialog()).dismiss());
+        Button closeButton = view.findViewById(R.id.chiudiBottone);
+        closeButton.setOnClickListener(k -> Objects.requireNonNull(getDialog()).dismiss());
 
         return builder.create();
     }
 
     private void selectedDots(int position) {
-        dots[position].setImageDrawable(sferaDelDrago);
-        if (position - 1 >= 0) dots[position - 1].setImageDrawable(dot);
-        if (position + 1 != screenshots.size()) dots[position + 1].setImageDrawable(dot);
+        dots[position].setImageDrawable(medium);
+        if (position - 1 >= 0) dots[position - 1].setImageDrawable(away);
+        if (position + 1 != screenshots.size()) dots[position + 1].setImageDrawable(away);
     }
 
-    private void setIndicators(View view) {
+    private void setIndicators(View view, int initialPosition) {
         LinearLayout linearLayout = view.findViewById(R.id.dots_container);
 
         for (int i = 0; i < dots.length; i++) {
             dots[i] = new ImageView(getContext());
-            dots[i].setImageDrawable(dot);
-            if (i == 0) dots[i].setImageDrawable(sferaDelDrago);
+            dots[i].setImageDrawable(away);
+            if (i == initialPosition) dots[i].setImageDrawable(medium);
             linearLayout.addView(dots[i]);
         }
 

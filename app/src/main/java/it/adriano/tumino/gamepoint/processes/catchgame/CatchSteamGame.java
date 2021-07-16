@@ -104,8 +104,8 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
                     if (object.has("minimum")) minimum = object.getString("minimum");
                     if (object.has("recommended")) recommended = object.getString("recommended");
                 }
-                game.setMinimumRequirement(minimum.replace("<strong>Minimum:</strong><br>", ""));
-                game.setRecommendedRequirement(recommended.replace("<strong>Recommended:</strong><br>", ""));
+                game.setMinimumRequirement(minimum);
+                game.setRecommendedRequirement(recommended);
 
                 if (data.has("developers"))
                     developers = getValuesFromJSONArray(data.getJSONArray("developers"), "");
@@ -130,6 +130,15 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
                 if (data.has("screenshots"))
                     screenshots = getValuesFromJSONArray(data.getJSONArray("screenshots"), "path_full");
                 game.setScreenshotsUrl(screenshots);
+
+                String videoTrailerUrl = "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/ae4424ffb1beda926e14cd43/mp4_page_bg_english.mp4?t=1626369244";
+                if (data.has("movies") && data.getJSONArray("movies").length() > 0) {
+                    JSONObject object = data.getJSONArray("movies").getJSONObject(0);
+                    if (object.has("mp4") && object.getJSONObject("mp4").has("max")) {
+                        videoTrailerUrl = object.getJSONObject("mp4").getString("max");
+                    }
+                }
+                game.setVideoUrl(videoTrailerUrl);
 
                 if (data.has("release_date")) {
                     boolean comingSoon = data.getJSONObject("release_date").getBoolean("coming_soon");

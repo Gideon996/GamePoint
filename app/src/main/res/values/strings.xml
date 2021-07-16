@@ -55,4 +55,15 @@
     <string name="share_game_text">Guarda che bel gioco ho trovato: </string>
     <string name="added_on_favorite">Gioco aggiunto ai preferiti</string>
     <string name="removed_from_favorite">Gioco rimosso dai preferiti</string>
+    <string name="developers_title">Developers:</string>
+    <string name="publishers_title">Publishers:</string>
+    <string name="web_site_title">Web Site:</string>
+    <string name="metacritic_score_title">Metacritic:</string>
+    <string name="categories_title">Categories:</string>
+    <string name="genres_title">Genres:</string>
+    <string name="languages_title">Languages</string>
+    <string name="requisiti">Requisiti</string>
+    <string name="nessun_elemento">N.A.</string>
+    <string name="content_description_pegi">Immagine contenente il pegi del gioco</string>
+    <string name="caratteristiche_per_console_title">Caratteristiche per console</string>
 </resources>
