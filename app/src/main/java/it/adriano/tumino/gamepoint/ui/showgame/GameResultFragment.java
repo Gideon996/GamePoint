@@ -98,7 +98,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         binding.tabLayout.addOnTabSelectedListener(this);
         isOnDatabase = favoriteDBManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore());
 
-        binding.favoriteButton.setColorFilter((isOnDatabase) ? Color.rgb(255,69,0) : Color.BLACK);
+        binding.favoriteButton.setColorFilter((isOnDatabase) ? getResources().getColor(R.color.favorite_color, getResources().newTheme()) : Color.BLACK);
 
         return binding.getRoot();
     }

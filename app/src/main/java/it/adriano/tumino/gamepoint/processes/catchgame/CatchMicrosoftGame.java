@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,6 +32,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
     @Override
     public MicrosoftStoreGame scrapping(@NotNull Document document) {
+        Log.e("TEST", "Inizio Scrapping");
         MicrosoftStoreGame game = new MicrosoftStoreGame();
 
         Elements body = document.select("#pdp");
@@ -48,6 +51,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
         Elements productPrice = body.select("#productPrice");
         String price = productPrice.select("span").get(0).text();
         game.setPrice(price);
+        Log.e("TEST", "Mostro il prezzo " + price);
 
         Elements overviewTab = body.select("#pivot-OverviewTab"); //contiene la descrizione
         Elements available = overviewTab.select("#AvailableOnModule");
@@ -66,14 +70,21 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
         String description = descriptionProduct.text();
         game.setDescription(description);
 
-        Elements schreenshotsElements = overviewTab.select("#responsiveScreenshots");
-        Elements schreenshotsList = schreenshotsElements.select(".cli_screenshot_gallery").select("ul").get(0).children();
+        Elements screenshotsElements = overviewTab.select("#responsiveScreenshots");
         ArrayList<String> schreenshots = new ArrayList<>();
-        for (Element screen : schreenshotsList) {
-            Element tmp = screen.select("img").get(0);
-            String s = tmp.attributes().get("data-src");
-            s = s.replaceAll("//", "https://");
-            schreenshots.add(s);
+        schreenshots.add("https://images-na.ssl-images-amazon.com/images/I/51ilsGij0KL._AC_SX679_.jpg");
+        if (screenshotsElements != null && !screenshotsElements.isEmpty()) {
+            Elements screenshotsList = screenshotsElements.select(".cli_screenshot_gallery");
+            if (screenshotsList != null && !screenshotsList.isEmpty()) {
+                Elements list = screenshotsList.select("ul").get(0).children();
+                schreenshots.clear();
+                for (Element screen : list) {
+                    Element tmp = screen.select("img").get(0);
+                    String s = tmp.attributes().get("data-src");
+                    s = s.replaceAll("//", "https://");
+                    schreenshots.add(s);
+                }
+            }
         }
         game.setScreenshotsUrl(schreenshots);
 
