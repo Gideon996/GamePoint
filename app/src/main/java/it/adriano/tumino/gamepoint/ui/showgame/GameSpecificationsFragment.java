@@ -144,11 +144,14 @@ public class GameSpecificationsFragment extends Fragment {
         TextView genresTextView = view.findViewById(R.id.generiPSNTextView);
         genresTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
 
+        TextView subGenresTextView = view.findViewById(R.id.subGenresPSNTextView);
+        subGenresTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getSubGenreList()), Html.FROM_HTML_MODE_LEGACY));
+
         TextView voiceLanguagesTextView = view.findViewById(R.id.voiceLanguagesTextView);
         TextView subTitleTextView = view.findViewById(R.id.subTitleTextView);
-        List<String> displayVoice = fromAcronimoToEsteso(playStationGame.getVoiceLaunguage());
+        List<String> displayVoice = fromAcronimoToEsteso(playStationGame.getVoiceLanguages());
         voiceLanguagesTextView.setText(Html.fromHtml(fromListToHTML(displayVoice), Html.FROM_HTML_MODE_COMPACT));
-        List<String> subTitle = fromAcronimoToEsteso(playStationGame.getSubtitleLanguage());
+        List<String> subTitle = fromAcronimoToEsteso(playStationGame.getSubtitleLanguages());
         subTitleTextView.setText(Html.fromHtml(fromListToHTML(subTitle), Html.FROM_HTML_MODE_COMPACT));
 
         TextView console = view.findViewById(R.id.consolePSNTextView);

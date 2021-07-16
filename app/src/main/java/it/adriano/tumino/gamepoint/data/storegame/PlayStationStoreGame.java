@@ -13,8 +13,8 @@ public class PlayStationStoreGame extends StoreGame {
     private String onlinePlayMode;
     private ArrayList<String> genres;
     private ArrayList<String> categories;
-    private ArrayList<String> voiceLaunguage;
-    private ArrayList<String> subtitleLanguage;
+    private ArrayList<String> voiceLanguages;
+    private ArrayList<String> subtitleLanguages;
     private ArrayList<String> platforms;
     private ArrayList<String> subGenreList;
 
@@ -31,8 +31,8 @@ public class PlayStationStoreGame extends StoreGame {
         onlinePlayMode = in.readString();
         genres = in.createStringArrayList();
         categories = in.createStringArrayList();
-        voiceLaunguage = in.createStringArrayList();
-        subtitleLanguage = in.createStringArrayList();
+        voiceLanguages = in.createStringArrayList();
+        subtitleLanguages = in.createStringArrayList();
         platforms = in.createStringArrayList();
         subGenreList = in.createStringArrayList();
     }
@@ -45,8 +45,8 @@ public class PlayStationStoreGame extends StoreGame {
         out.writeString(onlinePlayMode);
         out.writeStringList(genres);
         out.writeStringList(categories);
-        out.writeStringList(voiceLaunguage);
-        out.writeStringList(subtitleLanguage);
+        out.writeStringList(voiceLanguages);
+        out.writeStringList(subtitleLanguages);
         out.writeStringList(platforms);
         out.writeStringList(subGenreList);
     }
@@ -114,20 +114,20 @@ public class PlayStationStoreGame extends StoreGame {
         this.categories = categories;
     }
 
-    public ArrayList<String> getVoiceLaunguage() {
-        return voiceLaunguage;
+    public ArrayList<String> getVoiceLanguages() {
+        return voiceLanguages;
     }
 
-    public void setVoiceLaunguage(ArrayList<String> voiceLaunguage) {
-        this.voiceLaunguage = voiceLaunguage;
+    public void setVoiceLanguages(ArrayList<String> voiceLanguages) {
+        this.voiceLanguages = voiceLanguages;
     }
 
-    public ArrayList<String> getSubtitleLanguage() {
-        return subtitleLanguage;
+    public ArrayList<String> getSubtitleLanguages() {
+        return subtitleLanguages;
     }
 
-    public void setSubtitleLanguage(ArrayList<String> subtitleLanguage) {
-        this.subtitleLanguage = subtitleLanguage;
+    public void setSubtitleLanguages(ArrayList<String> subtitleLanguages) {
+        this.subtitleLanguages = subtitleLanguages;
     }
 
     public ArrayList<String> getPlatforms() {

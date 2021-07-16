@@ -157,8 +157,8 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
                 }
             }
         }
-        game.setVoiceLaunguage(voiceLanguages);
-        game.setSubtitleLanguage(subtitleLanguages);
+        game.setVoiceLanguages(voiceLanguages);
+        game.setSubtitleLanguages(subtitleLanguages);
         game.setPrice(price);
 
         if (jsonObject.has("playable_platform")) {
