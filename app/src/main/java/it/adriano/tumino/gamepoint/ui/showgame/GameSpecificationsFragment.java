@@ -16,8 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
@@ -129,24 +131,30 @@ public class GameSpecificationsFragment extends Fragment {
 
     private void psnGame(View view) {
         PlayStationStoreGame playStationGame = (PlayStationStoreGame) storeGame;
+
         LinearLayout linearLayout = view.findViewById(R.id.psnSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        TextView rating = view.findViewById(R.id.ratingTextView);
-        rating.setText(playStationGame.getRating());
-        TextView categorie = view.findViewById(R.id.categoryPSNTextView);
-        String s = fromListToHTML(playStationGame.getCategories());
-        categorie.setText(Html.fromHtml(s, Html.FROM_HTML_MODE_LEGACY));
-        TextView generi = view.findViewById(R.id.generiPSNTextView);
-        s = fromListToHTML(playStationGame.getGenres());
-        generi.setText(Html.fromHtml(s, Html.FROM_HTML_MODE_LEGACY));
-        TextView lingue = view.findViewById(R.id.languagePSNTextView);
-        lingue.setText(Html.fromHtml(fromListToHTML(playStationGame.getVoiceLaunguage()), Html.FROM_HTML_MODE_LEGACY));
-        TextView console = view.findViewById(R.id.consolePSNTextView);
-        console.setText(fromListToHTML(playStationGame.getPlatforms()));
-
         ImageView imageView = view.findViewById(R.id.ratingImageView);
         imageView.setImageDrawable(getRatingImage(playStationGame.getRating()));
+
+        TextView categoriesTextView = view.findViewById(R.id.categoryPSNTextView);
+        categoriesTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
+
+        TextView genresTextView = view.findViewById(R.id.generiPSNTextView);
+        genresTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
+
+        TextView voiceLanguagesTextView = view.findViewById(R.id.voiceLanguagesTextView);
+        TextView subTitleTextView = view.findViewById(R.id.subTitleTextView);
+        List<String> displayVoice = fromAcronimoToEsteso(playStationGame.getVoiceLaunguage());
+        voiceLanguagesTextView.setText(Html.fromHtml(fromListToHTML(displayVoice), Html.FROM_HTML_MODE_COMPACT));
+        List<String> subTitle = fromAcronimoToEsteso(playStationGame.getSubtitleLanguage());
+        subTitleTextView.setText(Html.fromHtml(fromListToHTML(subTitle), Html.FROM_HTML_MODE_COMPACT));
+
+        TextView console = view.findViewById(R.id.consolePSNTextView);
+        console.setText(Html.fromHtml(fromListToHTML(playStationGame.getPlatforms()), Html.FROM_HTML_MODE_LEGACY));
+
+
     }
 
     private void mcsGame(View view) {
@@ -196,5 +204,19 @@ public class GameSpecificationsFragment extends Fragment {
             string.append("<li>").append(list.get(i)).append("</li>");
         string.append("</ul>");
         return string.toString();
+    }
+
+    private List<String> fromAcronimoToEsteso(List<String> list) {
+        List<String> estesi = new ArrayList<>();
+        if (list.size() == 1 && list.get(0).equals("N.A.")) {
+            estesi.addAll(list);
+        } else {
+            for (String languageCode : list) {
+                Locale locale = new Locale(languageCode);
+                estesi.add(locale.getDisplayLanguage());
+            }
+        }
+
+        return estesi;
     }
 }
