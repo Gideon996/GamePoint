@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
         final StorageReference fileRef = storageReference.child("users/" + userID + "/profile.jpg");
         fileRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
-                        .addOnSuccessListener(uri -> Picasso.get().load(uri).into(binding.profileImage)))
+                        .addOnSuccessListener(uri -> Picasso.get().load(uri).fit().into(binding.profileImage)))
                 .addOnFailureListener(e -> Toast.makeText(requireActivity().getApplicationContext(), "Failed.", Toast.LENGTH_SHORT).show());
     }
 }

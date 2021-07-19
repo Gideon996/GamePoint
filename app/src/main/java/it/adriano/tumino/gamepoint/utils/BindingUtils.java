@@ -18,19 +18,8 @@ import java.io.IOException;
 
 public class BindingUtils {
 
-    @BindingAdapter("loadImageHeader")
-    public static void loadImage(ImageView view, String url) {
-        Log.e("TEST", (url != null) ? url : "nullo");
-        if (url != null && !url.isEmpty()) {
-            Picasso.get().load(url).fit()
-                    .centerInside()
-                    .placeholder(new ColorDrawable(Color.CYAN))
-                    .into(view);
-        }
-    }
-
-    @BindingAdapter("imageHeaderResult")
-    public static void showImage(ImageView view, String url) { //arriva il valore nullo
+    @BindingAdapter("showImageFromUrl")
+    public static void showImageFromUrl(ImageView view, String url) {
         if (url != null && !url.isEmpty()) {
             Picasso.get().load(url)
                     .fit()

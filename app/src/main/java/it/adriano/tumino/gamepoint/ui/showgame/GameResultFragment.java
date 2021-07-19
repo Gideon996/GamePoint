@@ -1,8 +1,6 @@
 package it.adriano.tumino.gamepoint.ui.showgame;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -122,13 +119,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         if (result != null) {
             viewModel.getHasResult().setValue(true);
             viewModel.getResult().setValue(result);
-
-            Log.e("TEST", "Risultato " + result.getImageHeaderURL());
-
-            Picasso.get().setLoggingEnabled(true);
-            Uri uri = Uri.parse(result.getImageHeaderURL());
-            //Picasso.get().load(uri).fit().into(binding.gameHeaderImageView);
-            Picasso.get().load(result.getImageHeaderURL()).fit().into(binding.imageView3);
 
             binding.gameResultLayout.setVisibility(View.VISIBLE);
             binding.setGame(result);
