@@ -8,19 +8,19 @@ public class BasicGameInformation extends Game{
 
     private String url;
     private String appID;
-    private String piattaforme;
+    private String platforms;
     private String store;
 
     public BasicGameInformation(){
     }
 
-    public BasicGameInformation(String title, String imageURL, String url, String appID, String piattaforme, String store, String price) {
+    public BasicGameInformation(String title, String imageURL, String url, String appID, String platforms, String store, String price) {
         super.setTitle(title);
         super.setImageHeaderURL(imageURL);
         super.setPrice(price);
         this.url = url;
         this.appID = appID;
-        this.piattaforme = piattaforme;
+        this.platforms = platforms;
         this.store = store;
     }
 
@@ -28,7 +28,7 @@ public class BasicGameInformation extends Game{
         super.writeToParcel(out, flags);
         out.writeString(url);
         out.writeString(appID);
-        out.writeString(piattaforme);
+        out.writeString(platforms);
         out.writeString(store);
     }
 
@@ -36,7 +36,7 @@ public class BasicGameInformation extends Game{
         super(in);
         url = in.readString();
         appID = in.readString();
-        piattaforme = in.readString();
+        platforms = in.readString();
         store = in.readString();
     }
 
@@ -56,8 +56,8 @@ public class BasicGameInformation extends Game{
         return appID;
     }
 
-    public String getPiattaforme() {
-        return piattaforme;
+    public String getPlatforms() {
+        return platforms;
     }
 
     public String getStore() {
@@ -84,6 +84,6 @@ public class BasicGameInformation extends Game{
 
     @Override
     public int hashCode() {
-        return Objects.hash(url, appID, piattaforme, store);
+        return Objects.hash(url, appID, platforms, store);
     }
 }

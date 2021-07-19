@@ -70,4 +70,8 @@
     <string name="voice_title">Voice</string>
     <string name="subtitle_title">Subtitle</string>
     <string name="console_supportate_title">Console Supportate</string>
+    <string name="nessun_commento">NESSUN COMMENTO</string>
+    <string name="comment_button_description">Bottone per aggiungere un nuovo commento</string>
+    <string name="button_to_change_image_description">button for change profile image</string>
+    <string name="log_out">Log Out</string>
 </resources>

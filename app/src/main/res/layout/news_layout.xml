@@ -30,7 +30,7 @@
 
                 <ImageView
                     android:id="@+id/newsImageView"
-                    profileImage="@{news.imageURL}"
+                    loadImageHeader="@{news.imageURL}"
                     android:layout_width="125dp"
                     android:layout_height="100dp"
                     android:contentDescription="@string/content_description_image_view" />

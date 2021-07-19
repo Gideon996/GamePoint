@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -21,34 +22,35 @@ import java.util.Calendar;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.Comment;
+import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 
 public class AddCommentDialog extends DialogFragment {
 
-    private final String title;
-    private final String store;
-    private final String displayName;
+    private final StoreGame storeGame;
+    private final FirebaseUser user;
     private EditText editText;
 
-    public AddCommentDialog(String title, String store, String displayName) {
-        this.title = title.replaceAll("\\s+", "");
-        this.store = store;
-        this.displayName = displayName;
+    public AddCommentDialog(StoreGame storeGame, FirebaseUser user) {
+        this.storeGame = storeGame;
+        this.user = user;
     }
 
     @NonNull
+    @SuppressLint("SimpleDateFormat")
     @Override
     public Dialog onCreateDialog(Bundle bundle) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = requireActivity().getLayoutInflater().inflate(R.layout.add_comment_layout, null);
         builder.setView(view);
         builder.setTitle("Add Comment");
+
         editText = view.findViewById(R.id.commentDescription);
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
 
         builder.setPositiveButton("Add Comment", (dialog, which) -> {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String format = sdf.format(Calendar.getInstance().getTime());
-            Comment comment = new Comment(displayName, editText.getText().toString(), ratingBar.getRating(), format);
+            Comment comment = new Comment(user.getDisplayName(), user.getUid(), editText.getText().toString(), ratingBar.getRating(), format);
             saveComment(comment, view);
         });
 
@@ -84,7 +86,8 @@ public class AddCommentDialog extends DialogFragment {
 
     private void saveComment(Comment comment, View view) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        firestore.collection("Games").document(title + store)
+        String title = storeGame.getTitle().replaceAll("\\s+", "");
+        firestore.collection("Games").document(title + storeGame.getStore())
                 .collection("Comments").document()
                 .set(comment)
                 .addOnSuccessListener(aVoid -> Toast.makeText(view.getContext(), "Commento Aggiunto correttamente", Toast.LENGTH_SHORT).show())

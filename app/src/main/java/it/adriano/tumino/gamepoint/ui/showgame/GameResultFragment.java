@@ -1,6 +1,8 @@
 package it.adriano.tumino.gamepoint.ui.showgame;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,12 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -119,6 +123,13 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             viewModel.getHasResult().setValue(true);
             viewModel.getResult().setValue(result);
 
+            Log.e("TEST", "Risultato " + result.getImageHeaderURL());
+
+            Picasso.get().setLoggingEnabled(true);
+            Uri uri = Uri.parse(result.getImageHeaderURL());
+            //Picasso.get().load(uri).fit().into(binding.gameHeaderImageView);
+            Picasso.get().load(result.getImageHeaderURL()).fit().into(binding.imageView3);
+
             binding.gameResultLayout.setVisibility(View.VISIBLE);
             binding.setGame(result);
             information.putParcelable("game", result);
@@ -159,7 +170,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         } else {
             favoriteDBManager.save(basicGameInformation);
             Toast.makeText(this.getContext(), R.string.removed_from_favorite, Toast.LENGTH_SHORT).show();
-            binding.favoriteButton.setColorFilter(Color.rgb(255,69,0));
+            binding.favoriteButton.setColorFilter(Color.rgb(255, 69, 0));
             isOnDatabase = true;
         }
     }

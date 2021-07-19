@@ -33,12 +33,10 @@ public class GameCommentsFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private StoreGame storeGameSearchResult;
-    private String store;
     FloatingActionButton button;
 
     public GameCommentsFragment() {
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,6 @@ public class GameCommentsFragment extends Fragment {
         if (getArguments() != null) {
             if (getArguments().containsKey("game"))
                 storeGameSearchResult = getArguments().getParcelable("game");
-            if (getArguments().containsKey("store")) store = getArguments().getString("store");
         }
     }
 
@@ -56,9 +53,9 @@ public class GameCommentsFragment extends Fragment {
         FragmentGameCommentsBinding binding = FragmentGameCommentsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        recyclerView = binding.recyclerView;
-        linearLayout = binding.linearLayoutEmpty;
-        onShanpshotComments(storeGameSearchResult.getTitle(), store);
+        recyclerView = binding.commentsRecyclerView;
+        linearLayout = binding.noCommentsLinearLayout;
+        onShanpshotComments(storeGameSearchResult.getTitle(), storeGameSearchResult.getStore());
 
         button = binding.addingCommentButton;
 
@@ -80,15 +77,17 @@ public class GameCommentsFragment extends Fragment {
             }
 
             List<Comment> comments = new ArrayList<>();
-            for (QueryDocumentSnapshot doc : value) {
-                Comment comment = doc.toObject(Comment.class);
-                comments.add(comment);
+            if (value != null) {
+                for (QueryDocumentSnapshot doc : value) {
+                    Comment comment = doc.toObject(Comment.class);
+                    comments.add(comment);
+                }
             }
-            visualizzeAllComments(comments);
+            visualizeAllComments(comments);
         });
     }
 
-    private void visualizzeAllComments(List<Comment> list) {
+    private void visualizeAllComments(List<Comment> list) {
         if (list.size() != 0) {
             linearLayout.setVisibility(View.GONE);
         }
@@ -100,7 +99,7 @@ public class GameCommentsFragment extends Fragment {
 
         button.setOnClickListener(v -> {
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            AddCommentDialog addCommentDialog = new AddCommentDialog(storeGameSearchResult.getTitle(), store, auth.getCurrentUser().getDisplayName());
+            AddCommentDialog addCommentDialog = new AddCommentDialog(storeGameSearchResult, auth.getCurrentUser());
             addCommentDialog.show(getChildFragmentManager(), "Add Comment");
         });
     }

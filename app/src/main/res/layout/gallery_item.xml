@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/screenImageView"
-            profileImage="@{screenshot}"
+            loadImageHeader="@{screenshot}"
             android:layout_width="400dp"
             android:layout_height="200dp"
             android:contentDescription="@string/content_description_screenshot"

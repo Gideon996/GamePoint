@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="10dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,12 +18,13 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:clickable="true"
+            android:contentDescription="@string/comment_button_description"
             android:foregroundGravity="bottom|right"
             android:src="@drawable/ic_add_24"
             android:visibility="visible" />
 
         <LinearLayout
-            android:id="@+id/linearLayoutEmpty"
+            android:id="@+id/noCommentsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:foregroundGravity="center"
                 android:gravity="center"
-                android:text="NESSUN COMMENTO"
+                android:text="@string/nessun_commento"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
                 android:textStyle="bold"
@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/commentsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="50dp"

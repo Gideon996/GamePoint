@@ -1,57 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/profileLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="profile"
+            type="com.google.firebase.auth.FirebaseUser" />
+    </data>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="10dp"
         tools:context=".ui.profile.ProfileFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_height="200dp"
+            android:padding="10dp"
+            android:baselineAligned="false">
 
-            <TextView
-                android:id="@+id/displayName"
-                android:layout_width="183dp"
-                android:layout_height="41dp"
-                android:layout_marginTop="16dp"
-                android:gravity="center|center_horizontal"
-                android:text="Adriano Tumino"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toEndOf="@+id/profileImage"
-                app:layout_constraintTop_toTopOf="parent" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shapeAppearanceOverlay="@style/Circular"
+                    profileImage="@{profile.uid}"/>
 
-            <Button
-                android:id="@+id/logOutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log Out"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/profileImage"
-                app:layout_constraintTop_toBottomOf="@+id/displayName" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/changeProfileImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/add_photo"
+                    android:contentDescription="@string/button_to_change_image_description" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/displayName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal"
+                    android:text="@{profile.displayName}"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/logOutButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/dark_cyan"
+                    android:gravity="center"
+                    android:text="@string/log_out" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <View
             android:layout_width="300dp"
@@ -64,58 +87,99 @@
             android:id="@+id/impostazioniBottone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="0.5"
                 android:src="@drawable/settings" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="IMPOSTAZIONI" />
         </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
                 android:src="@drawable/fui_ic_apple_white_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:text="INFORMAZIONI" />
         </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/fui_ic_mail_white_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="I TUOI COMMENTI" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/Gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/fui_ic_mail_white_24dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="COMMENTI" />
+                android:text="Invita gli amici" />
         </LinearLayout>
 
     </LinearLayout>
-
-
-</FrameLayout>
+</layout>

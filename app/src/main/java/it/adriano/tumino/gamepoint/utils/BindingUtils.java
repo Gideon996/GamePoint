@@ -1,22 +1,26 @@
 package it.adriano.tumino.gamepoint.utils;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
-import it.adriano.tumino.gamepoint.R;
-
 public class BindingUtils {
 
-    @BindingAdapter("profileImage")
+    @BindingAdapter("loadImageHeader")
     public static void loadImage(ImageView view, String url) {
+        Log.e("TEST", (url != null) ? url : "nullo");
         if (url != null && !url.isEmpty()) {
             Picasso.get().load(url).fit()
                     .centerInside()
@@ -26,10 +30,10 @@ public class BindingUtils {
     }
 
     @BindingAdapter("imageHeaderResult")
-    public static void showImage(ImageView view, String url) {
+    public static void showImage(ImageView view, String url) { //arriva il valore nullo
         if (url != null && !url.isEmpty()) {
             Picasso.get().load(url)
-                    .resize(view.getMaxWidth(), 700)
+                    .fit()
                     .centerInside()
                     .placeholder(new ColorDrawable(Color.CYAN))
                     .into(view);
@@ -48,6 +52,24 @@ public class BindingUtils {
             }
             view.setImageDrawable(d);
         }
+    }
+
+    @BindingAdapter("profileImage")
+    public static void profileImage(ShapeableImageView imageView, String userID) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("users/" + userID + "/profile.jpg");
+        profileRef.getDownloadUrl()
+                .addOnSuccessListener(uri -> Picasso.get().load(uri).fit().into(imageView))
+                .addOnFailureListener(exception -> {
+                    Drawable d;
+                    try {
+                        Context context = imageView.getContext();
+                        d = Drawable.createFromStream(context.getResources().getAssets().open("profile_default.png"), null);
+                    } catch (IOException e) {
+                        d = new ColorDrawable(Color.CYAN);
+                    }
+                    imageView.setImageDrawable(d);
+                });
     }
 
     private static String getLogoForStore(String store) {

@@ -9,86 +9,82 @@
             type="it.adriano.tumino.gamepoint.data.Comment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/authorCommentImageView"
-            android:layout_width="wrap_content"
+            profileImage="@{comment.authorID}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/fui_transparent"
+            android:contentDescription="@string/profile_image_comment"
+            app:shapeAppearanceOverlay="@style/Circular" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/profile_image_comment" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/displayNameComment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:gravity="center"
-            android:text="@{comment.autore}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/displayNameComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{comment.author}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/silver" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:background="#FAD02C"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
-            app:layout_constraintTop_toBottomOf="@+id/displayNameComment" />
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#FAD02C" />
 
-        <TextView
-            android:id="@+id/commentRatingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(comment.rating)}"
-            android:textColor="#ACB2B8"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionCommentTextView"
-            app:layout_constraintStart_toEndOf="@+id/starCommentImageView"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            app:layout_constraintVertical_bias="0.071" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/commentDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{comment.data}"
-            android:textColor="#ACB2B8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/commentRatingTextView"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+                <ImageView
+                    android:id="@+id/starCommentImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/rating_star_image"
+                    android:src="@drawable/ic_star_24"
+                    app:tint="@color/white" />
 
-        <TextView
-            android:id="@+id/descriptionCommentTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{comment.descrizione}"
-            android:textColor="#ACB2B8"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
-            app:layout_constraintTop_toBottomOf="@+id/commentDateTextView" />
+                <TextView
+                    android:id="@+id/commentRatingTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:text="@{String.valueOf(comment.rating)}"
+                    android:textColor="@color/silver" />
 
-        <ImageView
-            android:id="@+id/starCommentImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/rating_star_image"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionCommentTextView"
-            app:layout_constraintStart_toEndOf="@+id/authorCommentImageView"
-            app:layout_constraintTop_toBottomOf="@+id/displayNameComment"
-            app:layout_constraintVertical_bias="0.115"
-            app:srcCompat="@drawable/ic_star_24" />
+                <TextView
+                    android:id="@+id/commentDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:text="@{comment.data}"
+                    android:textColor="@color/silver" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/descriptionCommentTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{comment.description}"
+                android:textColor="@color/silver" />
+        </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

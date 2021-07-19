@@ -8,7 +8,7 @@
     tools:ignore="UselessParent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="horizontal"
@@ -19,9 +19,9 @@
 
         <EditText
             android:id="@+id/searchGameEditText"
-            android:layout_width="345dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:autofillHints="Game Title"
             android:backgroundTint="@color/cyan"
             android:ems="10"
@@ -32,7 +32,7 @@
 
         <ImageButton
             android:id="@+id/searchGameButton"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -45,6 +45,7 @@
         android:id="@+id/latestResearchGamesLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="vertical"
         android:paddingBottom="50dp"
         android:visibility="visible">
@@ -60,7 +61,7 @@
             android:id="@+id/latestResearchGameRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/last_search_layout"/>
+            tools:listitem="@layout/last_search_layout" />
     </LinearLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout

@@ -25,7 +25,7 @@ public abstract class StoreGame extends Game implements Parcelable {
         out.writeStringList(screenshotsUrl);
     }
 
-    protected StoreGame(Parcel in) { //devono essere in ordine di come li scrivo
+    protected StoreGame(Parcel in) {
         super(in);
         description = in.readString();
         releaseData = in.readString();

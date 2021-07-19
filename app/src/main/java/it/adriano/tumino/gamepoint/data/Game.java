@@ -16,7 +16,7 @@ public abstract class Game implements Parcelable {
         out.writeString(price);
     }
 
-    protected Game(Parcel in) { //devono essere in ordine di come li scrivo
+    protected Game(Parcel in) {
         title = in.readString();
         imageHeaderURL = in.readString();
         price = in.readString();

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="game"
             type="it.adriano.tumino.gamepoint.data.storegame.StoreGame" />
@@ -21,7 +20,7 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:animationCache="true"
-            android:visibility="visible"
+            android:visibility="gone"
             app:shimmer_repeat_mode="restart"
             app:shimmer_shape="radial">
 
@@ -41,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,15 +53,15 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/gameHeaderImageView"
-                        imageHeaderResult="@{game.imageHeaderURL}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@{String.format(@string/content_description_image_header_result, game.title)}"
-                        android:cropToPadding="false"
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
                         android:scaleType="fitXY"
-                        tools:src="@tools:sample/avatars" />
+                        tools:srcCompat="@tools:sample/avatars" />
 
                     <LinearLayout
                         android:layout_width="70dp"
