@@ -22,7 +22,7 @@
             android:scaleType="centerInside"
             android:scaleX="2"
             android:scaleY="2"
-            app:srcCompat="@drawable/open" />
+            app:srcCompat="@drawable/icon_open" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/copy" />
+            app:srcCompat="@drawable/icon_copy_element" />
 
         <TextView
             android:layout_width="match_parent"
@@ -87,7 +87,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_share_24"
+            app:srcCompat="@drawable/icon_share"
             app:tint="@color/white" />
 
         <TextView

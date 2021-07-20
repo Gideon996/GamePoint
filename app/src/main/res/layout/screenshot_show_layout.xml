@@ -11,7 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@android:color/transparent"
-        android:drawableEnd="@drawable/ic_close_24"
+        android:drawableEnd="@drawable/icon_close"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

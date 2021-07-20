@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/rating_star_image"
-                    android:src="@drawable/ic_star_24"
+                    android:src="@drawable/icon_star"
                     app:tint="@color/white" />
 
                 <TextView

@@ -82,7 +82,7 @@
             android:layout_weight="0.5"
             android:background="@android:color/transparent"
             android:contentDescription="@string/cancell_item"
-            app:srcCompat="@drawable/ic_close_24"
+            app:srcCompat="@drawable/icon_close"
             app:tint="@color/silver" />
 
     </LinearLayout>

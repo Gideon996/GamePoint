@@ -84,7 +84,7 @@
                             android:padding="5dp"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:src="@drawable/ic_favorite_24" />
+                            android:src="@drawable/icon_favorite" />
 
                         <ImageButton
                             android:id="@+id/shareButton"
@@ -94,7 +94,7 @@
                             android:background="@android:color/transparent"
                             android:contentDescription="@string/share_content_description"
                             android:padding="5dp"
-                            android:src="@drawable/ic_share_24" />
+                            android:src="@drawable/icon_share" />
 
                     </LinearLayout>
 

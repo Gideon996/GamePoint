@@ -42,7 +42,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:clickable="true"
-                    app:srcCompat="@drawable/add_photo"
+                    app:srcCompat="@drawable/icon_change_profile_image"
                     android:contentDescription="@string/button_to_change_image_description" />
 
             </RelativeLayout>
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="0.5"
-                android:src="@drawable/settings" />
+                android:src="@drawable/icon_setting" />
 
             <TextView
                 android:layout_width="wrap_content"

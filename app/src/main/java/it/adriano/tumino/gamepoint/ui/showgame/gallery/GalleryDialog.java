@@ -48,8 +48,8 @@ public class GalleryDialog extends DialogFragment {
         viewPager2.setAdapter(new ImageGalleryAdapter(screenshots));
         viewPager2.setCurrentItem(initialPosition);
 
-        away = getResources().getDrawable(R.drawable.circle_away, requireContext().getTheme());
-        medium = getResources().getDrawable(R.drawable.circle_medium, requireContext().getTheme());
+        away = getResources().getDrawable(R.drawable.icon_small_circle, requireContext().getTheme());
+        medium = getResources().getDrawable(R.drawable.icon_medium_circle, requireContext().getTheme());
 
         setIndicators(view, initialPosition);
 

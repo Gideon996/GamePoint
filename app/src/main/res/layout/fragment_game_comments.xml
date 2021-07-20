@@ -20,7 +20,7 @@
             android:clickable="true"
             android:contentDescription="@string/comment_button_description"
             android:foregroundGravity="bottom|right"
-            android:src="@drawable/ic_add_24"
+            android:src="@drawable/icon_add"
             android:visibility="visible" />
 
         <LinearLayout
