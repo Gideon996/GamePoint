@@ -39,6 +39,8 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
         Elements image = body.select(".pi-product-image");
         String imageUrl = image.select("img").get(0).attributes().get("src");
         game.setImageHeaderURL(imageUrl);
+        game.setVideoUrl("");
+        game.setThumbnail("");
 
         Elements titleGroup = body.select("#productTitle");
         String title = titleGroup.text();

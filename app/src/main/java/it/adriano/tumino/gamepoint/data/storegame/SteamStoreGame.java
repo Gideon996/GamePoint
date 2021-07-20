@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 public class SteamStoreGame extends StoreGame {
 
-    private String videoUrl;
-    private String thumbnail;
     private String languages;
     private String website;
     private String minimumRequirement;
@@ -25,8 +23,6 @@ public class SteamStoreGame extends StoreGame {
 
     private SteamStoreGame(Parcel in) {
         super(in);
-        videoUrl = in.readString();
-        thumbnail = in.readString();
         languages = in.readString();
         website = in.readString();
         minimumRequirement = in.readString();
@@ -40,8 +36,6 @@ public class SteamStoreGame extends StoreGame {
 
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
-        out.writeString(videoUrl);
-        out.writeString(thumbnail);
         out.writeString(languages);
         out.writeString(website);
         out.writeString(minimumRequirement);
@@ -66,22 +60,6 @@ public class SteamStoreGame extends StoreGame {
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
     public String getLanguages() {

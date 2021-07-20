@@ -43,12 +43,14 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         Elements video = header.select("iframe");
         String videoUrl = "https://www.youtube.com/embed/DKBK4OnvjX0?rel=0&theme=light&modestbranding=1&showinfo=0&autohide=1&autoplay=2&cc_load_policy=0&cc_lang_pref=it&enablejsapi=1";
         if (!video.isEmpty()) videoUrl = video.first().attributes().get("src");
-        game.setVideoTrailerUrl(videoUrl);
+        game.setVideoUrl(videoUrl);
+
 
         Elements imageElements = header.select("img");
         String imageHeader = "https://cdn02.nintendo-europe.com/media/images/10_share_images/others_3/nintendo_eshop_5/H2x1_NintendoeShop_WebsitePortal_itIT.jpg";
         if (!imageElements.isEmpty()) imageHeader = imageElements.first().attributes().get("src");
         game.setImageHeaderURL(imageHeader.replaceAll("//", "https://"));
+        game.setThumbnail(imageHeader.replaceAll("//", "https://"));
 
         Elements classification = header.select(".age-rating").select("span");
         String pegi = "pegi3";

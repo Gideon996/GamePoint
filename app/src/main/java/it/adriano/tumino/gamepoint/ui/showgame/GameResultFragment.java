@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +67,6 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             basicGameInformation = getArguments().getParcelable("game");
 
         information.putString("store", basicGameInformation.getStore());
-
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(basicGameInformation.getTitle().toUpperCase());
         switch (basicGameInformation.getStore()) {
             case "STEAM":
                 game = new CatchSteamGame(basicGameInformation.getAppID());
@@ -107,6 +104,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     @Override
     public void onResume() {
         super.onResume();
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(basicGameInformation.getTitle().toUpperCase());
         if (viewModel.getHasResult().getValue())
             setFragmentLayout(fragments[viewModel.getCurrentFragment().getValue()]);
     }
@@ -171,5 +169,11 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         ft.replace(R.id.frameLayout, fragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.gc();
     }
 }

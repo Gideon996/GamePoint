@@ -7,7 +7,6 @@ import java.util.List;
 
 public class NintendoStoreGame extends StoreGame {
 
-    private String videoTrailerUrl;
     private String pegi;
     private String console;
     private String systemInfo;
@@ -19,7 +18,6 @@ public class NintendoStoreGame extends StoreGame {
 
     private NintendoStoreGame(Parcel in) {
         super(in);
-        videoTrailerUrl = in.readString();
         pegi = in.readString();
         console = in.readString();
         systemInfo = in.readString();
@@ -28,7 +26,6 @@ public class NintendoStoreGame extends StoreGame {
 
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
-        out.writeString(videoTrailerUrl);
         out.writeString(pegi);
         out.writeString(console);
         out.writeString(systemInfo);
@@ -48,14 +45,6 @@ public class NintendoStoreGame extends StoreGame {
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    public String getVideoTrailerUrl() {
-        return videoTrailerUrl;
-    }
-
-    public void setVideoTrailerUrl(String videoTrailerUrl) {
-        this.videoTrailerUrl = videoTrailerUrl;
     }
 
     public String getPegi() {

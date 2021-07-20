@@ -12,6 +12,8 @@ public abstract class StoreGame extends Game implements Parcelable {
     private String description;
     private String releaseData;
     private String store;
+    private String videoUrl;
+    private String thumbnail;
     private ArrayList<String> screenshotsUrl;
 
     public StoreGame() {
@@ -22,6 +24,8 @@ public abstract class StoreGame extends Game implements Parcelable {
         out.writeString(description);
         out.writeString(releaseData);
         out.writeString(store);
+        out.writeString(videoUrl);
+        out.writeString(thumbnail);
         out.writeStringList(screenshotsUrl);
     }
 
@@ -30,6 +34,8 @@ public abstract class StoreGame extends Game implements Parcelable {
         description = in.readString();
         releaseData = in.readString();
         store = in.readString();
+        videoUrl = in.readString();
+        thumbnail = in.readString();
         screenshotsUrl = in.createStringArrayList();
     }
 
@@ -55,6 +61,22 @@ public abstract class StoreGame extends Game implements Parcelable {
 
     public void setStore(String store) {
         this.store = store;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public ArrayList<String> getScreenshotsUrl() {

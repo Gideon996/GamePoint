@@ -11,8 +11,6 @@ public class PlayStationStoreGame extends StoreGame {
     private String numberOfPlayers;
     private String inGamePurchases;
     private String onlinePlayMode;
-    private String videoUrl;
-    private String shots;
     private ArrayList<String> genres;
     private ArrayList<String> categories;
     private ArrayList<String> voiceLanguages;
@@ -31,8 +29,6 @@ public class PlayStationStoreGame extends StoreGame {
         numberOfPlayers = in.readString();
         inGamePurchases = in.readString();
         onlinePlayMode = in.readString();
-        videoUrl = in.readString();
-        shots = in.readString();
         genres = in.createStringArrayList();
         categories = in.createStringArrayList();
         voiceLanguages = in.createStringArrayList();
@@ -47,8 +43,6 @@ public class PlayStationStoreGame extends StoreGame {
         out.writeString(numberOfPlayers);
         out.writeString(inGamePurchases);
         out.writeString(onlinePlayMode);
-        out.writeString(videoUrl);
-        out.writeString(shots);
         out.writeStringList(genres);
         out.writeStringList(categories);
         out.writeStringList(voiceLanguages);
@@ -102,22 +96,6 @@ public class PlayStationStoreGame extends StoreGame {
 
     public void setOnlinePlayMode(String onlinePlayMode) {
         this.onlinePlayMode = onlinePlayMode;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public String getShots() {
-        return shots;
-    }
-
-    public void setShots(String shots) {
-        this.shots = shots;
     }
 
     public ArrayList<String> getGenres() {

@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +50,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                     .setPersistenceEnabled(false)
                     .build();
             FirebaseFirestore.getInstance().setFirestoreSettings(settings);
+            FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
         }
 
         mAuth = FirebaseAuth.getInstance(); //prendo l'instanza di login
@@ -109,5 +111,11 @@ public class AuthenticationActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.gc();
     }
 }

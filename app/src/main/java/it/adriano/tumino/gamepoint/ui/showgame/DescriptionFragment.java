@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
@@ -31,9 +32,6 @@ import com.squareup.picasso.Target;
 
 import org.jetbrains.annotations.NotNull;
 
-import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
-import it.adriano.tumino.gamepoint.data.storegame.PlayStationStoreGame;
-import it.adriano.tumino.gamepoint.data.storegame.SteamStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.databinding.FragmentDescriptionBinding;
 
@@ -63,26 +61,9 @@ public class DescriptionFragment extends Fragment {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false);
         linearLayout = binding.descriptionLayout;
         showGameDescription();
-        switch (storeGame.getStore()) {
-            case "STEAM":
-                SteamStoreGame steamStoreGame = (SteamStoreGame) storeGame;
-                if (!steamStoreGame.getVideoUrl().contains("youtube.com")) {
-                    binding.trailerLayout.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "PSN":
-                PlayStationStoreGame playStationStoreGame = (PlayStationStoreGame) storeGame;
-                if (!playStationStoreGame.getVideoUrl().contains("youtube.com")) {
-                    binding.trailerLayout.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "ESHOP":
-                binding.trailerYoutubeLayout.setVisibility(View.VISIBLE);
-                break;
-        }
+
         return binding.getRoot();
     }
-
 
 
     private void showGameDescription() {
@@ -97,56 +78,60 @@ public class DescriptionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        switch (storeGame.getStore()) {
-            case "STEAM":
-                SteamStoreGame steamStoreGame = (SteamStoreGame) storeGame;
-                if (!steamStoreGame.getVideoUrl().contains("youtube.com")) {
-                    setVideoTrailer(steamStoreGame.getVideoUrl(), steamStoreGame.getThumbnail());
-                }
-                break;
-            case "PSN":
-                PlayStationStoreGame playStationStoreGame = (PlayStationStoreGame) storeGame;
-                if (!playStationStoreGame.getVideoUrl().contains("youtube.com")) {
-                    setVideoTrailer(playStationStoreGame.getVideoUrl(), playStationStoreGame.getShots());
-                }
-                break;
-            case "ESHOP":
-                NintendoStoreGame nintendoStoreGame = (NintendoStoreGame) storeGame;
-                setYoutubeVideoTrailer(nintendoStoreGame.getVideoTrailerUrl());
-                break;
+        if (!storeGame.getVideoUrl().isEmpty()) {
+            if (storeGame.getVideoUrl().contains("youtube.com")) {
+                setYoutubeVideoTrailer(storeGame.getVideoUrl());
+                binding.trailerLayout.setVisibility(View.GONE);
+            } else {
+                setVideoTrailer(storeGame.getVideoUrl(), storeGame.getThumbnail());
+                binding.trailerYoutubeLayout.setVisibility(View.GONE);
+            }
+        } else {
+            binding.trailerYoutubeLayout.setVisibility(View.GONE);
+            binding.trailerLayout.setVisibility(View.GONE);
         }
     }
 
+    private static String createYoutubeFrame(@NonNull String videoUrl, float width, float height) {
+
+        return "<html>" +
+                "<body style='margin:0;padding:0;'>" +
+                "<iframe " +
+                "width=\"" + width + "\"" +
+                "height=\"" + height + "\"" +
+                "src=\"" + videoUrl + "\"" +
+                "frameborder=\"0\" allowfullscreen>" +
+                "</iframe>" +
+                "</body>" +
+                "</html>";
+    }
+
+    private final static String embedURL = "https://www.youtube.com/embed/";
+
     @SuppressLint("SetJavaScriptEnabled")
     private void setYoutubeVideoTrailer(String videoTrailer) {
-        //binding.trailerYoutubeLayout.setVisibility(View.VISIBLE);
-        //Esempio url: https://www.youtube.com/watch?v=DKBK4OnvjX0
-        //Originale: https://www.youtube.com/embed/SebD2MQVT1c?rel=0&theme=light&modestbranding=1&showinfo=0&autohide=1&autoplay=2&cc_load_policy=0&cc_lang_pref=it&enablejsapi=1
+
+        if (!videoTrailer.contains("embed")) {
+            String[] split = videoTrailer.split("=");
+            if (split.length > 1) {
+                String videoID = split[1];
+                videoTrailer = embedURL + videoID;
+            }
+        }
+
         WebView webView = binding.webView;
 
-        float density  = getResources().getDisplayMetrics().density;
-        float dpWidth  = webView.getWidth() / density;
+        float density = getResources().getDisplayMetrics().density;
+        float dpWidth = webView.getWidth() / density;
         float dpHeight = webView.getHeight() / density;
-        Log.e("TEST", "" + dpWidth + " " + dpHeight);
 
-        String frameVideo = "<html>" +
-                                "<body style='margin:0;padding:0;'>" +
-                                    "<iframe " +
-                                        "width=\"" + dpWidth + "\"" +
-                                        " height=\"" + dpHeight + "\"" +
-                                        " src=\"" + videoTrailer + "\"" +
-                "                        frameborder=\"0\" allowfullscreen>" +
-                                    "</iframe>" +
-                                "</body>" +
-                            "</html>";
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadData(frameVideo, "text/html", "utf-8");
+        webView.loadData(createYoutubeFrame(videoTrailer, dpWidth, dpHeight), "text/html", "utf-8");
     }
 
     private void setVideoTrailer(String videoUrl, String thumbnail) {
-        binding.trailerLayout.setVisibility(View.VISIBLE);
         Picasso.get().load(thumbnail).fit().into(binding.thumbnailVideoTrailer);
 
         VideoView videoView = binding.trailerVideoView;
@@ -165,6 +150,12 @@ public class DescriptionFragment extends Fragment {
         });
 
         linearLayout.getViewTreeObserver().addOnScrollChangedListener(mediaController::hide);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.gc();
     }
 
     public class PicassoImageGetter implements Html.ImageGetter {

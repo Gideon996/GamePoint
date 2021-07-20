@@ -90,12 +90,11 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         if (!legalText.isEmpty()) description += "<br/>" + legalText + "<br/>";
         game.setDescription(description);
 
-
         if (jsonObject.has("images")) {
             JSONArray jsonArray = jsonObject.getJSONArray("images");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject tmp = jsonArray.getJSONObject(i);
-                if (tmp.getInt("type") == 13) imageHeader = tmp.getString("url");
+                imageHeader = tmp.getString("url");
             }
         }
         game.setImageHeaderURL(imageHeader);
@@ -104,8 +103,8 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
             JSONObject mediaList = jsonObject.getJSONObject("mediaList");
             if (mediaList.has("previews") && mediaList.getJSONArray("previews").length() > 0) {
                 JSONObject preview = mediaList.getJSONArray("previews").getJSONObject(0);
-                trailerUrl = preview.getString("streamUrl");
-                shots = preview.getJSONArray("shots").getString(0);
+                if(preview.has("streamUrl") && !preview.isNull("streamUrl")) trailerUrl = preview.getString("streamUrl");
+                if(preview.has("shots") && !preview.isNull("shots")) shots = preview.getJSONArray("shots").getString(0);
             }
 
             if (mediaList.has("screenshots")) {
@@ -117,7 +116,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
             }
         }
         game.setVideoUrl(trailerUrl);
-        game.setShots(shots);
+        game.setThumbnail(shots);
         game.setScreenshotsUrl(screenshotsUrl);
 
         if (jsonObject.has("content_rating"))
