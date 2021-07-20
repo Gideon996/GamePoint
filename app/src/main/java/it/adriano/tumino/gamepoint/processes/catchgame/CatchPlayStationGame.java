@@ -50,6 +50,8 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         String inGamePurchases = "N.A.";
         String onlinePlayMode = "N.A.";
         String imageHeader = "https://images6.alphacoders.com/591/thumb-1920-591158.jpg";
+        String trailerUrl = "";
+        String shots = "";
 
         ArrayList<String> screenshotsUrl = new ArrayList<>();
         screenshotsUrl.add("https://wallpaperaccess.com/full/4419873.png");
@@ -99,12 +101,23 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         game.setImageHeaderURL(imageHeader);
 
         if (jsonObject.has("mediaList") && jsonObject.getJSONObject("mediaList").has("screenshots")) {
-            screenshotsUrl.clear();
-            JSONArray jsonArray = jsonObject.getJSONObject("mediaList").getJSONArray("screenshots");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                screenshotsUrl.add(jsonArray.getJSONObject(i).getString("url"));
+            JSONObject mediaList = jsonObject.getJSONObject("mediaList");
+            if (mediaList.has("previews") && mediaList.getJSONArray("previews").length() > 0) {
+                JSONObject preview = mediaList.getJSONArray("previews").getJSONObject(0);
+                trailerUrl = preview.getString("streamUrl");
+                shots = preview.getJSONArray("shots").getString(0);
+            }
+
+            if (mediaList.has("screenshots")) {
+                screenshotsUrl.clear();
+                JSONArray jsonArray = mediaList.getJSONArray("screenshots");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    screenshotsUrl.add(jsonArray.getJSONObject(i).getString("url"));
+                }
             }
         }
+        game.setVideoUrl(trailerUrl);
+        game.setShots(shots);
         game.setScreenshotsUrl(screenshotsUrl);
 
         if (jsonObject.has("content_rating"))

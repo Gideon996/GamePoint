@@ -53,6 +53,8 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
             String recommended = "";
             String price = "FREE";
             String date = "3 Ottobre 1911";
+            String videoTrailerUrl = "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/ae4424ffb1beda926e14cd43/mp4_page_bg_english.mp4?t=1626369244";
+            String thumbnail = "https://xboxplay.games/uploadStream/7550.jpg";
 
             int scoreMetacritic = 0;
             ArrayList<String> developers = new ArrayList<>();
@@ -131,13 +133,18 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
                     screenshots = getValuesFromJSONArray(data.getJSONArray("screenshots"), "path_full");
                 game.setScreenshotsUrl(screenshots);
 
-                String videoTrailerUrl = "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/ae4424ffb1beda926e14cd43/mp4_page_bg_english.mp4?t=1626369244";
+
                 if (data.has("movies") && data.getJSONArray("movies").length() > 0) {
                     JSONObject object = data.getJSONArray("movies").getJSONObject(0);
-                    if (object.has("mp4") && object.getJSONObject("mp4").has("max")) {
-                        videoTrailerUrl = object.getJSONObject("mp4").getString("max");
+                    if (object.has("thumbnail")) {
+                        thumbnail = object.getString("thumbnail");
+                    }
+
+                    if (object.has("mp4") && object.getJSONObject("mp4").has("480")) {
+                        videoTrailerUrl = object.getJSONObject("mp4").getString("480");
                     }
                 }
+                game.setThumbnail(thumbnail);
                 game.setVideoUrl(videoTrailerUrl);
 
                 if (data.has("release_date")) {

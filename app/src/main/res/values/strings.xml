@@ -73,4 +73,6 @@
     <string name="comment_button_description">Bottone per aggiungere un nuovo commento</string>
     <string name="button_to_change_image_description">button for change profile image</string>
     <string name="log_out">Log Out</string>
+    <string name="play_trailer_button">play trailer button</string>
+    <string name="trailer">Trailer</string>
 </resources>

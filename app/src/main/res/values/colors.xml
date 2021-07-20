@@ -21,4 +21,6 @@
     <color name="shimmer_background">#B3B3B3</color>
     <color name="favorite_color">#FF4500</color>
 
+    <color name="grayAlpha80">#CC808080</color>
+
 </resources>

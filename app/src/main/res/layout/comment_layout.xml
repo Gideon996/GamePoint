@@ -18,7 +18,7 @@
             android:id="@+id/authorCommentImageView"
             profileImage="@{comment.authorID}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_weight="2"
             android:background="@color/fui_transparent"
             android:contentDescription="@string/profile_image_comment"
@@ -26,7 +26,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -48,6 +48,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -62,16 +63,18 @@
                 <TextView
                     android:id="@+id/commentRatingTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="start|center_vertical"
+                    android:layout_weight="1"
                     android:text="@{String.valueOf(comment.rating)}"
                     android:textColor="@color/silver" />
 
                 <TextView
                     android:id="@+id/commentDateTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:gravity="end"
                     android:text="@{comment.data}"
                     android:textColor="@color/silver" />
@@ -80,7 +83,7 @@
             <TextView
                 android:id="@+id/descriptionCommentTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@{comment.description}"
                 android:textColor="@color/silver" />
         </LinearLayout>

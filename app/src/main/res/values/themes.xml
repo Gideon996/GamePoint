@@ -34,4 +34,13 @@
         <item name="android:textColorHint">@android:color/white</item>
     </style>
 
+    <style name="FloatingActionButtonStyle" parent="Widget.Design.FloatingActionButton">
+        <item name="shapeAppearanceOverlay">@style/PlayButtonStyle</item>
+    </style>
+
+    <style name="PlayButtonStyle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">20%</item>
+    </style>
+
+
 </resources>

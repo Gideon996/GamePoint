@@ -41,7 +41,7 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         Elements header = content.select(".gamepage-banner");
 
         Elements video = header.select("iframe");
-        String videoUrl = "https://www.youtube.com/watch?v=DKBK4OnvjX0";
+        String videoUrl = "https://www.youtube.com/embed/DKBK4OnvjX0?rel=0&theme=light&modestbranding=1&showinfo=0&autohide=1&autoplay=2&cc_load_policy=0&cc_lang_pref=it&enablejsapi=1";
         if (!video.isEmpty()) videoUrl = video.first().attributes().get("src");
         game.setVideoTrailerUrl(videoUrl);
 

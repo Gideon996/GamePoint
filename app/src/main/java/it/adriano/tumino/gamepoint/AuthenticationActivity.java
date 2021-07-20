@@ -22,7 +22,7 @@ import java.util.List;
 public class AuthenticationActivity extends AppCompatActivity {
     private static final String TAG = "AuthenticationActivity";
 
-    private static final boolean EMULATOR = false;
+    private static final boolean EMULATOR = true;
 
     private FirebaseAuth mAuth;
 
