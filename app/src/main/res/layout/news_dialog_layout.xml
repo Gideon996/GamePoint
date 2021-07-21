@@ -40,7 +40,7 @@
         android:layout_height="2dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:background="@color/Gray" />
+        android:background="@color/gray" />
 
     <LinearLayout
         android:id="@+id/copyNewsLayout"
@@ -72,7 +72,7 @@
         android:layout_height="2dp"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:background="@color/Gray" />
+        android:background="@color/gray" />
 
     <LinearLayout
         android:id="@+id/shareNewsLayout"

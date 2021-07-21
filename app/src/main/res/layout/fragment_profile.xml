@@ -81,7 +81,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <LinearLayout
             android:id="@+id/impostazioniBottone"
@@ -111,7 +111,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -139,7 +139,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,7 +167,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"

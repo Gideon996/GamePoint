@@ -24,7 +24,7 @@
             android:layout_weight="8"
             android:autofillHints="Game Title"
             android:background="@drawable/edit_text_background"
-            android:backgroundTint="@color/Gray"
+            android:backgroundTint="@color/gray"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/hint_search_edit_text"

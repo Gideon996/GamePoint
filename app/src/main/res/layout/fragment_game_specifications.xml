@@ -111,7 +111,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
@@ -158,7 +158,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
@@ -184,7 +184,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
@@ -214,7 +214,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:background="@color/Gray" />
+                android:background="@color/gray" />
 
             <TextView
                 android:id="@+id/reccommendetTextView"
@@ -264,7 +264,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
@@ -369,7 +369,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
@@ -426,7 +426,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="0"
-                android:background="@color/Gray" />
+                android:background="@color/gray" />
 
             <TextView
                 android:id="@+id/subTitleTextView"
@@ -442,7 +442,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
@@ -516,7 +516,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:id="@+id/metadataMCSTextView"
@@ -529,7 +529,7 @@
             android:layout_height="2dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"

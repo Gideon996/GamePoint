@@ -6,7 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="Gray">#808080</color>
+    <color name="gray">#808080</color>
 
 
     <!-- FINAL COLOR FOR MY PROJECT -->
@@ -17,6 +17,7 @@
     <color name="dark_teal">#2A475E</color>
     <color name="silver">#C7D5E0</color> <!-- colore testo -->
     <color name="white">#FFFFFFFF</color> <!-- colore titoli -->
+    <color name="red">#FF0000</color>
 
     <color name="shimmer_background">#B3B3B3</color>
     <color name="favorite_color">#FF4500</color>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColorHint="@color/silver">
+            android:textColorHint="@color/silver"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/ErrorText">
 
             <EditText
                 android:id="@+id/loginEmail"
@@ -45,7 +47,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
-            app:passwordToggleEnabled="true">
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            app:errorTextAppearance="@style/ErrorText">
 
             <EditText
                 android:id="@+id/loginPassword"
@@ -71,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layout_margin"
-            android:backgroundTint="@color/cyan"
+            android:backgroundTint="@color/dark_cyan"
             android:text="@string/login"
             android:textColor="@color/white" />
 

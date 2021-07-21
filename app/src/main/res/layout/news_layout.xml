@@ -93,7 +93,7 @@
             android:layout_width="300dp"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:background="@color/Gray" />
+            android:background="@color/gray" />
     </LinearLayout>
 
 </layout>

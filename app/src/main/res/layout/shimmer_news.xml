@@ -50,7 +50,7 @@
             android:autoSizeTextType="uniform"
             android:background="#B3B3B3"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/Gray" />
+            android:textColor="@color/gray" />
     </LinearLayout>
 
 </LinearLayout>
