@@ -75,4 +75,6 @@
     <string name="log_out">Log Out</string>
     <string name="play_trailer_button">play trailer button</string>
     <string name="trailer">Trailer</string>
+    <string name="email_regex"><![CDATA[^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$]]></string>
+    <string name="password_regex">^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$</string>
 </resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ui.authentication.LoginFragment">
+
+    <EditText
+        android:id="@+id/emailEditText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/edit_text_background"
+        android:backgroundTint="@color/dark_cyan"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="EMAIL"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/silver" />
+
+    <EditText
+        android:id="@+id/passwordEditText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/edit_text_background"
+        android:backgroundTint="@color/dark_cyan"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="PASSWORD"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/silver" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/cyan"
+        android:text="Login"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/loginTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Non possiedi un account? Registrati"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>

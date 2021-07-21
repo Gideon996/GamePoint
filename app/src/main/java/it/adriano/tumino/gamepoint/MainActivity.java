@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Initialization Main activity and Bottom Navigation View");
 
-        FirebaseUser user = getIntent().getParcelableExtra("user");
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

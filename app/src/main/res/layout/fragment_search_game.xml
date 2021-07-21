@@ -23,11 +23,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:autofillHints="Game Title"
-            android:backgroundTint="@color/cyan"
+            android:background="@drawable/edit_text_background"
+            android:backgroundTint="@color/Gray"
             android:ems="10"
+            android:gravity="center"
             android:hint="@string/hint_search_edit_text"
+            android:imeOptions="actionSearch"
             android:inputType="textPersonName"
-            android:textColor="@color/silver"
+            android:textColor="@color/white"
             android:textColorHint="@color/silver" />
 
         <ImageButton
@@ -38,7 +41,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/search_button_text"
             app:srcCompat="@drawable/icon_search_fill"
-            app:tint="@color/silver" />
+            app:tint="@color/white" />
     </LinearLayout>
 
     <LinearLayout
