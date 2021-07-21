@@ -11,21 +11,19 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.jetbrains.annotations.NotNull;
+
 import it.adriano.tumino.gamepoint.MainActivity;
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
 
-    private EditText email;
-    private EditText password;
+    private FragmentLoginBinding binding;
 
     private boolean correctEmail;
     private boolean correctPassword;
@@ -36,20 +34,17 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        email = view.findViewById(R.id.emailEditText2);
-        email.addTextChangedListener(emailTextWatcher);
+        binding.loginEmail.addTextChangedListener(emailTextWatcher);
 
-        password = view.findViewById(R.id.passwordEditText2);
-        password.addTextChangedListener(passwordTextWatcher);
+        binding.loginPassword.addTextChangedListener(passwordTextWatcher);
 
-        Button button = view.findViewById(R.id.button3);
-        button.setOnClickListener(loginListener);
+        binding.loginButton.setOnClickListener(loginListener);
 
-        TextView textView = view.findViewById(R.id.loginTextView);
-        textView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_up_action));
+        binding.goToSignUp.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_up_action));
 
         return view;
     }
@@ -62,7 +57,7 @@ public class LoginFragment extends Fragment {
     TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            email.setError(null);
+            binding.emailLoginLayout.setError(null);
         }
 
         @Override
@@ -72,16 +67,16 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String emailValidator = requireActivity().getString(R.string.email_regex);
+            String emailValidator = getString(R.string.email_regex);
             correctEmail = s.toString().matches(emailValidator);
-            if (!correctEmail) email.setError("Inserisci un email valida");
+            if (!correctEmail) binding.emailLoginLayout.setError(getString(R.string.wrong_email));
         }
     };
 
     TextWatcher passwordTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            password.setError(null);
+            binding.passwordLoginLayout.setError(null);
         }
 
         @Override
@@ -91,22 +86,24 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String passwordValidator = requireActivity().getString(R.string.password_regex);
+            String passwordValidator = getString(R.string.password_regex);
             correctPassword = s.toString().matches(passwordValidator);
-            if (!correctPassword) password.setError("Inserisci una password valida");
+            if (!correctPassword)
+                binding.passwordLoginLayout.setError(getString(R.string.wrong_password));
         }
     };
 
     View.OnClickListener loginListener = v -> {
         if (correctEmail && correctPassword) {
-            final String email = this.email.getText().toString();
-            final String password = this.password.getText().toString();
+            final String email = binding.loginEmail.getText().toString();
+            final String password = binding.loginPassword.getText().toString();
             FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                 startActivity(intent);
                 requireActivity().finish();
-            }).addOnFailureListener(e -> Toast.makeText(getContext(), "Errore di login, riprova", Toast.LENGTH_LONG).show());
+            }).addOnFailureListener(e -> Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show());
         }
     };
+
 }

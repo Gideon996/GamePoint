@@ -77,4 +77,11 @@
     <string name="trailer">Trailer</string>
     <string name="email_regex"><![CDATA[^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$]]></string>
     <string name="password_regex">^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$</string>
+    <string name="email">EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="login">Login</string>
+    <string name="registration">Not registered yet? SIGN UP</string>
+    <string name="wrong_email">Please enter a valid email</string>
+    <string name="wrong_password">Please enter a valid password.</string>
+    <string name="login_error">Error during login, please try again in a few seconds</string>
 </resources>

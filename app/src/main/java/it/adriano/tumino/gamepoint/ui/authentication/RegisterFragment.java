@@ -41,6 +41,8 @@ public class RegisterFragment extends Fragment {
     private boolean correctName;
     private boolean correctSurname;
 
+    String a = "The password must contain at least 6 characters, one uppercase character, one lowercase character and at least one number";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,7 @@ public class RegisterFragment extends Fragment {
         Button registerButton = view.findViewById(R.id.button2);
         registerButton.setOnClickListener(registrationAccount);
 
-        TextView login = view.findViewById(R.id.loginTextView);
+        TextView login = view.findViewById(R.id.goToSignUp);
         login.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_in_action));
 
         return view;

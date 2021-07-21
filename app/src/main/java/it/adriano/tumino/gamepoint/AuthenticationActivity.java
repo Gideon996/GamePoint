@@ -25,7 +25,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        if (EMULATOR) { //se uso l'emulatore imposto il localhost
+        if (EMULATOR) {
             Log.d(TAG, "Initializing the emulator for Firestore and for Authentication");
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             FirebaseFirestore.getInstance().useEmulator("10.0.2.2", 8080);
