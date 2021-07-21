@@ -1,87 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="20dp"
-    tools:context=".ui.authentication.RegisterFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/emailEditText"
+    <data />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/edit_text_background"
-        android:backgroundTint="@color/dark_cyan"
-        android:ems="10"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
         android:gravity="center"
-        android:hint="EMAIL"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver" />
+        android:orientation="vertical"
+        android:padding="@dimen/padding_layout"
+        tools:context=".ui.authentication.RegisterFragment">
 
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/edit_text_background"
-        android:backgroundTint="@color/dark_cyan"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="PASSWORD"
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailRegisterLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColorHint="@color/silver"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/ErrorText">
 
-    <EditText
-        android:id="@+id/nameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/edit_text_background"
-        android:backgroundTint="@color/dark_cyan"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="NAME"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver" />
+            <EditText
+                android:id="@+id/emailRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@color/dark_cyan"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white"
+                android:textColorHint="@color/silver" />
 
-    <EditText
-        android:id="@+id/surnameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/edit_text_background"
-        android:backgroundTint="@color/dark_cyan"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="SURNAME"
-        android:inputType="textPersonName"
-        android:textColor="@color/white"
-        android:textColorHint="@color/silver" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cyan"
-        android:text="Registrati"
-        android:textColor="@color/white" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordRegisterLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColorHint="@color/silver"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/ErrorText"
+            app:passwordToggleEnabled="true">
 
-    <TextView
-        android:id="@+id/goToSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:text="Possiedi già un account? Entra"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+            <EditText
+                android:id="@+id/passwordRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@color/dark_cyan"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/silver" />
 
-</LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameRegisterLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColorHint="@color/silver"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/ErrorText">
+
+            <EditText
+                android:id="@+id/nameRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@color/dark_cyan"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="@color/silver" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/surnameRegisterLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColorHint="@color/silver"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/ErrorText">
+
+            <EditText
+                android:id="@+id/surnameRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@color/dark_cyan"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/surname"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                android:textColorHint="@color/silver" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/cyan"
+            android:text="@string/create_user"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/goToSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="@string/sign_in"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>

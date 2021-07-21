@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
+    private static final String TAG = "LoginFragment";
 
     private FragmentLoginBinding binding;
 
@@ -36,7 +38,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
 
         binding.loginEmail.addTextChangedListener(emailTextWatcher);
 
@@ -46,7 +47,7 @@ public class LoginFragment extends Fragment {
 
         binding.goToSignUp.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_up_action));
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -67,9 +68,10 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String emailValidator = getString(R.string.email_regex);
-            correctEmail = s.toString().matches(emailValidator);
-            if (!correctEmail) binding.emailLoginLayout.setError(getString(R.string.wrong_email));
+            correctEmail = s.toString().matches(getString(R.string.email_regex));
+            if (!correctEmail && !s.toString().isEmpty()) {
+                binding.emailLoginLayout.setError(getString(R.string.wrong_email));
+            }
         }
     };
 
@@ -86,10 +88,10 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String passwordValidator = getString(R.string.password_regex);
-            correctPassword = s.toString().matches(passwordValidator);
-            if (!correctPassword)
+            correctPassword = s.toString().matches(getString(R.string.password_regex));
+            if (!correctPassword && !s.toString().isEmpty()) {
                 binding.passwordLoginLayout.setError(getString(R.string.wrong_password));
+            }
         }
     };
 
@@ -99,10 +101,14 @@ public class LoginFragment extends Fragment {
             final String password = binding.loginPassword.getText().toString();
             FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
+                Log.i(TAG, getString(R.string.login_success));
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                 startActivity(intent);
                 requireActivity().finish();
-            }).addOnFailureListener(e -> Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show());
+            }).addOnFailureListener(e -> {
+                Log.e(TAG, e.getMessage());
+                Toast.makeText(getContext(), R.string.login_error, Toast.LENGTH_LONG).show();
+            });
         }
     };
 

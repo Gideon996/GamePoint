@@ -8,40 +8,34 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
-import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.MainActivity;
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.databinding.FragmentRegisterBinding;
 
 public class RegisterFragment extends Fragment {
+    private static final String TAG = "RegisterFragment";
 
-    //private final String emailValidator = requireActivity().getString(R.string.email_regex);
-    //private final String passwordValidator = requireActivity().getString(R.string.password_regex);
-
-    private EditText email;
-    private EditText password;
-    private EditText name;
-    private EditText surname;
+    private FragmentRegisterBinding binding;
 
     private boolean correctEmail;
     private boolean correctPassword;
     private boolean correctName;
     private boolean correctSurname;
 
-    String a = "The password must contain at least 6 characters, one uppercase character, one lowercase character and at least one number";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,64 +43,64 @@ public class RegisterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
 
-        email = view.findViewById(R.id.emailEditText);
-        email.addTextChangedListener(emailTextWatcher);
+        binding.emailRegister.addTextChangedListener(emailTextWatcher);
 
-        password = view.findViewById(R.id.passwordEditText);
-        password.addTextChangedListener(passwordTextWatcher);
+        binding.passwordRegister.addTextChangedListener(passwordTextWatcher);
 
-        name = view.findViewById(R.id.nameEditText);
-        name.addTextChangedListener(nameTextWatcher);
+        binding.nameRegister.addTextChangedListener(nameTextWatcher);
 
-        surname = view.findViewById(R.id.surnameEditText);
-        surname.addTextChangedListener(surnameTextWatcher);
+        binding.surnameRegister.addTextChangedListener(surnameTextWatcher);
 
-        Button registerButton = view.findViewById(R.id.button2);
-        registerButton.setOnClickListener(registrationAccount);
+        binding.signupButton.setOnClickListener(registrationAccount);
 
-        TextView login = view.findViewById(R.id.goToSignUp);
-        login.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_in_action));
+        binding.goToSignIn.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_in_action));
 
-        return view;
+        return binding.getRoot();
     }
 
     View.OnClickListener registrationAccount = v -> {
         if (correctEmail && correctPassword && correctName && correctSurname) {
-            final String email = this.email.getText().toString();
-            final String password = this.password.getText().toString();
-            final String name = this.name.getText().toString();
-            final String surname = this.surname.getText().toString();
+            final String email = binding.emailRegister.getText().toString();
+            final String password = binding.passwordRegister.getText().toString();
+            final String name = binding.nameRegister.getText().toString();
+            final String surname = binding.surnameRegister.getText().toString();
 
             FirebaseAuth auth = FirebaseAuth.getInstance();
 
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnSuccessListener(requireActivity(), authResult -> {
-                        HashMap<String, String> data = new HashMap<>();
-                        data.put("email", email);
-                        data.put("name", name);
-                        data.put("surname", surname);
-                        String user_id = Objects.requireNonNull(auth.getCurrentUser()).getUid();
-                        data.put("uid", user_id);
-                        DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference();
-                        current_user_db.child("users").child(user_id).setValue(data);
+            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
+                Log.i(TAG, getString(R.string.user_created));
+                HashMap<String, String> otherInformation = new HashMap<>();
+                otherInformation.put("email", email);
+                otherInformation.put("name", name);
+                otherInformation.put("surname", surname);
 
-                        Intent intent = new Intent(requireActivity(), MainActivity.class);
-                        startActivity(intent);
-                        requireActivity().finish();
+                assert auth.getCurrentUser() != null;
+                String userId = auth.getCurrentUser().getUid();
+                otherInformation.put("uid", userId);
 
-                    }).addOnFailureListener(requireActivity(), e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+                DatabaseReference userInDB = FirebaseDatabase.getInstance().getReference();
+                userInDB.child("users").child(userId).setValue(otherInformation);
+
+                Log.i(TAG, getString(R.string.update_information));
+                Intent intent = new Intent(requireActivity(), MainActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+            }).addOnFailureListener(requireActivity(), e -> {
+                Log.e(TAG, e.getMessage());
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            });
         } else {
-            Toast.makeText(getContext(), "Inserisci i campi correttamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.error_registration, Toast.LENGTH_SHORT).show();
         }
     };
 
     TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            email.setError(null);
+            binding.emailRegisterLayout.setError(null);
         }
 
         @Override
@@ -116,16 +110,16 @@ public class RegisterFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String emailValidator = requireActivity().getString(R.string.email_regex);
-            correctEmail = s.toString().matches(emailValidator);
-            if (!correctEmail) email.setError("Inserisci un email valida");
+            correctEmail = s.toString().matches(getString(R.string.email_regex));
+            if (!correctEmail && !s.toString().isEmpty())
+                binding.emailRegisterLayout.setError(getString(R.string.wrong_email));
         }
     };
 
     TextWatcher passwordTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            password.setError(null);
+            binding.passwordRegisterLayout.setError(null);
         }
 
         @Override
@@ -135,16 +129,19 @@ public class RegisterFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            String passwordValidator = requireActivity().getString(R.string.password_regex);
-            correctPassword = s.toString().matches(passwordValidator);
-            if (!correctPassword) password.setError("Inserisci una password valida");
+            correctPassword = s.toString().matches(getString(R.string.password_regex));
+            if (!correctPassword && !s.toString().isEmpty()) {
+                String stringBuilder = getString(R.string.wrong_password) + "\n" + getString(R.string.password_elements);
+                binding.passwordRegisterLayout.setError(stringBuilder);
+            }
+
         }
     };
 
     TextWatcher nameTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            name.setError(null);
+            binding.nameRegisterLayout.setError(null);
         }
 
         @Override
@@ -155,14 +152,14 @@ public class RegisterFragment extends Fragment {
         @Override
         public void afterTextChanged(Editable s) {
             correctName = !s.toString().isEmpty();
-            if (!correctName) name.setError("Inserisci il tuo nome");
+            if (!correctName) binding.nameRegisterLayout.setError(getString(R.string.wrong_name));
         }
     };
 
     TextWatcher surnameTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            surname.setError(null);
+            binding.surnameRegisterLayout.setError(null);
         }
 
         @Override
@@ -173,7 +170,8 @@ public class RegisterFragment extends Fragment {
         @Override
         public void afterTextChanged(Editable s) {
             correctSurname = !s.toString().isEmpty();
-            if (!correctSurname) surname.setError("Inserisci il tuo cognome");
+            if (!correctSurname)
+                binding.surnameRegisterLayout.setError(getString(R.string.wrong_surname));
         }
     };
 }

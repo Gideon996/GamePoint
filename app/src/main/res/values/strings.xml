@@ -84,4 +84,15 @@
     <string name="wrong_email">Please enter a valid email</string>
     <string name="wrong_password">Please enter a valid password.</string>
     <string name="login_error">Error during login, please try again in a few seconds</string>
+    <string name="login_success">Login successful</string>
+    <string name="name">NAME</string>
+    <string name="surname">SURNAME</string>
+    <string name="sign_in">Do you already have an account? SignIn</string>
+    <string name="create_user">Create User</string>
+    <string name="user_created">User created</string>
+    <string name="update_information">Update user information</string>
+    <string name="error_registration">Enter all information correctly</string>
+    <string name="wrong_name">lease enter your name</string>
+    <string name="wrong_surname">Please enter your surname</string>
+    <string name="password_elements">The password must contain:\n- at least 6 characters\n- one uppercase character\n- one lowercase character\n- at least one number\n</string>
 </resources>
