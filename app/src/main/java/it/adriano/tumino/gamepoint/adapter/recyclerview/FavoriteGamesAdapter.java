@@ -1,6 +1,5 @@
 package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 

@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class AuthenticationViewModel extends ViewModel {
+public class AuthenticationSharedViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isAuthenticate;
     private final MutableLiveData<FirebaseAuth> authentication;
 
-    public AuthenticationViewModel() {
+    public AuthenticationSharedViewModel() {
         isAuthenticate = new MutableLiveData<>();
         authentication = new MutableLiveData<>();
         isAuthenticate.setValue(false);

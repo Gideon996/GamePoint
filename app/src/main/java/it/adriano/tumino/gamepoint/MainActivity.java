@@ -17,7 +17,7 @@ import it.adriano.tumino.gamepoint.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private SharedViewModel viewModel;
+    private MainSharedViewModel viewModel;
     private ActivityMainBinding binding;
 
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Initialization Main activity and Bottom Navigation View");
 
-        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MainSharedViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

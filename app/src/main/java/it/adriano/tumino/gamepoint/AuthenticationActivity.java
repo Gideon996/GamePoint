@@ -20,13 +20,13 @@ public class AuthenticationActivity extends AppCompatActivity {
     private static final String TAG = "AuthenticationActivity";
 
     private static final boolean EMULATOR = true;
-    private AuthenticationViewModel viewModel;
+    private AuthenticationSharedViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
-        viewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AuthenticationSharedViewModel.class);
 
         if (EMULATOR) {
             Log.d(TAG, "Initializing the emulator for Firestore and for Authentication");

@@ -11,16 +11,20 @@ import java.util.List;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.data.GameOffers;
 
-public class SharedViewModel extends ViewModel {
+public class MainSharedViewModel extends ViewModel {
     private final MutableLiveData<Boolean> hasOffers;
+
     private final MutableLiveData<List<GameOffers>> offersList;
 
-    public SharedViewModel() {
+
+    public MainSharedViewModel() {
         hasOffers = new MutableLiveData<>();
+
         offersList = new MutableLiveData<>();
 
         hasOffers.setValue(false);
     }
+
 
     public MutableLiveData<Boolean> getHasOffers() {
         return hasOffers;
@@ -33,6 +37,7 @@ public class SharedViewModel extends ViewModel {
     public void setHasOffers(boolean value) {
         hasOffers.setValue(value);
     }
+
 
     public void setOffersList(List<GameOffers> offersList) {
         this.offersList.setValue(offersList);

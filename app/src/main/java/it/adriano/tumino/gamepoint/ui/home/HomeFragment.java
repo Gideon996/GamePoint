@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
@@ -27,12 +28,12 @@ import it.adriano.tumino.gamepoint.data.GameOffers;
 import it.adriano.tumino.gamepoint.databinding.FragmentHomeBinding;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.processes.search.SearchOffers;
-import it.adriano.tumino.gamepoint.SharedViewModel;
+import it.adriano.tumino.gamepoint.MainSharedViewModel;
 
 public class HomeFragment extends Fragment implements AsyncResponse<List<GameOffers>> {
     public static final String TAG = "HomeFragment";
 
-    private SharedViewModel sharedViewModel;
+    private MainSharedViewModel mainSharedViewModel;
     private FragmentHomeBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        mainSharedViewModel = new ViewModelProvider(requireActivity()).get(MainSharedViewModel.class);
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
     }
@@ -54,15 +55,16 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
             startSearchOffers();
             binding.refreshOffersList.setRefreshing(false);
         });
+
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (sharedViewModel.getHasOffers().getValue() != null && sharedViewModel.getHasOffers().getValue()) {
+        if (mainSharedViewModel.getHasOffers().getValue() != null && mainSharedViewModel.getHasOffers().getValue()) {
             Log.i(TAG, getString(R.string.has_state_of_home_fragment));
-            setOffersList(sharedViewModel.getOffersList().getValue());
+            setOffersList(mainSharedViewModel.getOffersList().getValue());
         } else {
             Log.i(TAG, getString(R.string.no_state_of_home_fragment));
             startSearchOffers();
@@ -70,7 +72,7 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
     }
 
     public void startSearchOffers(){
-        SearchOffers searchOffers = new SearchOffers(getContext());
+        SearchOffers searchOffers = new SearchOffers();
         searchOffers.delegate = this;
         searchOffers.execute();
     }
@@ -80,8 +82,8 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
         if (result != null && result.size() > 0) {
             setOffersList(result);
             Log.d(TAG, getString(R.string.save_state));
-            sharedViewModel.setHasOffers(true);
-            sharedViewModel.setOffersList(result);
+            mainSharedViewModel.setHasOffers(true);
+            mainSharedViewModel.setOffersList(result);
         } else {
             binding.offersTitle.setVisibility(View.GONE);
             binding.offersList.setVisibility(View.GONE);
