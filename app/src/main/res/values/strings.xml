@@ -7,7 +7,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favorite_image_description">Immagine contenente la copertina del gioco tra i preferiti</string>
-    <string name="footer_news_button_text">Visualizza Altro</string>
+    <string name="footer_news_button_text">View More</string>
     <string name="favorite_game_text">Your favorites Games</string>
     <string name="developers">Developers</string>
     <string name="publisher">Publisher</string>
@@ -20,7 +20,7 @@
     <string name="risultati_ricerca_text">Risultati Ricerca:</string>
     <string name="go_to_fragment_2">Go to Fragment 2</string>
     <string name="fragment_1">Fragment 1</string>
-    <string name="content_description_image_view">Immagine contenente la news</string>
+    <string name="content_description_news">Image containing the thumbnail of the news: %s</string>
     <string name="content_description_screenshot">Immagine contenente uno screenshot del gioco</string>
     <string name="content_description_shimmer_image">Immagine per lo shimmer</string>
     <string name="content_description_game_searched">Immagine contentente la copertina del videogioco</string>
@@ -105,4 +105,5 @@
     <string name="no_state_of_home_fragment">No value saved, I start the search</string>
     <string name="has_state_of_home_fragment">List of saved offers, initialization of the list</string>
     <string name="save_state">Save state of fragment</string>
+    <string name="loading">Loading...</string>
 </resources>

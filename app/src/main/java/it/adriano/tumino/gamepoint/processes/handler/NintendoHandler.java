@@ -7,15 +7,11 @@ import androidx.annotation.NonNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
-import it.adriano.tumino.gamepoint.data.GameOffers;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.processes.catchgame.CatchNintendoGame;
@@ -26,10 +22,6 @@ public class NintendoHandler {
 
     private final static String FIRST_PIECE_SEARCH_URL = "https://search.nintendo-europe.com/en/select?q=";
     private final static String SECOND_PIECE_SEARCH_URL = "&fq=type%3A*%20AND%20*%3A*&start=0&rows=24&wt=json&group=true&group.field=pg_s&group.limit=100&group.sort=score%20desc,%20date_from%20desc&sort=score%20desc,%20date_from%20desc";
-    private final static String SEARCH_DEFAULT_URL = "/Search/Search-299117.html?f=147394-7042-11772";
-    private final static String SEARCH_ITALIAN_URL = "/Cerca/Cerca-299117.html?f=147394-7042-11772";
-    private final static String DEFAULT_URL = "https://www.nintendo.co.uk";
-    private final static String ITALIAN_URL = "https://www.nintendo.it";
 
 
     public static String generateSearchUrl(String title) {

@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/newsLayout"
+    android:id="@+id/refreshNewsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.news.NewsFragment">
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRecycleView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="50dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/news_layout"/>
+            tools:listitem="@layout/news_layout" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/newsShimmerLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:animationCache="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:shimmer_repeat_mode="restart"
             app:shimmer_shape="radial">
 
@@ -41,28 +33,28 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
 
-                <include layout="@layout/shimmer_news" />
+                <include layout="@layout/shimmer_news_layout" />
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-</FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

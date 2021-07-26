@@ -1,15 +1,19 @@
 package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import it.adriano.tumino.gamepoint.MainSharedViewModel;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.databinding.FooterNewsLayoutBinding;
@@ -22,13 +26,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public static final String TAG = "NewsAdapter";
 
     private final List<News> newsList;
-    private int currentPage;
+    private final MainSharedViewModel viewModel;
 
     private static final int TYPE_FOOTER = 1;
 
-    public NewsAdapter(List<News> newsList, int currentPage) {
+    public NewsAdapter(List<News> newsList, Activity activity) {
         this.newsList = newsList;
-        this.currentPage = currentPage;
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(MainSharedViewModel.class);
     }
 
     @NotNull
@@ -46,8 +50,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterNewsHolder) {
             FooterNewsHolder holderBinding = (FooterNewsHolder) holder;
-            holderBinding.bind(currentPage);
-            currentPage++;
+            holderBinding.bind(viewModel.nextPage());
         } else if (holder instanceof NewsHolder) {
             NewsHolder holderBinding = (NewsHolder) holder;
             News news = newsList.get(position);
@@ -71,6 +74,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     @Override
     public void processFinish(List<News> result) {
         newsList.addAll(result);
+        viewModel.setNewsList(result);
         notifyItemRangeInserted(newsList.size() - result.size(), result.size());
     }
 }

@@ -1,7 +1,6 @@
 package it.adriano.tumino.gamepoint.ui.news;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
+import it.adriano.tumino.gamepoint.MainSharedViewModel;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.NewsAdapter;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.News;
@@ -25,27 +22,44 @@ import it.adriano.tumino.gamepoint.processes.CatchNews;
 public class NewsFragment extends Fragment implements AsyncResponse<List<News>> {
     public static final String TAG = "NewsFragment";
 
-    private NewsViewModel newsViewModel;
     private FragmentNewsBinding binding;
-    private RecyclerView recyclerView;
-    private ShimmerFrameLayout shimmerFrameLayout;
+    private MainSharedViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(TAG, "");
-        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
         binding = FragmentNewsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        viewModel = new ViewModelProvider(requireActivity()).get(MainSharedViewModel.class);
+        viewModel.getCurrentNewsPage().setValue(0);
 
-        recyclerView = binding.newsRecycleView;
-        shimmerFrameLayout = binding.newsShimmerLayout;
+        binding.newsShimmerLayout.startShimmer();
 
-        shimmerFrameLayout.startShimmer();
-        int initialPage = 1;
+        binding.refreshNewsLayout.setOnRefreshListener(() -> {
+            binding.newsShimmerLayout.setVisibility(View.VISIBLE);
+            binding.newsShimmerLayout.startShimmer();
+            binding.newsRecycleView.setVisibility(View.GONE);
+            searchNews();
+            binding.refreshNewsLayout.setRefreshing(false);
+        });
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel.getHasNews().getValue() != null && viewModel.getHasNews().getValue()) {
+            setRecyclerValue(viewModel.getNewsList().getValue());
+            binding.newsShimmerLayout.stopShimmer();
+            binding.newsShimmerLayout.setVisibility(View.GONE);
+            binding.newsRecycleView.setVisibility(View.VISIBLE);
+        } else {
+            searchNews();
+        }
+    }
+
+    private void searchNews() {
         CatchNews catchNews = new CatchNews(this);
-        catchNews.execute(initialPage);
-
-        return root;
+        catchNews.execute(viewModel.nextPage());
     }
 
     @Override
@@ -54,16 +68,20 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
         binding = null;
     }
 
+    private void setRecyclerValue(List<News> newsList) {
+        NewsAdapter newsAdapter = new NewsAdapter(newsList, requireActivity());
+        binding.newsRecycleView.setHasFixedSize(true);
+        binding.newsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.newsRecycleView.setAdapter(newsAdapter);
+    }
+
     @Override
     public void processFinish(List<News> newsList) {
-        int currentPage = 1;
-        NewsAdapter newsAdapter = new NewsAdapter(newsList, currentPage);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(newsAdapter);
-
-        shimmerFrameLayout.stopShimmer();
-        shimmerFrameLayout.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+        setRecyclerValue(newsList);
+        viewModel.setNewsList(newsList);
+        viewModel.getHasNews().setValue(true);
+        binding.newsShimmerLayout.stopShimmer();
+        binding.newsShimmerLayout.setVisibility(View.GONE);
+        binding.newsRecycleView.setVisibility(View.VISIBLE);
     }
 }

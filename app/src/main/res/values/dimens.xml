@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="news_padding">15dp</dimen>
+
     <dimen name="padding_news">20dp</dimen>
     <dimen name="layout_margin">20dp</dimen>
     <dimen name="padding_layout">20dp</dimen>
