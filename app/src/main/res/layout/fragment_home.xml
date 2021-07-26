@@ -22,6 +22,39 @@
             android:layout_margin="@dimen/layout_margin"
             android:orientation="vertical">
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/favoriteShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:animationCache="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shimmer_repeat_mode="restart"
+                app:shimmer_shape="radial">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_favorite_layout" />
+
+                    <include layout="@layout/shimmer_favorite_layout" />
+
+                    <include layout="@layout/shimmer_favorite_layout" />
+
+                    <include layout="@layout/shimmer_favorite_layout" />
+
+                    <include layout="@layout/shimmer_favorite_layout" />
+
+                    <include layout="@layout/shimmer_favorite_layout" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/favoriteTitle"
                 android:layout_width="match_parent"
@@ -30,7 +63,8 @@
                 android:text="@string/favorite_game_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favoriteGamesList"
@@ -38,9 +72,44 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal|center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/favorite_game_layout" />
+                tools:listitem="@layout/favorite_game_layout" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/offersShimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:animationCache="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shimmer_repeat_mode="restart"
+                app:shimmer_shape="radial">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_offers_layout" />
+
+                    <include layout="@layout/shimmer_offers_layout" />
+
+                    <include layout="@layout/shimmer_offers_layout" />
+
+                    <include layout="@layout/shimmer_offers_layout" />
+
+                    <include layout="@layout/shimmer_offers_layout" />
+
+                    <include layout="@layout/shimmer_offers_layout" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
                 android:id="@+id/offersTitle"
@@ -50,7 +119,8 @@
                 android:text="@string/special_offers"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/offersList"
@@ -58,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="true"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/game_searched_layout" />
 

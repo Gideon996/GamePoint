@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
@@ -48,10 +47,15 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding.favoriteShimmerLayout.startShimmer();
+        binding.offersShimmerLayout.startShimmer();
 
         if (mAuth.getUid() != null) onSnapshotFavoritesGame(mAuth.getUid());
 
         binding.refreshOffersList.setOnRefreshListener(() -> {
+            binding.offersShimmerLayout.setVisibility(View.VISIBLE);
+            binding.offersTitle.setVisibility(View.GONE);
+            binding.offersList.setVisibility(View.GONE);
             startSearchOffers();
             binding.refreshOffersList.setRefreshing(false);
         });
@@ -65,13 +69,20 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
         if (mainSharedViewModel.getHasOffers().getValue() != null && mainSharedViewModel.getHasOffers().getValue()) {
             Log.i(TAG, getString(R.string.has_state_of_home_fragment));
             setOffersList(mainSharedViewModel.getOffersList().getValue());
+            binding.offersShimmerLayout.setVisibility(View.GONE);
+            binding.offersTitle.setVisibility(View.VISIBLE);
+            binding.offersList.setVisibility(View.VISIBLE);
         } else {
             Log.i(TAG, getString(R.string.no_state_of_home_fragment));
+            binding.offersShimmerLayout.setVisibility(View.VISIBLE);
+            binding.offersShimmerLayout.startShimmer();
+            binding.offersTitle.setVisibility(View.GONE);
+            binding.offersList.setVisibility(View.GONE);
             startSearchOffers();
         }
     }
 
-    public void startSearchOffers(){
+    public void startSearchOffers() {
         SearchOffers searchOffers = new SearchOffers();
         searchOffers.delegate = this;
         searchOffers.execute();
@@ -79,6 +90,10 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
 
     @Override
     public void processFinish(List<GameOffers> result) {
+        binding.offersShimmerLayout.stopShimmer();
+        binding.offersShimmerLayout.setVisibility(View.GONE);
+        binding.offersTitle.setVisibility(View.VISIBLE);
+        binding.offersList.setVisibility(View.VISIBLE);
         if (result != null && result.size() > 0) {
             setOffersList(result);
             Log.d(TAG, getString(R.string.save_state));
@@ -122,6 +137,8 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
     }
 
     private void visualizeAllFavoriteGames(List<BasicGameInformation> list) {
+        binding.favoriteShimmerLayout.stopShimmer();
+        binding.favoriteShimmerLayout.setVisibility(View.GONE);
         if (list.size() != 0) {
             FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(list);
             binding.favoriteGamesList.setAdapter(favoriteGamesAdapter);
