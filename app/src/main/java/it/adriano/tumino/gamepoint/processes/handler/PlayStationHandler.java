@@ -4,8 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,6 +114,8 @@ public class PlayStationHandler {
                 for (int j = 0; j < links.length(); j++) {
                     JSONObject gameInformation = links.getJSONObject(j);
                     if (gameInformation == null || gameInformation.length() == 0) continue;
+                    if (gameInformation.has("top_category") && gameInformation.getString("top_category").equals("theme"))
+                        continue;
 
                     String titleGame = gameInformation.getString("name");
                     String imageURL = "https://upload.wikimedia.org/wikipedia/it/thumb/4/4e/Playstation_logo_colour.svg/1200px-Playstation_logo_colour.svg.png";
