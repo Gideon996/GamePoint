@@ -1,6 +1,7 @@
 package it.adriano.tumino.gamepoint;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +20,13 @@ public class AuthenticationActivity extends AppCompatActivity {
     private static final String TAG = "AuthenticationActivity";
 
     private static final boolean EMULATOR = true;
+    private AuthenticationViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+        viewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
 
         if (EMULATOR) {
             Log.d(TAG, "Initializing the emulator for Firestore and for Authentication");
@@ -45,12 +48,15 @@ public class AuthenticationActivity extends AppCompatActivity {
                     boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                     if (!isNewUser) {
                         Log.d(TAG, "Existing user, Autologin");
+                        viewModel.setIsAuthenticate(true);
+                        viewModel.setUser(mAuth);
                         Toast.makeText(this, "Welcome Back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         successfulLogin(user);
                     }
                 }
             });
         }
+        viewModel.setIsAuthenticate(false);
     }
 
     private void successfulLogin(FirebaseUser user) {

@@ -83,8 +83,8 @@ public class RegisterFragment extends Fragment {
 
                 DatabaseReference userInDB = FirebaseDatabase.getInstance().getReference();
                 userInDB.child("users").child(userId).setValue(otherInformation);
-
                 Log.i(TAG, getString(R.string.update_information));
+
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                 startActivity(intent);
                 requireActivity().finish();

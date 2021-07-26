@@ -18,6 +18,9 @@
     <color name="silver">#C7D5E0</color> <!-- colore testo -->
     <color name="white">#FFFFFFFF</color> <!-- colore titoli -->
     <color name="red">#FF0000</color>
+    <color name="dark_red">#B30000</color>
+    <color name="orange">#FF9900</color>
+    <color name="dark_orange">#F18700</color>
 
     <color name="shimmer_background">#B3B3B3</color>
     <color name="favorite_color">#FF4500</color>

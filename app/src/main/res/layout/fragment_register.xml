@@ -20,8 +20,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
-            app:errorTextAppearance="@style/ErrorText">
+            app:errorIconTint="@color/red"
+            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:errorTextColor="@color/red">
 
             <EditText
                 android:id="@+id/emailRegister"
@@ -46,8 +49,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
-            app:errorTextAppearance="@style/ErrorText"
+            app:errorIconTint="@color/red"
+            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:errorTextColor="@color/red"
             app:passwordToggleEnabled="true">
 
             <EditText
@@ -73,8 +79,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
-            app:errorTextAppearance="@style/ErrorText">
+            app:errorIconTint="@color/red"
+            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:errorTextColor="@color/red">
 
             <EditText
                 android:id="@+id/nameRegister"
@@ -99,8 +108,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
-            app:errorTextAppearance="@style/ErrorText">
+            app:errorIconTint="@color/red"
+            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:errorTextColor="@color/red">
 
             <EditText
                 android:id="@+id/surnameRegister"
@@ -123,7 +135,7 @@
             android:id="@+id/signupButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/cyan"
+            android:backgroundTint="@color/dark_cyan"
             android:text="@string/create_user"
             android:textColor="@color/white" />
 

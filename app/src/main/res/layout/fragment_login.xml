@@ -20,8 +20,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
-            app:errorTextAppearance="@style/ErrorText">
+            app:errorIconTint="@color/red"
+            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:errorTextColor="@color/red">
 
             <EditText
                 android:id="@+id/loginEmail"
@@ -47,9 +50,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
-            app:passwordToggleEnabled="true"
-            app:errorTextAppearance="@style/ErrorText">
+            app:errorIconTint="@color/red"
+            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:errorTextColor="@color/red"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/loginPassword"

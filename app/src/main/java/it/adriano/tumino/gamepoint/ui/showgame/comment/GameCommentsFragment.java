@@ -55,7 +55,7 @@ public class GameCommentsFragment extends Fragment {
 
         recyclerView = binding.commentsRecyclerView;
         linearLayout = binding.noCommentsLinearLayout;
-        onShanpshotComments(storeGameSearchResult.getTitle(), storeGameSearchResult.getStore());
+        onSnapshotComments(storeGameSearchResult.getTitle(), storeGameSearchResult.getStore());
 
         button = binding.addingCommentButton;
 
@@ -63,7 +63,7 @@ public class GameCommentsFragment extends Fragment {
         return root;
     }
 
-    private void onShanpshotComments(String gameTitle, String store) {
+    private void onSnapshotComments(String gameTitle, String store) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
         String title = gameTitle.replaceAll("\\s+", "");

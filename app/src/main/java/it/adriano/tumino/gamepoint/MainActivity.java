@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,6 +17,7 @@ import it.adriano.tumino.gamepoint.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
+    private SharedViewModel viewModel;
     private ActivityMainBinding binding;
 
     @Override
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Initialization Main activity and Bottom Navigation View");
 
+        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -37,4 +39,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+        viewModel = null;
+    }
 }

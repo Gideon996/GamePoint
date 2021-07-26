@@ -1,86 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/homeLayout"
+    android:id="@+id/refreshOffersList"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="50dp"
+    tools:context=".ui.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/favoritesLinearLayout"
-            android:layout_width="0dp"
-            android:layout_height="280dp"
-            android:layout_marginTop="40dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/layout_margin"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/favoriteTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="@string/favorite_game_text" />
+                android:text="@string/favorite_game_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
-            <RelativeLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoriteGamesList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/favorite_game_layout" />
 
-                <TextView
-                    android:id="@+id/noFavoriteGamesTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/nessun_preferito"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    android:visibility="visible" />
+            <TextView
+                android:id="@+id/offersTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/special_offers"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/favoriteGamesRecycleView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center|center_horizontal|center_vertical"
-                    android:visibility="visible"
-                    tools:listitem="@layout/favorite_game_layout"/>
-            </RelativeLayout>
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmerFavoriteLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:animateLayoutChanges="true"
-                android:animationCache="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:shimmer_repeat_mode="restart"
-                app:shimmer_shape="radial">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/shimmer_favorite" />
-
-                    <include layout="@layout/shimmer_favorite" />
-
-                    <include layout="@layout/shimmer_favorite" />
-                </LinearLayout>
-
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offersList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/game_searched_layout" />
 
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-</FrameLayout>
+

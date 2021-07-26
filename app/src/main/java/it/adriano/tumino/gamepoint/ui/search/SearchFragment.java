@@ -29,7 +29,7 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.SearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.LastSearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
-import it.adriano.tumino.gamepoint.processes.searchgame.SearchGames;
+import it.adriano.tumino.gamepoint.processes.search.SearchGames;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;

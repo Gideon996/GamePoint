@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -23,7 +25,8 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/content_description_game_searched"
             android:cropToPadding="false"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            tools:srcCompat="@tools:sample/avatars"/>
 
         <LinearLayout
             android:layout_width="match_parent"

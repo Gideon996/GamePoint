@@ -8,7 +8,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favorite_image_description">Immagine contenente la copertina del gioco tra i preferiti</string>
     <string name="footer_news_button_text">Visualizza Altro</string>
-    <string name="favorite_game_text">I tuoi preferiti</string>
+    <string name="favorite_game_text">Your favorites Games</string>
     <string name="developers">Developers</string>
     <string name="publisher">Publisher</string>
     <string name="specifiche_windows">Specifiche Windows</string>
@@ -26,7 +26,7 @@
     <string name="content_description_game_searched">Immagine contentente la copertina del videogioco</string>
     <string name="rating_star_image">Immagine contenente la stella simbolo del rating</string>
     <string name="profile_image_comment">Immagine Profilo utente che ha fatto il commento</string>
-    <string name="nessun_preferito">Nessun Preferito</string>
+    <string name="no_elements_text">No elements</string>
 
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -95,4 +95,14 @@
     <string name="wrong_name">lease enter your name</string>
     <string name="wrong_surname">Please enter your surname</string>
     <string name="password_elements">The password must contain:\n- at least 6 characters\n- one uppercase character\n- one lowercase character\n- at least one number\n</string>
+    <string name="special_offers">Special Offers</string>
+    <string name="no_offer">No Offer</string>
+    <string name="remove_favorite">Game removed from favorites</string>
+    <string name="error_favorite_delete">Error removing, try again later</string>
+    <string name="favorite_add">Game added to your favorites</string>
+    <string name="error_add_favorite">Unable to bookmark the game, please try again in a few seconds</string>
+    <string name="not_get_user_id">Unable to get user information</string>
+    <string name="no_state_of_home_fragment">No value saved, I start the search</string>
+    <string name="has_state_of_home_fragment">List of saved offers, initialization of the list</string>
+    <string name="save_state">Save state of fragment</string>
 </resources>

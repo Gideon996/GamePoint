@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.processes.searchgame;
+package it.adriano.tumino.gamepoint.processes.search;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,6 +20,10 @@ import java.util.concurrent.Future;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.handler.MicrosoftHandler;
+import it.adriano.tumino.gamepoint.processes.handler.NintendoHandler;
+import it.adriano.tumino.gamepoint.processes.handler.PlayStationHandler;
+import it.adriano.tumino.gamepoint.processes.handler.SteamHandler;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 
@@ -46,10 +50,10 @@ public class SearchGames extends TaskRunner<Void, List<BasicGameInformation>> {
 
         if (selections.size() == 0) return null;
 
-        Callable<List<BasicGameInformation>> callableSteam = () -> StoresSearchManager.steamGames(title);
-        Callable<List<BasicGameInformation>> callableNintendo = () -> StoresSearchManager.nintendoGames(title);
-        Callable<List<BasicGameInformation>> callableMicrosoft = () -> StoresSearchManager.microsoftGames(title);
-        Callable<List<BasicGameInformation>> callablePlayStation = () -> StoresSearchManager.playStationGames(title);
+        Callable<List<BasicGameInformation>> callableSteam = () -> SteamHandler.steamGames(title);
+        Callable<List<BasicGameInformation>> callableNintendo = () -> NintendoHandler.nintendoGames(title);
+        Callable<List<BasicGameInformation>> callableMicrosoft = () -> MicrosoftHandler.microsoftGames(title);
+        Callable<List<BasicGameInformation>> callablePlayStation = () -> PlayStationHandler.playStationGames(title);
 
         List<Callable<List<BasicGameInformation>>> taskList = new ArrayList<>();
         for (String selection : selections) {

@@ -11,6 +11,7 @@ import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.NintendoStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
+import it.adriano.tumino.gamepoint.processes.handler.NintendoHandler;
 
 public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements WebScrapping<NintendoStoreGame> {
     private static final String TAG = "CatchGameFromEShop";
@@ -23,6 +24,7 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
     public AsyncResponse<StoreGame> delegate = null;
 
     public CatchNintendoGame(String url, String price) {
+        NintendoHandler.generateGameUrl();
         finalURL = BASE_URL + url;
         this.price = price;
     }
@@ -32,6 +34,8 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         return getWebPageAndParsing(finalURL, TAG);
     }
 
+    //italiano nintendo.it
+    //inglese nintendo.co.uk -> cambia anche it in en sulle api
     @Override
     public NintendoStoreGame scrapping(@NotNull Document document) {
         NintendoStoreGame game = new NintendoStoreGame();
