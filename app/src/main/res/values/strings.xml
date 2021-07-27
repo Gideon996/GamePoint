@@ -1,85 +1,82 @@
 <resources>
     <string name="app_name">GamePoint</string>
-    <string name="title_home">Home</string>
-    <string name="title_news">News</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_news" translatable="false">News</string>
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="favorite_image_description">Immagine contenente la copertina del gioco tra i preferiti</string>
+    <string name="favorite_image_description">Image containing the cover of the game %s</string>
     <string name="footer_news_button_text">View More</string>
     <string name="favorite_game_text">Your favorites Games</string>
     <string name="developers">Developers</string>
     <string name="publisher">Publisher</string>
-    <string name="specifiche_windows">Specifiche Windows</string>
-    <string name="specifiche_mac">Specifiche Mac</string>
-    <string name="specifiche_linux">Specifiche Linux</string>
-    <string name="hint_search_edit_text">Cerca il gioco</string>
+    <string name="specifiche_windows">Windows specifications</string>
+    <string name="specifiche_mac">Mac specifications</string>
+    <string name="specifiche_linux">Linux specifications</string>
+    <string name="hint_search_edit_text">Search for the game</string>
     <string name="search_button_text">Search Button</string>
-    <string name="ultime_ricerche_text">Ultime Ricerche</string>
-    <string name="risultati_ricerca_text">Risultati Ricerca:</string>
-    <string name="go_to_fragment_2">Go to Fragment 2</string>
-    <string name="fragment_1">Fragment 1</string>
+    <string name="ultime_ricerche_text">Latest Searches</string>
+    <string name="risultati_ricerca_text">Search results:</string>
     <string name="content_description_news">Image containing the thumbnail of the news: %s</string>
-    <string name="content_description_screenshot">Immagine contenente uno screenshot del gioco</string>
-    <string name="content_description_shimmer_image">Immagine per lo shimmer</string>
-    <string name="content_description_game_searched">Immagine contentente la copertina del videogioco</string>
-    <string name="rating_star_image">Immagine contenente la stella simbolo del rating</string>
-    <string name="profile_image_comment">Immagine Profilo utente che ha fatto il commento</string>
+    <string name="content_description_screenshot">Image containing a screenshot of the game %s</string>
+    <string name="content_description_shimmer_image">Image for the shimmer</string>
+    <string name="content_description_game_searched">Image containing the cover of %s</string>
+    <string name="rating_star_image">star rating symbol</string>
+    <string name="profile_image_comment">Profile picture of the user %s</string>
     <string name="no_elements_text">No elements</string>
 
     <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="sync_header" translatable="false">Sync</string>
 
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="signature_title" translatable="false">Your signature</string>
+    <string name="reply_title" translatable="false">Default reply action</string>
 
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="no_games">NESUN ELEMENTO TROVATO</string>
+    <string name="sync_title" translatable="false">Sync email periodically</string>
+    <string name="attachment_title" translatable="false">Download incoming attachments</string>
+    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails</string>
+    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>
+    <string name="no_games">No Item Found</string>
 
-    <string name="description_store_icon">Immagine contenente il logo dello store %s</string>
+    <string name="description_store_icon">Image containing the %s store logo</string>
     <string name="cancell_item">Cancell Item</string>
-    <string name="content_description_image_header_result">Immagine di copertina di %s</string>
-    <string name="favorite_content_description">bottone per salvare il gioco tra i preferiti</string>
-    <string name="share_content_description">bottone per condividere il gioco</string>
-    <string name="description_tab_item">Descrizione</string>
-    <string name="gallery_tab_item">Galleria</string>
-    <string name="specifications_tab_item">Specifiche</string>
-    <string name="comments_tab_item">Commenti</string>
+    <string name="content_description_image_header_result">Cover image by %s</string>
+    <string name="favorite_content_description">button to save the game as a favorite</string>
+    <string name="share_content_description">button to share the game</string>
+    <string name="description_tab_item">Description</string>
+    <string name="gallery_tab_item">Gallery</string>
+    <string name="specifications_tab_item">Specifications</string>
+    <string name="comments_tab_item">Comments</string>
     <string name="no_result">No Result</string>
 
-    <string name="share_game_text">Guarda che bel gioco ho trovato: </string>
-    <string name="added_on_favorite">Gioco aggiunto ai preferiti</string>
-    <string name="removed_from_favorite">Gioco rimosso dai preferiti</string>
+    <string name="share_game_text">Look what a nice game I found: </string>
+    <string name="added_on_favorite">Game added to favorites</string>
+    <string name="removed_from_favorite">Game removed from favorites</string>
     <string name="developers_title">Developers:</string>
     <string name="publishers_title">Publishers:</string>
     <string name="web_site_title">Web Site:</string>
-    <string name="metacritic_score_title">Metacritic:</string>
+    <string name="metacritic_score_title" translatable="false">Metacritic:</string>
     <string name="categories_title">Categories:</string>
     <string name="genres_title">Genres:</string>
     <string name="languages_title">Languages</string>
-    <string name="requisiti">Requisiti</string>
-    <string name="nessun_elemento">N.A.</string>
-    <string name="content_description_pegi">Immagine contenente il pegi del gioco</string>
-    <string name="caratteristiche_per_console_title">Caratteristiche per console</string>
+    <string name="requisiti">Requirements</string>
+    <string name="nessun_elemento" translatable="false">N.A.</string>
+    <string name="content_description_pegi">Image containing the pegi of the game</string>
+    <string name="caratteristiche_per_console_title">Features for consoles</string>
     <string name="subgenres_title">SubGenres:</string>
     <string name="voice_title">Voice</string>
     <string name="subtitle_title">Subtitle</string>
-    <string name="console_supportate_title">Console Supportate</string>
-    <string name="nessun_commento">NESSUN COMMENTO</string>
-    <string name="comment_button_description">Bottone per aggiungere un nuovo commento</string>
-    <string name="button_to_change_image_description">button for change profile image</string>
-    <string name="log_out">Log Out</string>
+    <string name="console_supportate_title">Supported consoles</string>
+    <string name="nessun_commento">No Comment</string>
+    <string name="comment_button_description">Button to add a new comment</string>
+    <string name="button_to_change_image_description">Button for change profile image</string>
+    <string name="log_out" translatable="false">Log Out</string>
     <string name="play_trailer_button">play trailer button</string>
-    <string name="trailer">Trailer</string>
-    <string name="email_regex"><![CDATA[^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$]]></string>
-    <string name="password_regex">^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$</string>
-    <string name="email">EMAIL</string>
-    <string name="password">PASSWORD</string>
-    <string name="login">Login</string>
+    <string name="trailer" translatable="false">Trailer</string>
+    <string name="email_regex" translatable="false"><![CDATA[^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$]]></string>
+    <string name="password_regex" translatable="false">^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$</string>
+    <string name="email" translatable="false">EMAIL</string>
+    <string name="password" translatable="false">PASSWORD</string>
+    <string name="login" translatable="false">Login</string>
     <string name="registration">Not registered yet? SIGN UP</string>
     <string name="wrong_email">Please enter a valid email</string>
     <string name="wrong_password">Please enter a valid password.</string>
@@ -92,7 +89,7 @@
     <string name="user_created">User created</string>
     <string name="update_information">Update user information</string>
     <string name="error_registration">Enter all information correctly</string>
-    <string name="wrong_name">lease enter your name</string>
+    <string name="wrong_name">Please enter your name</string>
     <string name="wrong_surname">Please enter your surname</string>
     <string name="password_elements">The password must contain:\n- at least 6 characters\n- one uppercase character\n- one lowercase character\n- at least one number\n</string>
     <string name="special_offers">Special Offers</string>
@@ -105,7 +102,7 @@
     <string name="no_state_of_home_fragment">No value saved, I start the search</string>
     <string name="has_state_of_home_fragment">List of saved offers, initialization of the list</string>
     <string name="save_state">Save state of fragment</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="copy_on_clipboard">URL copied to clipboard</string>
     <string name="open_icon_description">News opening icon</string>
     <string name="open">Open</string>
