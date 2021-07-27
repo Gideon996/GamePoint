@@ -17,7 +17,7 @@ import it.adriano.tumino.gamepoint.adapter.recyclerview.NewsAdapter;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.databinding.FragmentNewsBinding;
-import it.adriano.tumino.gamepoint.processes.CatchNews;
+import it.adriano.tumino.gamepoint.processes.search.SearchNews;
 
 public class NewsFragment extends Fragment implements AsyncResponse<List<News>> {
     public static final String TAG = "NewsFragment";
@@ -36,7 +36,7 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
         binding.refreshNewsLayout.setOnRefreshListener(() -> {
             binding.newsShimmerLayout.setVisibility(View.VISIBLE);
             binding.newsShimmerLayout.startShimmer();
-            binding.newsRecycleView.setVisibility(View.GONE);
+            binding.newsRecyclerView.setVisibility(View.GONE);
             searchNews();
             binding.refreshNewsLayout.setRefreshing(false);
         });
@@ -51,15 +51,15 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
             setRecyclerValue(viewModel.getNewsList().getValue());
             binding.newsShimmerLayout.stopShimmer();
             binding.newsShimmerLayout.setVisibility(View.GONE);
-            binding.newsRecycleView.setVisibility(View.VISIBLE);
+            binding.newsRecyclerView.setVisibility(View.VISIBLE);
         } else {
             searchNews();
         }
     }
 
     private void searchNews() {
-        CatchNews catchNews = new CatchNews(this);
-        catchNews.execute(viewModel.nextPage());
+        SearchNews searchNews = new SearchNews(this);
+        searchNews.execute(viewModel.nextPage());
     }
 
     @Override
@@ -70,9 +70,9 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
 
     private void setRecyclerValue(List<News> newsList) {
         NewsAdapter newsAdapter = new NewsAdapter(newsList, requireActivity());
-        binding.newsRecycleView.setHasFixedSize(true);
-        binding.newsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.newsRecycleView.setAdapter(newsAdapter);
+        binding.newsRecyclerView.setHasFixedSize(true);
+        binding.newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.newsRecyclerView.setAdapter(newsAdapter);
     }
 
     @Override
@@ -82,6 +82,6 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
         viewModel.getHasNews().setValue(true);
         binding.newsShimmerLayout.stopShimmer();
         binding.newsShimmerLayout.setVisibility(View.GONE);
-        binding.newsRecycleView.setVisibility(View.VISIBLE);
+        binding.newsRecyclerView.setVisibility(View.VISIBLE);
     }
 }

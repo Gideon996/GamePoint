@@ -25,10 +25,10 @@ public class MicrosoftHandler {
     public static List<BasicGameInformation> microsoftGames(@NonNull String title) {
         title = title.toLowerCase();
         List<BasicGameInformation> result = new ArrayList<>();
-        String titleEncoded = SearchUtils.encodedTitle(title);
+        String titleEncoded = HandlerUtils.encodedTitle(title);
         if (titleEncoded.isEmpty()) return result;
 
-        Document document = Utils.getDocumentFromUrl(SearchUtils.generateMicrosoftUrl(titleEncoded));
+        Document document = Utils.getDocumentFromUrl(HandlerUtils.generateMicrosoftUrl(titleEncoded));
         if (document == null) {
             Log.i(TAG, "No document");
             return result;
@@ -49,7 +49,7 @@ public class MicrosoftHandler {
             Element titlediv = gameUrlElement.getElementsByClass("c-subheading-6").first();
             String titleGame = titlediv.text();
 
-            if (SearchUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
+            if (HandlerUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
                 String gameID;
                 try {
                     gameID = new JSONObject(gameUrlElement.attributes().get("data-m")).getString("pid");

@@ -2,15 +2,12 @@ package it.adriano.tumino.gamepoint.holder.recyclerview;
 
 import android.view.View;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import it.adriano.tumino.gamepoint.MainSharedViewModel;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
-import it.adriano.tumino.gamepoint.processes.CatchNews;
+import it.adriano.tumino.gamepoint.processes.search.SearchNews;
 import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.databinding.FooterNewsLayoutBinding;
 
@@ -23,7 +20,6 @@ public class FooterNewsHolder extends RecyclerView.ViewHolder {
         super(binding.getRoot());
         this.binding = binding;
         this.delegate = delegate;
-
     }
 
     public void bind(Object obj) {
@@ -34,7 +30,7 @@ public class FooterNewsHolder extends RecyclerView.ViewHolder {
         binding.viewMoreNewsButton.setOnClickListener(v -> {
             binding.loadingOtherNewsTextView.setVisibility(View.VISIBLE);
             binding.viewMoreNewsButton.setVisibility(View.GONE);
-            CatchNews updateNews = new CatchNews(delegate);
+            SearchNews updateNews = new SearchNews(delegate);
             updateNews.execute((int) obj);
         });
     }

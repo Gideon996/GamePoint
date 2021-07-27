@@ -24,10 +24,10 @@ public class PlayStationHandler {
     public static List<BasicGameInformation> playStationGames(@NonNull String title) {
         title = title.toLowerCase();
         List<BasicGameInformation> result = new ArrayList<>();
-        String titleEncoded = SearchUtils.encodedTitle(title);
+        String titleEncoded = HandlerUtils.encodedTitle(title);
         if (titleEncoded.isEmpty()) return result;
 
-        String finalUrl = SearchUtils.generatePlayStationUrl(titleEncoded);
+        String finalUrl = HandlerUtils.generatePlayStationUrl(titleEncoded);
         String json = Utils.getJsonFromUrl(finalUrl);
         if (json.isEmpty()) return result;
 
@@ -55,7 +55,7 @@ public class PlayStationHandler {
 
                     String titleGame = gameInformation.getString("name");
 
-                    if (SearchUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
+                    if (HandlerUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
 
                         String imageURL = "https://upload.wikimedia.org/wikipedia/it/thumb/4/4e/Playstation_logo_colour.svg/1200px-Playstation_logo_colour.svg.png";
                         if (gameInformation.has("images"))

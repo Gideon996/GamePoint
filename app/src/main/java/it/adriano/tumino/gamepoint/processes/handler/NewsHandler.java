@@ -21,14 +21,12 @@ public class NewsHandler {
     private static final String URL_MULTIPLAYER = "https://multiplayer.it/articoli/notizie/?page=";
     private static final String URL_PCGAMER = "https://www.pcgamer.com/news/page/";
 
-    private static final String[] mounth = {"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
-
-
     public static ArrayList<News> getPcGamerNews(int page) {
         String url = URL_PCGAMER + page;
         ArrayList<News> list = new ArrayList<>();
         Document document = Utils.getDocumentFromUrl(url);
         if (document == null) return list;
+        Log.i(TAG, "Starting parsing PCGAMER's HTML for the news");
         Element content = document.getElementById("content");
         Elements news = content.select("section.news");
         if (news.size() > 0) {
@@ -41,7 +39,7 @@ public class NewsHandler {
                         String imageUrl = tagA.select("img.optional-image").first().attributes().get("data-pin-media");
                         String title = tagA.select("h3.article-name").text();
                         String body = tagA.select("p.synopsis").text();
-                        String date = tagA.select("time.published-date").first().attributes().get("data-published-date");
+                        String date = HandlerUtils.normalizePCGamerDate(tagA.select("time.published-date").first().attributes().get("data-published-date"));
 
                         News news1 = new News(title, body, imageUrl, date, newsUrl, "PcGamer.com");
                         list.add(news1);
@@ -51,7 +49,6 @@ public class NewsHandler {
         }
         return list;
     }
-
 
     public static ArrayList<News> getEveryeye(int page) {
         String url = URL_EVERYEYE + page;
@@ -88,7 +85,7 @@ public class NewsHandler {
         Log.i(TAG, "Starting parsing Multiplayer's HTML for the news");
         Elements elements = document.getElementsByClass("media");
         for (Element element : elements) {
-            String imageURL = element.getElementsByTag("img").get(0).attributes().get("data-src"); //nullo se non è possibile trovare il tag
+            String imageURL = element.getElementsByTag("img").get(0).attributes().get("data-src");
             Element mediaBody = element.getElementsByClass("media-body").get(0);
             String newsUrl = "https://multiplayer.it" + mediaBody.getElementsByTag("a").get(0).attributes().get("href");
             String title = mediaBody.getElementsByTag("a").get(0).text();
@@ -99,7 +96,7 @@ public class NewsHandler {
             if (!date.matches("([0-9]{2})\\\\([0-9]{2})\\\\([0-9]{4})")) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                 String[] string = sdf.format(Calendar.getInstance().getTime()).split("/");
-                date = string[0] + " " + mounth[Integer.parseInt(string[1]) - 1] + " 20" + string[string.length - 1];
+                date = string[0] + " " + HandlerUtils.fromNumberToName(string[1]) + " 20" + string[string.length - 1];
             }
             if (!body.isEmpty()) {
                 News gameNews = new News(title, body, imageURL, date, newsUrl, "multiplayer.it");
@@ -109,4 +106,6 @@ public class NewsHandler {
 
         return list;
     }
+
+
 }

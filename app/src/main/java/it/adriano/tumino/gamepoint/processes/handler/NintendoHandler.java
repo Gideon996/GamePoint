@@ -35,7 +35,7 @@ public class NintendoHandler {
     public static List<BasicGameInformation> nintendoGames(@NonNull String title) {
         title = title.toLowerCase();
         List<BasicGameInformation> result = new ArrayList<>();
-        String titleEncoded = SearchUtils.encodedTitle(title);
+        String titleEncoded = HandlerUtils.encodedTitle(title);
         if (titleEncoded.isEmpty()) return result;
 
         String finalUrl = generateSearchUrl(titleEncoded);
@@ -67,7 +67,7 @@ public class NintendoHandler {
                         if (object == null || !object.has("title")) continue;
 
                         String gameTitle = object.getString("title");
-                        if (SearchUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) {
+                        if (HandlerUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) {
                             String gameUrl = object.getString("url");
                             if (gameUrl.isEmpty()) continue;
 

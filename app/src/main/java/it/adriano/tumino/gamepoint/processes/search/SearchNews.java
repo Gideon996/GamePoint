@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.processes;
+package it.adriano.tumino.gamepoint.processes.search;
 
 import android.util.Log;
 
@@ -14,15 +14,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import it.adriano.tumino.gamepoint.data.News;
+import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.TaskRunner;
 import it.adriano.tumino.gamepoint.processes.handler.NewsHandler;
 
-public class CatchNews extends TaskRunner<Integer, List<News>> {
+public class SearchNews extends TaskRunner<Integer, List<News>> {
     public static final String TAG = "CatchNews";
 
 
     public AsyncResponse<List<News>> delegate;
 
-    public CatchNews(AsyncResponse<List<News>> delegate) {
+    public SearchNews(AsyncResponse<List<News>> delegate) {
         this.delegate = delegate;
     }
 

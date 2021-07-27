@@ -33,7 +33,7 @@ public class SteamHandler {
         title = title.toLowerCase();
         List<BasicGameInformation> result = new ArrayList<>();
 
-        String titleEncoded = SearchUtils.encodedTitle(title);
+        String titleEncoded = HandlerUtils.encodedTitle(title);
         if (titleEncoded.isEmpty()) return result;
 
         Document document = Utils.getDocumentFromUrl(generateSteamUrl(titleEncoded));
@@ -51,7 +51,7 @@ public class SteamHandler {
         Elements links = resultsRows.getElementsByTag("a");
         for (Element link : links) {
             String gameTitle = link.getElementsByClass("title").get(0).text();
-            if (SearchUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) { //I only take games with the correct titles
+            if (HandlerUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) { //I only take games with the correct titles
                 String gameID = link.attributes().get("data-ds-appid");
                 if (gameID == null || gameID.isEmpty()) continue;
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");

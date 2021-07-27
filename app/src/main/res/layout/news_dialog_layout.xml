@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="@dimen/layout_margin"
     android:background="@color/black"
     android:orientation="vertical">
 
@@ -12,24 +11,30 @@
         android:id="@+id/openNewsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/news_layout_margin"
+        android:layout_marginBottom="@dimen/news_layout_margin"
         android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="@string/open_icon_description"
             android:scaleType="centerInside"
             android:scaleX="2"
             android:scaleY="2"
-            app:srcCompat="@drawable/icon_open" />
+            app:srcCompat="@drawable/icon_open"
+            app:tint="@color/white" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="4"
             android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="Apri"
+            android:padding="@dimen/news_dialog_padding"
+            android:text="@string/open"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/silver" />
 
@@ -39,30 +44,36 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/news_layout_margin"
+        android:layout_marginBottom="@dimen/news_layout_margin"
         android:background="@color/gray" />
 
     <LinearLayout
         android:id="@+id/copyNewsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/news_layout_margin"
+        android:layout_marginBottom="@dimen/news_layout_margin"
         android:clickable="true"
         android:orientation="horizontal"
         android:visibility="visible">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/icon_copy_element" />
+            android:layout_weight="1"
+            android:contentDescription="@string/copy_icon_description"
+            app:srcCompat="@drawable/icon_copy_element"
+            app:tint="@color/white" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="4"
             android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="Copia Link"
+            android:padding="@dimen/news_dialog_padding"
+            android:text="@string/copy_link"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/silver" />
     </LinearLayout>
@@ -71,31 +82,36 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/news_layout_margin"
+        android:layout_marginBottom="@dimen/news_layout_margin"
         android:background="@color/gray" />
 
     <LinearLayout
         android:id="@+id/shareNewsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/news_layout_margin"
+        android:layout_marginBottom="@dimen/news_layout_margin"
         android:clickable="true"
         android:orientation="horizontal"
         android:visibility="visible">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="@string/news_sharing_icon"
             app:srcCompat="@drawable/icon_share"
             app:tint="@color/white" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="4"
             android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="Condividi Link"
+            android:padding="@dimen/news_dialog_padding"
+            android:text="@string/share"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/silver" />
     </LinearLayout>

@@ -8,4 +8,6 @@
     <dimen name="padding_news">20dp</dimen>
     <dimen name="layout_margin">20dp</dimen>
     <dimen name="padding_layout">20dp</dimen>
+    <dimen name="news_dialog_padding">10dp</dimen>
+    <dimen name="news_layout_margin">5dp</dimen>
 </resources>

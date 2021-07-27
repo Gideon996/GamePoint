@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.MainActivity;
 import it.adriano.tumino.gamepoint.R;
@@ -69,29 +70,38 @@ public class RegisterFragment extends Fragment {
             final String surname = binding.surnameRegister.getText().toString();
 
             FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.fetchSignInMethodsForEmail(Objects.requireNonNull(email))
+                    .addOnCompleteListener(task -> {
+                        if (task.getResult() != null && task.getResult().getSignInMethods() != null) {
+                            boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
+                            if (!isNewUser) {
+                                Toast.makeText(requireContext(), "This email is already associated with a user", Toast.LENGTH_SHORT).show();
+                            } else {
+                                auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
+                                    Log.i(TAG, getString(R.string.user_created));
+                                    HashMap<String, String> otherInformation = new HashMap<>();
+                                    otherInformation.put("email", email);
+                                    otherInformation.put("name", name);
+                                    otherInformation.put("surname", surname);
 
-            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
-                Log.i(TAG, getString(R.string.user_created));
-                HashMap<String, String> otherInformation = new HashMap<>();
-                otherInformation.put("email", email);
-                otherInformation.put("name", name);
-                otherInformation.put("surname", surname);
+                                    assert auth.getCurrentUser() != null;
+                                    String userId = auth.getCurrentUser().getUid();
+                                    otherInformation.put("uid", userId);
 
-                assert auth.getCurrentUser() != null;
-                String userId = auth.getCurrentUser().getUid();
-                otherInformation.put("uid", userId);
+                                    DatabaseReference userInDB = FirebaseDatabase.getInstance().getReference();
+                                    userInDB.child("users").child(userId).setValue(otherInformation);
+                                    Log.i(TAG, getString(R.string.update_information));
 
-                DatabaseReference userInDB = FirebaseDatabase.getInstance().getReference();
-                userInDB.child("users").child(userId).setValue(otherInformation);
-                Log.i(TAG, getString(R.string.update_information));
-
-                Intent intent = new Intent(requireActivity(), MainActivity.class);
-                startActivity(intent);
-                requireActivity().finish();
-            }).addOnFailureListener(requireActivity(), e -> {
-                Log.e(TAG, e.getMessage());
-                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-            });
+                                    Intent intent = new Intent(requireActivity(), MainActivity.class);
+                                    startActivity(intent);
+                                    requireActivity().finish();
+                                }).addOnFailureListener(requireActivity(), e -> {
+                                    Log.e(TAG, e.getMessage());
+                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
+                            }
+                        }
+                    });
         } else {
             Toast.makeText(getContext(), R.string.error_registration, Toast.LENGTH_SHORT).show();
         }

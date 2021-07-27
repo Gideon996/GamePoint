@@ -106,4 +106,11 @@
     <string name="has_state_of_home_fragment">List of saved offers, initialization of the list</string>
     <string name="save_state">Save state of fragment</string>
     <string name="loading">Loading...</string>
+    <string name="copy_on_clipboard">URL copied to clipboard</string>
+    <string name="open_icon_description">News opening icon</string>
+    <string name="open">Open</string>
+    <string name="copy_icon_description">Copy link icon</string>
+    <string name="copy_link">Copy link</string>
+    <string name="news_sharing_icon">News sharing icon</string>
+    <string name="share">Share</string>
 </resources>

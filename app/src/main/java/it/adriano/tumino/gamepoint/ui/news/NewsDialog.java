@@ -6,11 +6,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -18,8 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.News;
@@ -51,16 +47,16 @@ public class NewsDialog extends DialogFragment {
         });
 
         copyLink.setOnClickListener(v -> {
-            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipboardManager clipboard = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("News Url", news.getNewsUrl());
             clipboard.setPrimaryClip(clip);
-            getDialog().dismiss();
-            Toast.makeText(getContext(), "Url copiato negli appunti", Toast.LENGTH_SHORT).show();
+            Objects.requireNonNull(getDialog()).dismiss();
+            Toast.makeText(getContext(), R.string.copy_on_clipboard, Toast.LENGTH_SHORT).show();
         });
 
         shareNews.setOnClickListener(v -> {
             Utils.shareContent(getContext(), news.getImageURL(), news.getTitle() + ": " + news.getNewsUrl());
-            getDialog().dismiss();
+            Objects.requireNonNull(getDialog()).dismiss();
         });
 
         return builder.create();
