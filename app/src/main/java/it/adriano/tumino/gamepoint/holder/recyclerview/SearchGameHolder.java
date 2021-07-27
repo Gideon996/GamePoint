@@ -21,8 +21,9 @@ public class SearchGameHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Object obj) {
-        binding.setVariable(BR.game, obj); //nome della variabile da usare
+        binding.setVariable(BR.game, obj);
         binding.executePendingBindings();
+
         binding.searchedGameLayout.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             Bundle bundle = new Bundle();

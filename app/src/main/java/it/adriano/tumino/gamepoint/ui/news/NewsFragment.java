@@ -29,7 +29,6 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(MainSharedViewModel.class);
-        viewModel.getCurrentNewsPage().setValue(0);
 
         binding.newsShimmerLayout.startShimmer();
 
@@ -47,8 +46,8 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
     @Override
     public void onResume() {
         super.onResume();
-        if (viewModel.getHasNews().getValue() != null && viewModel.getHasNews().getValue()) {
-            setRecyclerValue(viewModel.getNewsList().getValue());
+        if (viewModel.getHasNews()) {
+            setRecyclerValue(viewModel.getNewsList());
             binding.newsShimmerLayout.stopShimmer();
             binding.newsShimmerLayout.setVisibility(View.GONE);
             binding.newsRecyclerView.setVisibility(View.VISIBLE);
@@ -79,7 +78,7 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
     public void processFinish(List<News> newsList) {
         setRecyclerValue(newsList);
         viewModel.setNewsList(newsList);
-        viewModel.getHasNews().setValue(true);
+        viewModel.setHasNews(true);
         binding.newsShimmerLayout.stopShimmer();
         binding.newsShimmerLayout.setVisibility(View.GONE);
         binding.newsRecyclerView.setVisibility(View.VISIBLE);

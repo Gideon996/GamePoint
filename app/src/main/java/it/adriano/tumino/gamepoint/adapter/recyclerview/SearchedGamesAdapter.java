@@ -1,8 +1,7 @@
 package it.adriano.tumino.gamepoint.adapter.recyclerview;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
+
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
@@ -20,12 +19,10 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
 public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> {
     public static final String TAG = "SearchGamesAdapter";
-    private final ArrayList<BasicGameInformation> searchedGames;
-    private final View view;
+    private final List<BasicGameInformation> searchedGames;
 
-    public SearchedGamesAdapter(ArrayList<BasicGameInformation> searchedGames, View view) {
+    public SearchedGamesAdapter(List<BasicGameInformation> searchedGames) {
         this.searchedGames = searchedGames;
-        this.view = view;
     }
 
     @NonNull

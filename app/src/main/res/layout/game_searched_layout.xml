@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,67 +10,86 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/searchedGameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_news">
-
-        <ImageView
-            android:id="@+id/gameCoverSearchedImageView"
-            showImageFromUrl="@{game.imageHeaderURL}"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/content_description_game_searched"
-            android:cropToPadding="false"
-            android:scaleType="fitXY"
-            tools:srcCompat="@tools:sample/avatars"/>
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
+            android:id="@+id/searchedGameLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:layout_height="120dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/gameTitleSearchedTextView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeStepGranularity="1dp"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal|start"
-                android:text="@{game.title}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <ImageView
+                android:id="@+id/gameCoverSearchedImageView"
+                showImageFromUrl="@{game.imageHeaderURL}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/content_description_game_searched"
+                android:cropToPadding="false"
+                android:scaleType="fitXY"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/storeGameImageView"
-                    storeImage="@{game.store}"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:contentDescription="@{String.format(@string/description_store_icon, game.store)}" />
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/priceGameSearchTextView"
+                    android:id="@+id/gameTitleSearchedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="18dp"
+                    android:autoSizeMinTextSize="1dp"
+                    android:autoSizeStepGranularity="1dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal|start"
+                    android:maxLength="35"
+                    android:text="@{game.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:autoSizeTextType="none"
-                    android:gravity="center|start"
-                    android:text="@{game.price}"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:id="@+id/storeGameImageView"
+                        storeImage="@{game.store}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:contentDescription="@{String.format(@string/description_store_icon, game.store)}" />
+
+                    <TextView
+                        android:id="@+id/priceGameSearchTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="none"
+                        android:gravity="center|start"
+                        android:text="@{game.price}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/gray" />
+
     </LinearLayout>
+
+
 </layout>

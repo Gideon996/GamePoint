@@ -10,80 +10,96 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/lastGameLayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_news">
-
-        <ImageView
-            android:id="@+id/lastGameCoverSearchedImageView"
-            showImageFromUrl="@{lastGames.imageHeaderURL}"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/content_description_game_searched"
-            android:cropToPadding="false"
-            android:scaleType="fitXY" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
+            android:id="@+id/lastGameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/lastGameTitleSearchedTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="18dp"
-                android:autoSizeMinTextSize="1dp"
-                android:autoSizeStepGranularity="1dp"
-                android:autoSizeTextType="uniform"
-                android:gravity="center_horizontal|start"
-                android:text="@{lastGames.title}"
-                android:maxLength="35"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <ImageView
+                android:id="@+id/lastGameCoverSearchedImageView"
+                showImageFromUrl="@{lastGames.imageHeaderURL}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/content_description_game_searched"
+                android:cropToPadding="false"
+                android:scaleType="fitXY" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/lastStoreGameSearchedImageView"
-                    storeImage="@{lastGames.store}"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:contentDescription="@{String.format(@string/description_store_icon, lastGames.store)}" />
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/priceLastGameSearchTextView"
+                    android:id="@+id/lastGameTitleSearchedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="18dp"
+                    android:autoSizeMinTextSize="1dp"
+                    android:autoSizeStepGranularity="1dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_horizontal|start"
+                    android:maxLength="35"
+                    android:text="@{lastGames.title}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:autoSizeTextType="none"
-                    android:gravity="center|start"
-                    android:text="@{lastGames.price}"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/lastStoreGameSearchedImageView"
+                        storeImage="@{lastGames.store}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:contentDescription="@{String.format(@string/description_store_icon, lastGames.store)}" />
+
+                    <TextView
+                        android:id="@+id/priceLastGameSearchTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="none"
+                        android:gravity="center|start"
+                        android:text="@{lastGames.price}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                </LinearLayout>
+
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/cancellImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/cancell_item"
+                app:srcCompat="@drawable/icon_close"
+                app:tint="@color/silver" />
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/cancellImageButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/cancell_item"
-            app:srcCompat="@drawable/icon_close"
-            app:tint="@color/silver" />
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/gray" />
 
     </LinearLayout>
+
+
 </layout>

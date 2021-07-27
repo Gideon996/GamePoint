@@ -25,12 +25,11 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Object obj) {
-        binding.setVariable(BR.lastGames, obj); //nome della variabile da usare
+        binding.setVariable(BR.lastGames, obj);
         binding.executePendingBindings();
         binding.lastGameLayout.setOnClickListener(v -> {
-            BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             Bundle bundle = new Bundle();
-            bundle.putParcelable("game", basicGameInformation);
+            bundle.putParcelable("game", (BasicGameInformation) obj);
 
             Navigation.findNavController(binding.getRoot()).navigate(R.id.navigate_to_searched, bundle);
         });
@@ -42,7 +41,7 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
             boolean result = dbManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
             if (result) {
                 adapter.deleteItem(position);
-                Toast.makeText(binding.cancellImageButton.getContext(), "Gioco eliminato", Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.cancellImageButton.getContext(), R.string.game_deleted, Toast.LENGTH_SHORT).show();
             }
         });
     }

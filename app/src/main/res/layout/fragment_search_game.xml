@@ -1,129 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:ignore="UselessParent">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/searchGameEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:autofillHints="Game Title"
-            android:background="@drawable/edit_text_background"
-            android:backgroundTint="@color/gray"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/hint_search_edit_text"
-            android:imeOptions="actionSearch"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="@color/silver" />
-
-        <ImageButton
-            android:id="@+id/searchGameButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/search_button_text"
-            app:srcCompat="@drawable/icon_search_fill"
-            app:tint="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/latestResearchGamesLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
         android:orientation="vertical"
-        android:paddingBottom="50dp"
-        android:visibility="visible">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/ultime_ricerche_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/latestResearchGameRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/last_search_layout" />
-    </LinearLayout>
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/searchedGamesShimmerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:animationCache="true"
-        android:visibility="visible"
-        app:shimmer_repeat_mode="restart"
-        app:shimmer_shape="radial">
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include layout="@layout/shimmer_searched_game" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:hint="@string/hint_search_edit_text"
+                app:endIconMode="clear_text">
 
-            <include layout="@layout/shimmer_searched_game" />
+                <EditText
+                    android:id="@+id/searchGameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:autofillHints="Game Title"
+                    android:background="@drawable/edit_text_background"
+                    android:backgroundTint="@color/gray"
+                    android:ems="10"
+                    android:gravity="center"
 
-            <include layout="@layout/shimmer_searched_game" />
+                    android:imeOptions="actionSearch"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/silver"
+                    tools:ignore="LabelFor" />
 
-            <include layout="@layout/shimmer_searched_game" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/searchGameButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/search_button_text"
+                app:srcCompat="@drawable/icon_search_fill"
+                app:tint="@color/white" />
+
+
         </LinearLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+        <LinearLayout
+            android:id="@+id/latestResearchGamesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:paddingBottom="50dp"
+            android:visibility="visible">
 
-    <TextView
-        android:id="@+id/anyResultTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/no_games"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
-        android:visibility="gone" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/ultime_ricerche_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <LinearLayout
-        android:id="@+id/gameSearchResultsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="50dp"
-        android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/latestResearchGameRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/last_search_layout" />
+        </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/searchedGamesShimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:animationCache="true"
+            android:visibility="visible"
+            app:shimmer_repeat_mode="restart"
+            app:shimmer_shape="radial">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_searched_game" />
+
+                <include layout="@layout/shimmer_searched_game" />
+
+                <include layout="@layout/shimmer_searched_game" />
+
+                <include layout="@layout/shimmer_searched_game" />
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <TextView
+            android:id="@+id/anyResultTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/risultati_ricerca_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:text="@string/no_games"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/gameSearchResultsRecyclerView"
+        <LinearLayout
+            android:id="@+id/gameSearchResultsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/last_search_layout"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:paddingBottom="50dp"
+            android:visibility="gone">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/risultati_ricerca_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gameSearchResultsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/last_search_layout" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
 

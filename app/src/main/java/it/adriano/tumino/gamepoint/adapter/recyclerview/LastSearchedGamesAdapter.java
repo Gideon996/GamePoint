@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
@@ -19,9 +19,9 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.LastSearchedGamesHolder;
 
 public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> {
     public static final String TAG = "SearchGamesAdapter";
-    private final ArrayList<BasicGameInformation> lastSearchedGamesList;
+    private final List<BasicGameInformation> lastSearchedGamesList;
 
-    public LastSearchedGamesAdapter(ArrayList<BasicGameInformation> lastSearchedGamesList) {
+    public LastSearchedGamesAdapter(List<BasicGameInformation> lastSearchedGamesList) {
         this.lastSearchedGamesList = lastSearchedGamesList;
     }
 

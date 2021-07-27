@@ -66,9 +66,9 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
     @Override
     public void onResume() {
         super.onResume();
-        if (mainSharedViewModel.getHasOffers().getValue() != null && mainSharedViewModel.getHasOffers().getValue()) {
+        if (mainSharedViewModel.getHasOffers()) {
             Log.i(TAG, getString(R.string.has_state_of_home_fragment));
-            setOffersList(mainSharedViewModel.getOffersList().getValue());
+            setOffersList(mainSharedViewModel.getOffersList());
             binding.offersShimmerLayout.setVisibility(View.GONE);
             binding.offersTitle.setVisibility(View.VISIBLE);
             binding.offersList.setVisibility(View.VISIBLE);
