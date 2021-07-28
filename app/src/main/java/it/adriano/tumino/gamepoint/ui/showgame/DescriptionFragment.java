@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -37,14 +36,13 @@ import it.adriano.tumino.gamepoint.databinding.FragmentDescriptionBinding;
 
 public class DescriptionFragment extends Fragment {
     private static final String TAG = "DescriptionFragment";
+    private final static String embedURL = "https://www.youtube.com/embed/";
 
     private FragmentDescriptionBinding binding;
-    private LinearLayout linearLayout;
 
     private StoreGame storeGame;
 
     public DescriptionFragment() {
-
     }
 
     @Override
@@ -59,20 +57,9 @@ public class DescriptionFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false);
-        linearLayout = binding.descriptionLayout;
         showGameDescription();
 
         return binding.getRoot();
-    }
-
-
-    private void showGameDescription() {
-        TextView descriptionTextView = binding.descriptionTextView;
-        String body = storeGame.getDescription();
-        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(descriptionTextView);
-        descriptionTextView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
-        descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
-        descriptionTextView.setLinksClickable(true);
     }
 
     @Override
@@ -92,8 +79,13 @@ public class DescriptionFragment extends Fragment {
         }
     }
 
-    private static String createYoutubeFrame(@NonNull String videoUrl, float width, float height) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.gc();
+    }
 
+    private static String createYoutubeFrame(@NonNull String videoUrl, float width, float height) {
         return "<html>" +
                 "<body style='margin:0;padding:0;'>" +
                 "<iframe " +
@@ -106,11 +98,17 @@ public class DescriptionFragment extends Fragment {
                 "</html>";
     }
 
-    private final static String embedURL = "https://www.youtube.com/embed/";
+    private void showGameDescription() {
+        TextView descriptionTextView = binding.descriptionTextView;
+        String body = storeGame.getDescription();
+        PicassoImageGetter picassoImageGetter = new PicassoImageGetter(descriptionTextView);
+        descriptionTextView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
+        descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        descriptionTextView.setLinksClickable(true);
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void setYoutubeVideoTrailer(String videoTrailer) {
-
         if (!videoTrailer.contains("embed")) {
             String[] split = videoTrailer.split("=");
             if (split.length > 1) {
@@ -149,13 +147,7 @@ public class DescriptionFragment extends Fragment {
             videoView.start();
         });
 
-        linearLayout.getViewTreeObserver().addOnScrollChangedListener(mediaController::hide);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        System.gc();
+        binding.descriptionLayout.getViewTreeObserver().addOnScrollChangedListener(mediaController::hide);
     }
 
     public class PicassoImageGetter implements Html.ImageGetter {

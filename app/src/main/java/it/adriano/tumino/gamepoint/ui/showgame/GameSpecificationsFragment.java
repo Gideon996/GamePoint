@@ -32,6 +32,7 @@ import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 public class GameSpecificationsFragment extends Fragment {
 
     private StoreGame storeGame;
+    private TextView textView;
 
     public GameSpecificationsFragment() {
     }
@@ -71,39 +72,34 @@ public class GameSpecificationsFragment extends Fragment {
         LinearLayout linearLayout = view.findViewById(R.id.steamSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        TextView developersTextView = view.findViewById(R.id.developerTextView);
-        String string = String.join(", ", steamGame.getDevelopers());
-        developersTextView.setText(string);
+        textView = view.findViewById(R.id.developerTextView);
+        textView.setText(String.join(", ", steamGame.getDevelopers()));
 
-        TextView publishersTextView = view.findViewById(R.id.publisherTextView);
-        string = String.join(", ", steamGame.getPublishers());
-        publishersTextView.setText(string);
+        textView = view.findViewById(R.id.publisherTextView);
+        textView.setText(String.join(", ", steamGame.getPublishers()));
 
-        TextView webSiteTextView = view.findViewById(R.id.webSiteTextView);
-        webSiteTextView.setText(steamGame.getWebsite());
+        textView = view.findViewById(R.id.webSiteTextView);
+        textView.setText(steamGame.getWebsite());
 
-        TextView metacriticScoreTextView = view.findViewById(R.id.metacriticScoreTextView);
-        metacriticScoreTextView.setText(steamGame.getScoreMetacritic());
+        textView = view.findViewById(R.id.metacriticScoreTextView);
+        textView.setText(steamGame.getScoreMetacritic());
 
-        TextView categoriesTextView = view.findViewById(R.id.categoryPSNTextView);
-        string = fromListToHTML(steamGame.getCategories());
-        categoriesTextView.setText(Html.fromHtml(string, Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.categoryPSNTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(steamGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView genresTextView = view.findViewById(R.id.generiTextView);
-        string = fromListToHTML(steamGame.getGenres());
-        genresTextView.setText(Html.fromHtml(string, Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.generiTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(steamGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView languagesTextView = view.findViewById(R.id.languagesTextView);
-        List<String> languagesList = Arrays.asList(steamGame.getLanguages().split(",").clone());
-        languagesTextView.setText(Html.fromHtml(fromListToHTML(languagesList), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.languagesTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(Arrays.asList(steamGame.getLanguages().split(",").clone())), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView minimumTextView = view.findViewById(R.id.minimumTextView);
-        minimumTextView.setText(Html.fromHtml(steamGame.getMinimumRequirement(), Html.FROM_HTML_MODE_LEGACY));
-        TextView reccommendedTextView = view.findViewById(R.id.reccommendetTextView);
+        textView = view.findViewById(R.id.minimumTextView);
+        textView.setText(Html.fromHtml(steamGame.getMinimumRequirement(), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.reccommendetTextView);
         if (steamGame.getRecommendedRequirement().isEmpty()) {
-            reccommendedTextView.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
         }
-        reccommendedTextView.setText(Html.fromHtml(steamGame.getRecommendedRequirement(), Html.FROM_HTML_MODE_LEGACY));
+        textView.setText(Html.fromHtml(steamGame.getRecommendedRequirement(), Html.FROM_HTML_MODE_LEGACY));
 
     }
 
@@ -117,15 +113,15 @@ public class GameSpecificationsFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.pegiNintendo);
         imageView.setImageDrawable(pegi);
 
-        TextView caratteristiche = view.findViewById(R.id.caratteristicheTextView);
-        caratteristiche.setText(Html.fromHtml(nintendoGame.getSystemInfo(), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.caratteristicheTextView);
+        textView.setText(Html.fromHtml(nintendoGame.getSystemInfo(), Html.FROM_HTML_MODE_LEGACY));
 
-        LinearLayout caratteristichePerConsole = view.findViewById(R.id.caratterostocheConsoleLayout);
+        LinearLayout characteristicsForConsole = view.findViewById(R.id.caratterostocheConsoleLayout);
         for (int i = 0; i < nintendoGame.getFeatureSheets().size(); i++) {
             String console = nintendoGame.getFeatureSheets().get(i);
             TextView textView = new TextView(getContext());
             textView.setText(Html.fromHtml(console, Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
-            caratteristichePerConsole.addView(textView);
+            characteristicsForConsole.addView(textView);
         }
     }
 
@@ -138,26 +134,22 @@ public class GameSpecificationsFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.ratingImageView);
         imageView.setImageDrawable(getRatingImage(playStationGame.getRating()));
 
-        TextView categoriesTextView = view.findViewById(R.id.categoryPSNTextView);
-        categoriesTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.categoryPSNTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView genresTextView = view.findViewById(R.id.generiPSNTextView);
-        genresTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.generiPSNTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView subGenresTextView = view.findViewById(R.id.subGenresPSNTextView);
-        subGenresTextView.setText(Html.fromHtml(fromListToHTML(playStationGame.getSubGenreList()), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.subGenresPSNTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getSubGenreList()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView voiceLanguagesTextView = view.findViewById(R.id.voiceLanguagesTextView);
-        TextView subTitleTextView = view.findViewById(R.id.subTitleTextView);
-        List<String> displayVoice = fromAcronimoToEsteso(playStationGame.getVoiceLanguages());
-        voiceLanguagesTextView.setText(Html.fromHtml(fromListToHTML(displayVoice), Html.FROM_HTML_MODE_COMPACT));
-        List<String> subTitle = fromAcronimoToEsteso(playStationGame.getSubtitleLanguages());
-        subTitleTextView.setText(Html.fromHtml(fromListToHTML(subTitle), Html.FROM_HTML_MODE_COMPACT));
+        textView = view.findViewById(R.id.voiceLanguagesTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(fromAcronymToFullName(playStationGame.getVoiceLanguages())), Html.FROM_HTML_MODE_COMPACT));
+        textView = view.findViewById(R.id.subTitleTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(fromAcronymToFullName(playStationGame.getSubtitleLanguages())), Html.FROM_HTML_MODE_COMPACT));
 
-        TextView console = view.findViewById(R.id.consolePSNTextView);
-        console.setText(Html.fromHtml(fromListToHTML(playStationGame.getPlatforms()), Html.FROM_HTML_MODE_LEGACY));
-
-
+        textView = view.findViewById(R.id.consolePSNTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getPlatforms()), Html.FROM_HTML_MODE_LEGACY));
     }
 
     private void mcsGame(View view) {
@@ -169,14 +161,14 @@ public class GameSpecificationsFragment extends Fragment {
         Drawable pegiImage = getRatingImage(microsoftGame.getPegi());
         pegi.setImageDrawable(pegiImage);
 
-        TextView categories = view.findViewById(R.id.categoriesMCSTextView);
-        categories.setText(Html.fromHtml(fromListToHTML(microsoftGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.categoriesMCSTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(microsoftGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView metadata = view.findViewById(R.id.metadataMCSTextView);
-        metadata.setText(Html.fromHtml(fromListToHTML(microsoftGame.getMetadata()), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.metadataMCSTextView);
+        textView.setText(Html.fromHtml(fromListToHTML(microsoftGame.getMetadata()), Html.FROM_HTML_MODE_LEGACY));
 
-        TextView requirement = view.findViewById(R.id.requirementMCSTextView);
-        requirement.setText(Html.fromHtml(microsoftGame.getSystemRequirement(), Html.FROM_HTML_MODE_LEGACY));
+        textView = view.findViewById(R.id.requirementMCSTextView);
+        textView.setText(Html.fromHtml(microsoftGame.getSystemRequirement(), Html.FROM_HTML_MODE_LEGACY));
     }
 
     private Drawable getRatingImage(String rating) {
@@ -213,17 +205,17 @@ public class GameSpecificationsFragment extends Fragment {
         return string.toString();
     }
 
-    private static List<String> fromAcronimoToEsteso(List<String> list) {
-        List<String> estesi = new ArrayList<>();
+    private static List<String> fromAcronymToFullName(List<String> list) {
+        List<String> fullName = new ArrayList<>();
         if (list.size() == 1 && list.get(0).equals("N.A.")) {
-            estesi.addAll(list);
+            fullName.addAll(list);
         } else {
             for (String languageCode : list) {
                 Locale locale = new Locale(languageCode);
-                estesi.add(locale.getDisplayLanguage());
+                fullName.add(locale.getDisplayLanguage());
             }
         }
 
-        return estesi;
+        return fullName;
     }
 }
