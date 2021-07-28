@@ -20,8 +20,6 @@ public class MainSharedViewModel extends ViewModel {
     private final MutableLiveData<List<BasicGameInformation>> searchedList;
 
     private final MutableLiveData<Integer> currentNewsPage;
-    private final MutableLiveData<String> titleSearched;
-
 
     public MainSharedViewModel() {
         hasOffers = new MutableLiveData<>();
@@ -33,7 +31,6 @@ public class MainSharedViewModel extends ViewModel {
         searchedList = new MutableLiveData<>();
 
         currentNewsPage = new MutableLiveData<>();
-        titleSearched = new MutableLiveData<>();
 
         hasOffers.setValue(false);
         hasNews.setValue(false);
@@ -43,19 +40,24 @@ public class MainSharedViewModel extends ViewModel {
         newsList.setValue(new ArrayList<>());
 
         currentNewsPage.setValue(0);
-        titleSearched.setValue("");
     }
 
     public boolean getHasOffers() {
-        return hasOffers.getValue();
+        if (hasOffers.getValue() != null) return hasOffers.getValue();
+
+        return false;
     }
 
     public boolean getHasNews() {
-        return hasNews.getValue();
+        if (hasNews.getValue() != null) return hasNews.getValue();
+
+        return false;
     }
 
     public boolean getHasResearch() {
-        return hasResearch.getValue();
+        if (hasResearch.getValue() != null) return hasResearch.getValue();
+
+        return false;
     }
 
     public List<GameOffers> getOffersList() {
@@ -70,12 +72,11 @@ public class MainSharedViewModel extends ViewModel {
         return searchedList.getValue();
     }
 
-    public int getCurrentPage() {
-        return currentNewsPage.getValue();
-    }
 
-    public String getTitle() {
-        return titleSearched.getValue();
+    public int getCurrentPage() {
+        if (currentNewsPage.getValue() != null) return currentNewsPage.getValue();
+
+        return 0;
     }
 
     public void setHasOffers(boolean value) {
@@ -92,14 +93,22 @@ public class MainSharedViewModel extends ViewModel {
 
     public void setOffersList(List<GameOffers> offersList) {
         List<GameOffers> list = this.offersList.getValue();
-        list.addAll(offersList);
-        this.offersList.setValue(list);
+        if (list != null) {
+            list.addAll(offersList);
+            this.offersList.setValue(list);
+        } else {
+            this.offersList.setValue(new ArrayList<>());
+        }
     }
 
     public void setNewsList(List<News> newsList) {
         List<News> list = this.newsList.getValue();
-        list.addAll(newsList);
-        this.newsList.setValue(list);
+        if (list != null) {
+            list.addAll(newsList);
+            this.newsList.setValue(list);
+        } else {
+            this.newsList.setValue(new ArrayList<>());
+        }
     }
 
     public void setSearchedList(List<BasicGameInformation> list) {
@@ -107,14 +116,11 @@ public class MainSharedViewModel extends ViewModel {
     }
 
     public int nextPage() {
-        int currentPage = currentNewsPage.getValue();
+        int currentPage = 0;
+        if (currentNewsPage.getValue() != null) currentPage = currentNewsPage.getValue();
         currentPage = currentPage + 1;
         currentNewsPage.setValue(currentPage);
         return currentPage;
-    }
-
-    public void setTitle(String title) {
-        titleSearched.setValue(title);
     }
 
 }

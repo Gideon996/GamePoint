@@ -55,10 +55,8 @@ public class Utils {
             connection.setDefaultUseCaches(false);
             connection.setUseCaches(false);
             if (Locale.getDefault().getLanguage().equals("it")) {
-                Log.e("TEST", "it-IT");
                 connection.setRequestProperty("Accept-Language", "it-IT");
             } else {
-                Log.e("TEST", "en-US");
                 connection.setRequestProperty("Accept-Language", "en-US");
             }
 

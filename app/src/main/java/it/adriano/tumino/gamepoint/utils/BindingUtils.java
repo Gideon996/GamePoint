@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 public class BindingUtils {
-
     @BindingAdapter("showImageFromUrl")
     public static void showImageFromUrl(ImageView view, String url) {
         if (url != null && !url.isEmpty()) {

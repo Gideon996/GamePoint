@@ -26,6 +26,7 @@ public class OffersHolder extends RecyclerView.ViewHolder {
         binding.offerGameLayout.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             Bundle bundle = new Bundle();
+            bundle.putString("title", basicGameInformation.getTitle());
             bundle.putParcelable("game", basicGameInformation);
             Navigation.findNavController(binding.getRoot()).navigate(R.id.navigate_to_favorite, bundle);
         });

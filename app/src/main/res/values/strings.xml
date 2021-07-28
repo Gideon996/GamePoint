@@ -111,4 +111,10 @@
     <string name="news_sharing_icon">News sharing icon</string>
     <string name="share">Share</string>
     <string name="game_deleted">Game Deleted</string>
+    <string name="price">Price:\n %s%s</string>
+    <string name="release_data">Release date:\n%s</string>
+    <string name="price_symbol">€</string>
+    <string name="coming_soon">Coming soon</string>
+    <string name="free">free</string>
+    <string name="n_a">n.a.</string>
 </resources>

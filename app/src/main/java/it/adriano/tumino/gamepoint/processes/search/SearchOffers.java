@@ -23,7 +23,6 @@ public class SearchOffers extends TaskRunner<Void, List<GameOffers>> {
     public AsyncResponse<List<GameOffers>> delegate;
 
     public SearchOffers() {
-
     }
 
     @Override

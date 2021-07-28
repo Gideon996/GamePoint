@@ -6,11 +6,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.SteamStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
+import it.adriano.tumino.gamepoint.processes.ProcessUtils;
 
 public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonParser<SteamStoreGame> {
     public static final String TAG = "CatchGameFromSteam";
@@ -51,7 +53,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
             String website = "https://store.steampowered.com/";
             String minimum = "N.A.";
             String recommended = "";
-            String price = "FREE";
+            String price = "Unavailable";
             String date = "3 Ottobre 1911";
             String videoTrailerUrl = "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/ae4424ffb1beda926e14cd43/mp4_page_bg_english.mp4?t=1626369244";
             String thumbnail = "https://xboxplay.games/uploadStream/7550.jpg";
@@ -80,8 +82,9 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
                     if (!isFree) {
                         if (data.has("price_overview") && data.getJSONObject("price_overview").has("final_formatted")) {
                             price = data.getJSONObject("price_overview").getString("final_formatted");
+                            price = price.substring(0, price.length() - 1);
                         } else {
-                            price = "Disponibile a breve";
+                            price = (Locale.getDefault().getLanguage().equals("it")) ? "Disponibile a breve" : "Coming soon";
                         }
                     }
                 }
@@ -151,7 +154,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
                     boolean comingSoon = data.getJSONObject("release_date").getBoolean("coming_soon");
                     date = "Coming Soon";
                     if (!comingSoon) {
-                        date = "Data di uscita: " + data.getJSONObject("release_date").getString("date");
+                        date = normalizeDate(data.getJSONObject("release_date").getString("date"));
                     }
                 }
                 game.setReleaseData(date);
@@ -161,6 +164,12 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
         }
 
         return null;
+    }
+
+    private String normalizeDate(String date) {
+        String[] tmp = date.split(" ");
+        String month = ProcessUtils.normalizeSteamMonth(tmp[1].substring(0, tmp[1].length() - 1));
+        return tmp[0] + " " + month + " " + tmp[2];
     }
 
     private ArrayList<String> getValuesFromJSONArray(JSONArray array, String... valuesName) throws JSONException {

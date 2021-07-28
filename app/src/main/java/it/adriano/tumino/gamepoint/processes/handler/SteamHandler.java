@@ -15,6 +15,7 @@ import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.data.GameOffers;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.ProcessUtils;
 import it.adriano.tumino.gamepoint.processes.catchgame.CatchSteamGame;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
@@ -33,7 +34,7 @@ public class SteamHandler {
         title = title.toLowerCase();
         List<BasicGameInformation> result = new ArrayList<>();
 
-        String titleEncoded = HandlerUtils.encodedTitle(title);
+        String titleEncoded = ProcessUtils.encodedTitle(title);
         if (titleEncoded.isEmpty()) return result;
 
         Document document = Utils.getDocumentFromUrl(generateSteamUrl(titleEncoded));
@@ -51,7 +52,7 @@ public class SteamHandler {
         Elements links = resultsRows.getElementsByTag("a");
         for (Element link : links) {
             String gameTitle = link.getElementsByClass("title").get(0).text();
-            if (HandlerUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) { //I only take games with the correct titles
+            if (ProcessUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) { //I only take games with the correct titles
                 String gameID = link.attributes().get("data-ds-appid");
                 if (gameID == null || gameID.isEmpty()) continue;
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");

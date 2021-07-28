@@ -29,6 +29,7 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
         binding.executePendingBindings();
         binding.lastGameLayout.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
+            bundle.putString("title", ((BasicGameInformation) obj).getTitle());
             bundle.putParcelable("game", (BasicGameInformation) obj);
 
             Navigation.findNavController(binding.getRoot()).navigate(R.id.navigate_to_searched, bundle);
@@ -38,7 +39,7 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             int position = getAdapterPosition();
             DBManager dbManager = new DBManager(binding.cancellImageButton.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
-            boolean result = dbManager.deleteWithNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
+            boolean result = dbManager.deleteByNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
             if (result) {
                 adapter.deleteItem(position);
                 Toast.makeText(binding.cancellImageButton.getContext(), R.string.game_deleted, Toast.LENGTH_SHORT).show();

@@ -7,21 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private final String tableName;
 
     public DBHelper(@Nullable Context context, String tableName) {
         super(context, tableName, null, 1);
-        this.tableName = tableName;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if(tableName.equals(DBUtils.FAVORITE_TABLE_TITLE)){
-            db.execSQL(DBUtils.generateFavoriteTable());
-        }else{
-            db.execSQL(DBUtils.generateLastResearcTable());
-        }
-
+        db.execSQL(DBUtils.generateLastResearcTable());
     }
 
     @Override

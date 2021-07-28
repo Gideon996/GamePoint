@@ -24,7 +24,7 @@ public class DBManager {
     }
 
 
-    public void save(BasicGameInformation basicGameInformation) {
+    public void saveGame(BasicGameInformation basicGameInformation) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBUtils.TITLE, basicGameInformation.getTitle().replaceAll("'", ""));
@@ -42,11 +42,11 @@ public class DBManager {
         }
     }
 
-    public boolean delete(long id) {
+    public boolean deleteByID(long id) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         try {
             if (database.delete(tableName, DBUtils.ID + "=?", new String[]{Long.toString(id)}) > 0) {
-                Log.i(TAG, "Deletted game " + id + " in " + tableName);
+                Log.i(TAG, "Deleted game " + id + " in " + tableName);
                 return true;
             }
         } catch (SQLiteException exception) {
@@ -55,22 +55,8 @@ public class DBManager {
         return false;
     }
 
-    public Cursor query() {
-        Cursor cursor;
-        try {
-            SQLiteDatabase database = dbHelper.getReadableDatabase();
-            cursor = database.query(tableName, null, null, null, null, null, null, null);
-            database.close();
-            cursor.close();
-        } catch (SQLiteException exception) {
-            Log.e(TAG, exception.toString());
-            return null;
-        }
-        return cursor;
-    }
-
     @SuppressLint("Recycle")
-    public boolean deleteWithNameAndStore(String name, String store) {
+    public boolean deleteByNameAndStore(String name, String store) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name.replaceAll("'", ""), store);
@@ -79,12 +65,12 @@ public class DBManager {
             long id = cursor.getLong(cursor.getColumnIndex(DBUtils.ID));
             Log.d(TAG, "Delete game " + id + " in " + tableName);
             cursor.close();
-            return delete(id);
+            return deleteByID(id);
         }
         return false;
     }
 
-    public ArrayList<BasicGameInformation> getAllElements() {
+    public ArrayList<BasicGameInformation> getAllGames() {
         ArrayList<BasicGameInformation> list = new ArrayList<>();
 
         SQLiteDatabase database = dbHelper.getReadableDatabase();
@@ -105,13 +91,14 @@ public class DBManager {
                 list.add(basicGameInformation);
             }
         }
+        cursor.close();
         Log.d(TAG, "Get all games from " + tableName);
 
         return list;
     }
 
     @SuppressLint("Recycle")
-    public boolean checkIfElementsIsOnDataBase(String name, String store) {
+    public boolean checkIfGameIsOnDataBase(String name, String store) {
         Log.d(TAG, "Check existing game " + name + " in " + tableName);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = DBUtils.getSelectionWithNameAndStoreQuery(tableName, name.replaceAll("'", ""), store);

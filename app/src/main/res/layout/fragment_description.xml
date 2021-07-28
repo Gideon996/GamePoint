@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
     <LinearLayout
         android:id="@+id/descriptionLayout"
@@ -46,23 +45,40 @@
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@color/cyan" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageButton
+                    android:id="@+id/playVideoTrailer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/fui_transparent"
+                    android:contentDescription="@string/play_trailer_button"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icon_play_trailer" />
+
+                <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/playVideoTrailer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:contentDescription="@string/play_trailer_button"
                     android:scrollbarAlwaysDrawVerticalTrack="false"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:maxImageSize="45dp"
-                    app:srcCompat="@drawable/icon_play" />
+                    app:srcCompat="@drawable/icon_play" /> -->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

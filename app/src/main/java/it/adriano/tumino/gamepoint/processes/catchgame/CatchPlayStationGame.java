@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.PlayStationStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
+import it.adriano.tumino.gamepoint.processes.ProcessUtils;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
 
 public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements JsonParser<PlayStationStoreGame> {
@@ -32,8 +33,6 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
     public PlayStationStoreGame jsonParser(@NotNull String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
 
-        //Only when the game doesn't exist
-        //Theoretically impossible because the link comes directly from playstation
         if (jsonObject.has("codeName")) {
             return null;
         }
@@ -45,7 +44,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         String description = "N.A.";
         String legalText = "";
         String rating = "0";
-        String price = "N.A.";
+        String price = "unavailable";
         String numberOfPlayers = "N.A.";
         String inGamePurchases = "N.A.";
         String onlinePlayMode = "N.A.";
@@ -79,7 +78,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         if (jsonObject.has("release_date")) {
             String tmp = jsonObject.getString("release_date");
             String onlyDate = tmp.split("T")[0];
-            releaseData = "Data di uscita: " + onlyDate.replaceAll("-", "/");
+            releaseData = ProcessUtils.normalizePlayStationDate(onlyDate.replaceAll("-", "/"));
         }
         game.setReleaseData(releaseData);
 
@@ -103,8 +102,10 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
             JSONObject mediaList = jsonObject.getJSONObject("mediaList");
             if (mediaList.has("previews") && mediaList.getJSONArray("previews").length() > 0) {
                 JSONObject preview = mediaList.getJSONArray("previews").getJSONObject(0);
-                if(preview.has("streamUrl") && !preview.isNull("streamUrl")) trailerUrl = preview.getString("streamUrl");
-                if(preview.has("shots") && !preview.isNull("shots")) shots = preview.getJSONArray("shots").getString(0);
+                if (preview.has("streamUrl") && !preview.isNull("streamUrl"))
+                    trailerUrl = preview.getString("streamUrl");
+                if (preview.has("shots") && !preview.isNull("shots"))
+                    shots = preview.getJSONArray("shots").getString(0);
             }
 
             if (mediaList.has("screenshots")) {
@@ -146,7 +147,10 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
         if (jsonObject.has("skus")) {
             JSONObject skus = jsonObject.getJSONArray("skus").getJSONObject(0);
 
-            if (skus.has("display_price")) price = skus.getString("display_price");
+            if (skus.has("display_price")) {
+                price = skus.getString("display_price");
+                if (!price.toLowerCase().equals("free")) price = price.substring(1);
+            }
 
             JSONObject entitlements = skus.getJSONArray("entitlements").getJSONObject(0);
             if (!entitlements.isNull("metadata")) {

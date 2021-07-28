@@ -2,7 +2,7 @@ package it.adriano.tumino.gamepoint.ui.showgame;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,8 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.processes.handler.MicrosoftHandler;
@@ -39,12 +37,15 @@ import it.adriano.tumino.gamepoint.utils.Utils;
 public class GameResultFragment extends Fragment implements AsyncResponse<StoreGame>, TabLayout.OnTabSelectedListener {
     public static final String TAG = "GameResultFragment";
 
+    private static final String USER = "Users";
+    private static final String FAVORITES = "Favorites";
+
     private BasicGameInformation basicGameInformation;
     private FragmentGameResultBinding binding;
     private final GameResultViewModel viewModel;
 
-    private FirebaseAuth auth;
-    private FirebaseFirestore firestore;
+    private final FirebaseAuth auth;
+    private final FirebaseFirestore firebaseFirestore;
     private boolean isOnDatabase;
     private String query;
 
@@ -52,10 +53,12 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     private final Bundle information = new Bundle();
 
-
     public GameResultFragment() {
         viewModel = new GameResultViewModel();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         viewModel.getHasResult().setValue(false);
+
         fragments[0] = new DescriptionFragment();
         fragments[1] = new GalleryFragment();
         fragments[2] = new GameSpecificationsFragment();
@@ -66,38 +69,52 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null && getArguments().containsKey("game"))
+        if (getArguments() != null && getArguments().containsKey("game")) {
             basicGameInformation = getArguments().getParcelable("game");
+        }
 
-        information.putString("store", basicGameInformation.getStore());
-        switch (basicGameInformation.getStore()) {
-            case "STEAM":
-                SteamHandler.catchGame(basicGameInformation.getAppID(), this);
-                break;
-            case "MCS":
-                MicrosoftHandler.catchGame(basicGameInformation.getUrl(), this);
-                break;
-            case "PSN":
-                PlayStationHandler.catchGame(basicGameInformation.getUrl(), this);
-                break;
-            case "ESHOP":
-                NintendoHandler.catchGame(basicGameInformation.getUrl(), basicGameInformation.getPrice(), this);
-                break;
+        boolean isEmpty = basicGameInformation == null || basicGameInformation.isEmpty();
+        viewModel.getIsEmpty().setValue(isEmpty);
+
+        if (!isEmpty) {
+            viewModel.getHasResult().setValue(true);
+            information.putString("store", basicGameInformation.getStore());
+            switch (basicGameInformation.getStore()) {
+                case "STEAM":
+                    SteamHandler.catchGame(basicGameInformation.getAppID(), this);
+                    break;
+                case "MCS":
+                    MicrosoftHandler.catchGame(basicGameInformation.getUrl(), this);
+                    break;
+                case "PSN":
+                    PlayStationHandler.catchGame(basicGameInformation.getUrl(), this);
+                    break;
+                case "ESHOP":
+                    NintendoHandler.catchGame(basicGameInformation.getUrl(), basicGameInformation.getPrice(), this);
+                    break;
+            }
         }
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        auth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
         binding = FragmentGameResultBinding.inflate(inflater, container, false);
-        query = basicGameInformation.getTitle().replaceAll("\\s+", "") + basicGameInformation.getStore();
-        binding.gameResultShimmerLayout.startShimmer();
-        binding.tabLayout.addOnTabSelectedListener(this);
+        if (viewModel.getIsEmpty().getValue() != null && viewModel.getIsEmpty().getValue()) {
+            binding.gameResultShimmerLayout.setVisibility(View.GONE);
+            binding.gameResultLayout.setVisibility(View.GONE);
+            binding.noGameResultTextView.setVisibility(View.VISIBLE);
+        } else {
+            query = basicGameInformation.getTitle().replaceAll("\\s+", "") + basicGameInformation.getStore();
+            binding.gameResultShimmerLayout.startShimmer();
+            binding.tabLayout.addOnTabSelectedListener(this);
 
-        binding.favoriteButton.setEnabled(false);
-        checkIfOnDatabase();
-
+            binding.favoriteButton.setEnabled(false);
+            if (auth.getUid() != null) {
+                checkIfOnDatabase(auth.getUid());
+            } else {
+                isOnDatabase = false;
+            }
+        }
 
         return binding.getRoot();
     }
@@ -105,18 +122,23 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     @Override
     public void onResume() {
         super.onResume();
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(basicGameInformation.getTitle().toUpperCase());
-        if (viewModel.getResult() != null && viewModel.getHasResult().getValue() != null) {
-            if (viewModel.getHasResult().getValue())
-                setFragmentLayout(fragments[(viewModel.getCurrentFragment().getValue() != null) ? viewModel.getCurrentFragment().getValue() : 0]);
+        if (hasResultToShow()) {
+            setFragmentLayout(fragments[(viewModel.getCurrentFragment().getValue() != null) ? viewModel.getCurrentFragment().getValue() : 0]);
         }
+    }
 
+    private boolean hasResultToShow() {
+        return viewModel.getIsEmpty().getValue() != null &&
+                viewModel.getIsEmpty().getValue() &&
+                viewModel.getHasResult().getValue() != null &&
+                viewModel.getHasResult().getValue();
     }
 
     @Override
     public void processFinish(StoreGame result) {
         binding.gameResultShimmerLayout.stopShimmer();
         binding.gameResultShimmerLayout.setVisibility(View.GONE);
+
         if (result != null) {
             viewModel.getHasResult().setValue(true);
             viewModel.getResult().setValue(result);
@@ -129,10 +151,17 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             viewModel.getCurrentFragment().setValue(0);
             setFragmentLayout(fragments[0]);
 
+            if (result.getPrice().toLowerCase().equals("free") || result.getPrice().toLowerCase().equals("unavailable")) {
+                binding.priceGameTextView.setText(String.format(getString(R.string.price), result.getPrice(), ""));
+            } else {
+                binding.priceGameTextView.setText(String.format(getString(R.string.price), result.getPrice(), getString(R.string.price_symbol)));
+            }
+
             binding.shareButton.setOnClickListener(v -> Utils.shareContent(getContext(), result.getImageHeaderURL(), getString(R.string.share_game_text) + result.getTitle()));
             binding.favoriteButton.setOnClickListener(v -> favoriteRoutines());
         } else {
-            binding.noGameResulTextView.setVisibility(View.VISIBLE);
+            viewModel.getHasResult().setValue(false);
+            binding.noGameResultTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -152,31 +181,35 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     }
 
-    private void checkIfOnDatabase() {
-        if (auth.getUid() != null) {
-            DocumentReference exist = firestore.collection("Users").document(auth.getUid()).collection("Favorites").document(query);
-            exist.get().addOnCompleteListener(task -> {
-                binding.favoriteButton.setEnabled(true);
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    isOnDatabase = false;
-                    if (document != null) isOnDatabase = document.exists();
-                    changeColor();
-                } else {
-                    isOnDatabase = false;
-                }
-            });
-        } else {
-            Log.e(TAG, getString(R.string.not_get_user_id));
-            Toast.makeText(requireContext(), R.string.not_get_user_id, Toast.LENGTH_SHORT).show();
-            isOnDatabase = false;
-        }
+    private void setFragmentLayout(Fragment fragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.frameLayout, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
+
+    private void checkIfOnDatabase(@NonNull String userID) {
+        DocumentReference exist = firebaseFirestore.collection(USER)
+                .document(userID).collection(FAVORITES).document(query);
+        exist.get().addOnCompleteListener(task -> {
+            binding.favoriteButton.setEnabled(true);
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                isOnDatabase = false;
+                if (document != null) isOnDatabase = document.exists();
+                changeColor();
+            } else {
+                isOnDatabase = false;
+            }
+        });
 
     }
 
     private void favoriteRoutines() {
         if (auth.getUid() == null) return;
-        DocumentReference reference = firestore.collection("Users").document(auth.getUid()).collection("Favorites").document(query);
+        DocumentReference reference = firebaseFirestore.collection(USER)
+                .document(auth.getUid()).collection(FAVORITES).document(query);
         if (isOnDatabase) {
             reference.delete()
                     .addOnSuccessListener(aVoid -> {
@@ -207,17 +240,11 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         binding.favoriteButton.setColorFilter(getResources().getColor((isOnDatabase) ? R.color.favorite_color : R.color.black, getResources().newTheme()));
     }
 
-    private void setFragmentLayout(Fragment fragment) {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.frameLayout, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
+        /*Since I create so many objects I prefer to call the garbage
+        collector to delete the ones that are no longer useful*/
         System.gc();
     }
 }

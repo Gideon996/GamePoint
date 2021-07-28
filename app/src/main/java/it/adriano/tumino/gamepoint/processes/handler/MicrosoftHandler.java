@@ -12,23 +12,34 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
+import it.adriano.tumino.gamepoint.processes.ProcessUtils;
 import it.adriano.tumino.gamepoint.processes.catchgame.CatchMicrosoftGame;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class MicrosoftHandler {
     private static final String TAG = "MicrosoftHandler";
 
+    //en-us
+    private final static String MICROSOFT_URL = "https://www.microsoft.com/en-us/search/shop/games?q=";
+
+    public static String generateMicrosoftUrl(String title) {
+        String url = MICROSOFT_URL;
+        if (Locale.getDefault().getLanguage().equals("it")) url = url.replace("en-us", "it-it");
+        return url + title;
+    }
+
     public static List<BasicGameInformation> microsoftGames(@NonNull String title) {
         title = title.toLowerCase();
         List<BasicGameInformation> result = new ArrayList<>();
-        String titleEncoded = HandlerUtils.encodedTitle(title);
+        String titleEncoded = ProcessUtils.encodedTitle(title);
         if (titleEncoded.isEmpty()) return result;
 
-        Document document = Utils.getDocumentFromUrl(HandlerUtils.generateMicrosoftUrl(titleEncoded));
+        Document document = Utils.getDocumentFromUrl(generateMicrosoftUrl(titleEncoded));
         if (document == null) {
             Log.i(TAG, "No document");
             return result;
@@ -49,7 +60,7 @@ public class MicrosoftHandler {
             Element titlediv = gameUrlElement.getElementsByClass("c-subheading-6").first();
             String titleGame = titlediv.text();
 
-            if (HandlerUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
+            if (ProcessUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
                 String gameID;
                 try {
                     gameID = new JSONObject(gameUrlElement.attributes().get("data-m")).getString("pid");
@@ -73,6 +84,7 @@ public class MicrosoftHandler {
 
     /*Method to catch Microsoft's game*/
     public static void catchGame(String url, AsyncResponse<StoreGame> delegate) {
+        if (Locale.getDefault().getLanguage().equals("it")) url = url.replace("en-us", "it-it");
         CatchMicrosoftGame catchMicrosoftGame = new CatchMicrosoftGame(url);
         catchMicrosoftGame.delegate = delegate;
         catchMicrosoftGame.execute();

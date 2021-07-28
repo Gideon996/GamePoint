@@ -4,14 +4,14 @@ import android.os.Parcel;
 
 import java.util.Objects;
 
-public class BasicGameInformation extends Game{
+public class BasicGameInformation extends Game {
 
     private String url;
     private String appID;
     private String platforms;
     private String store;
 
-    public BasicGameInformation(){
+    public BasicGameInformation() {
     }
 
     public BasicGameInformation(String title, String imageURL, String url, String appID, String platforms, String store, String price) {
@@ -85,5 +85,11 @@ public class BasicGameInformation extends Game{
     @Override
     public int hashCode() {
         return Objects.hash(url, appID, platforms, store);
+    }
+
+    //If the url or game ID is not present then we cannot fetch the information,
+    //so I consider the object as an empty object
+    public boolean isEmpty() {
+        return (url == null || getUrl().isEmpty()) && (appID == null || getAppID().isEmpty());
     }
 }

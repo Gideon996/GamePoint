@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:gravity="center_vertical"
-            android:padding="@dimen/news_dialog_padding"
+            android:padding="@dimen/ten_value"
             android:text="@string/open"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/silver" />
@@ -72,7 +72,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:gravity="center_vertical"
-            android:padding="@dimen/news_dialog_padding"
+            android:padding="@dimen/ten_value"
             android:text="@string/copy_link"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/silver" />
@@ -110,7 +110,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:gravity="center_vertical"
-            android:padding="@dimen/news_dialog_padding"
+            android:padding="@dimen/ten_value"
             android:text="@string/share"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/silver" />

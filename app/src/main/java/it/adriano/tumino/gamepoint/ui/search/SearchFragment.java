@@ -79,8 +79,6 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
             binding.latestResearchGamesLayout.setVisibility(View.GONE);
             binding.gameSearchResultsLayout.setVisibility(View.VISIBLE);
 
-            binding.searchGameEditText.setText(viewModel.getTitle());
-
             setUpResearchView(viewModel.getSearchedList());
         } else {
             binding.searchedGamesShimmerLayout.setVisibility(View.GONE);
@@ -91,7 +89,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
     }
 
     private void setUpLastSearch() {
-        ArrayList<BasicGameInformation> list = dbManager.getAllElements();
+        ArrayList<BasicGameInformation> list = dbManager.getAllGames();
         LastSearchedGamesAdapter lastSearchedGamesAdapter = new LastSearchedGamesAdapter(list);
         binding.latestResearchGameRecyclerView.setHasFixedSize(true);
         binding.latestResearchGameRecyclerView.setAdapter(lastSearchedGamesAdapter);
@@ -128,7 +126,6 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
     private void catchInformation(String name) {
         binding.searchedGamesShimmerLayout.setVisibility(View.VISIBLE);
         binding.searchedGamesShimmerLayout.startShimmer();
-        viewModel.setTitle(name);
         SearchGames searchGames = new SearchGames(name, getContext());
         searchGames.delegate = this;
         searchGames.execute();

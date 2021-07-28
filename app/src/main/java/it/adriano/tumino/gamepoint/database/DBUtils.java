@@ -12,24 +12,10 @@ public class DBUtils {
     public static final String APPID = "AppID";
     public static final String PRICE = "Price";
 
-    public static final String FAVORITE_TABLE_TITLE = "FavoriteTable";
     public static final String LAST_RESEARCH_TABLE_TITLE = "UltimeRicercheTable";
 
     private static final String SELECT_FROM = "SELECT  * FROM %s";
     private static final String SELECT_FROM_NAME_AND_STORE = " where %s = '%s' AND %s = '%s'";
-
-    public static String generateFavoriteTable() {
-        String query = "";
-        query += "CREATE TABLE " + FAVORITE_TABLE_TITLE;
-        query += " ( " + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,";
-        query += TITLE + " " + "TEXT" + ",";
-        query += IMAGE_URL + " " + "TEXT" + ",";
-        query += STORE + " " + "TEXT" + ",";
-        query += APPID + " " + "TEXT" + ",";
-        query += PRICE + " " + "TEXT" + ",";
-        query += URL + " " + "TEXT" + ")";
-        return query;
-    }
 
     public static String generateLastResearcTable() {
         String query = "";

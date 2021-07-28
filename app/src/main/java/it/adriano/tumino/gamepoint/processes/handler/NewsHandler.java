@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import it.adriano.tumino.gamepoint.data.News;
+import it.adriano.tumino.gamepoint.processes.ProcessUtils;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class NewsHandler {
@@ -39,7 +40,7 @@ public class NewsHandler {
                         String imageUrl = tagA.select("img.optional-image").first().attributes().get("data-pin-media");
                         String title = tagA.select("h3.article-name").text();
                         String body = tagA.select("p.synopsis").text();
-                        String date = HandlerUtils.normalizePCGamerDate(tagA.select("time.published-date").first().attributes().get("data-published-date"));
+                        String date = ProcessUtils.normalizePCGamerDate(tagA.select("time.published-date").first().attributes().get("data-published-date"));
 
                         News news1 = new News(title, body, imageUrl, date, newsUrl, "PcGamer.com");
                         list.add(news1);
@@ -96,7 +97,7 @@ public class NewsHandler {
             if (!date.matches("([0-9]{2})\\\\([0-9]{2})\\\\([0-9]{4})")) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
                 String[] string = sdf.format(Calendar.getInstance().getTime()).split("/");
-                date = string[0] + " " + HandlerUtils.fromNumberToName(string[1]) + " 20" + string[string.length - 1];
+                date = string[0] + " " + ProcessUtils.fromNumberToName(string[1]) + " 20" + string[string.length - 1];
             }
             if (!body.isEmpty()) {
                 News gameNews = new News(title, body, imageURL, date, newsUrl, "multiplayer.it");

@@ -10,11 +10,16 @@ public class GameResultViewModel extends ViewModel {
     private MutableLiveData<Integer> currentFragment;
     private MutableLiveData<StoreGame> result;
     private MutableLiveData<Boolean> hasResult;
+    private MutableLiveData<Boolean> isEmpty;
 
     public GameResultViewModel() {
         currentFragment = new MutableLiveData<>();
         result = new MutableLiveData<>();
         hasResult = new MutableLiveData<>();
+        isEmpty = new MutableLiveData<>();
+
+        hasResult.setValue(false);
+        isEmpty.setValue(false);
         currentFragment.setValue(0);
     }
 
@@ -37,5 +42,12 @@ public class GameResultViewModel extends ViewModel {
             hasResult = new MutableLiveData<>();
         }
         return hasResult;
+    }
+
+    public MutableLiveData<Boolean> getIsEmpty() {
+        if (isEmpty == null) {
+            isEmpty = new MutableLiveData<>();
+        }
+        return isEmpty;
     }
 }

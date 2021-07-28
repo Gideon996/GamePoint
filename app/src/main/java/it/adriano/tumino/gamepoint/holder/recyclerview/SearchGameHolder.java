@@ -27,13 +27,14 @@ public class SearchGameHolder extends RecyclerView.ViewHolder {
         binding.searchedGameLayout.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             Bundle bundle = new Bundle();
+            bundle.putString("title", basicGameInformation.getTitle());
             bundle.putParcelable("game", basicGameInformation);
 
             Navigation.findNavController(binding.getRoot()).navigate(R.id.navigate_to_searched, bundle);
 
             DBManager dbManager = new DBManager(binding.getRoot().getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
-            if (!dbManager.checkIfElementsIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore())) {
-                dbManager.save(basicGameInformation);
+            if (!dbManager.checkIfGameIsOnDataBase(basicGameInformation.getTitle(), basicGameInformation.getStore())) {
+                dbManager.saveGame(basicGameInformation);
             }
         });
     }

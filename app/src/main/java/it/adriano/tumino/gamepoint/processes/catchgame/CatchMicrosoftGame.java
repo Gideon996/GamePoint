@@ -1,7 +1,5 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
-import android.util.Log;
-
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,7 +30,6 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
     @Override
     public MicrosoftStoreGame scrapping(@NotNull Document document) {
-        Log.e("TEST", "Inizio Scrapping");
         MicrosoftStoreGame game = new MicrosoftStoreGame();
 
         Elements body = document.select("#pdp");
@@ -52,8 +49,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
         Elements productPrice = body.select("#productPrice");
         String price = productPrice.select("span").get(0).text();
-        game.setPrice(price);
-        Log.e("TEST", "Mostro il prezzo " + price);
+        game.setPrice(price.substring(1));
 
         Elements overviewTab = body.select("#pivot-OverviewTab"); //contiene la descrizione
         Elements available = overviewTab.select("#AvailableOnModule");

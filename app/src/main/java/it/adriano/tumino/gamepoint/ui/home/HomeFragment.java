@@ -140,6 +140,8 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
         binding.favoriteShimmerLayout.stopShimmer();
         binding.favoriteShimmerLayout.setVisibility(View.GONE);
         if (list.size() != 0) {
+            binding.favoriteGamesList.setVisibility(View.VISIBLE);
+            binding.favoriteTitle.setVisibility(View.VISIBLE);
             FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(list);
             binding.favoriteGamesList.setAdapter(favoriteGamesAdapter);
         } else {

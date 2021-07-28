@@ -21,7 +21,6 @@ import it.adriano.tumino.gamepoint.processes.handler.NewsHandler;
 public class SearchNews extends TaskRunner<Integer, List<News>> {
     public static final String TAG = "CatchNews";
 
-
     public AsyncResponse<List<News>> delegate;
 
     public SearchNews(AsyncResponse<List<News>> delegate) {
