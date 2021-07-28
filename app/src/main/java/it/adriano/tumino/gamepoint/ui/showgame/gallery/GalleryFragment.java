@@ -13,7 +13,6 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.GalleryAdapter;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 
-
 public class GalleryFragment extends Fragment {
     private StoreGame storeGame;
 
@@ -34,7 +33,6 @@ public class GalleryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.galleryListView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(new GalleryAdapter(getContext(), storeGame.getScreenshotsUrl()));
         return view;
     }

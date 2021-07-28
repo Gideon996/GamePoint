@@ -6,7 +6,7 @@ import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -61,7 +61,7 @@ public class GalleryDialog extends DialogFragment {
             }
         });
 
-        Button closeButton = view.findViewById(R.id.chiudiBottone);
+        ImageButton closeButton = view.findViewById(R.id.closeGalleryDialog);
         closeButton.setOnClickListener(k -> Objects.requireNonNull(getDialog()).dismiss());
 
         return builder.create();

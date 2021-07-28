@@ -27,6 +27,15 @@ public class BindingUtils {
         }
     }
 
+    @BindingAdapter("showScreenshotFromUrl")
+    public static void showScreenshotFromUrl(ImageView view, String url){
+        if (url != null && !url.isEmpty()) {
+            Picasso.get().load(url)
+                    .placeholder(new ColorDrawable(Color.CYAN))
+                    .into(view);
+        }
+    }
+
     @BindingAdapter("storeImage")
     public static void storeImage(ImageView view, String store) {
         if (store != null && !store.isEmpty()) {

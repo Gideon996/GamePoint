@@ -1,17 +1,18 @@
 package it.adriano.tumino.gamepoint.adapter.vievpager;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
+import it.adriano.tumino.gamepoint.databinding.ScreenshotLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.viewpager.ImageGalleryHolder;
 
 public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder> {
@@ -24,15 +25,15 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder
 
     @NonNull
     @Override
-    public ImageGalleryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.screenshot_layout, parent, false);
-        return new ImageGalleryHolder(view);
+    public ImageGalleryHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+        ScreenshotLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.screenshot_layout, parent, false);
+        return new ImageGalleryHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ImageGalleryHolder holder, int position) {
-        String image = list.get(position);
-        Picasso.get().load(image).into(holder.imageView);
+        String url = list.get(position);
+        holder.bind(url);
     }
 
     @Override
