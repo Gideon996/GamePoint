@@ -39,7 +39,8 @@
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHint="@color/silver" />
+                android:textColorHint="@color/silver"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,6 +51,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColorHint="@color/silver"
+            android:visibility="visible"
             app:boxStrokeErrorColor="@color/red"
             app:errorEnabled="true"
             app:errorIconTint="@color/red"
@@ -70,7 +72,8 @@
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/silver" />
+                android:textColorHint="@color/silver"
+                tools:ignore="SpeakableTextPresentCheck" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,7 +86,7 @@
             android:layout_margin="@dimen/layout_margin"
             android:backgroundTint="@color/dark_cyan"
             android:text="@string/login"
-            android:textColor="@color/white" />
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/goToSignUp"
@@ -93,6 +96,19 @@
             android:text="@string/registration"
             android:textColor="@color/white"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/forgotPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/twenty_five_dp_value"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/forgot_password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/white"
+            android:textStyle="italic" />
 
     </LinearLayout>
 </layout>

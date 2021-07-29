@@ -8,19 +8,27 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="it.adriano.tumino.gamepoint.ui.authentication.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:label="GamePoint: Login"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/sign_up_action"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/reset_password_action"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="it.adriano.tumino.gamepoint.ui.authentication.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        android:label="GamePoint: Register"
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/sign_in_action"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="it.adriano.tumino.gamepoint.ui.authentication.ResetPasswordFragment"
+        android:label="Reset Your Password"
+        tools:layout="@layout/fragment_reset_password" />
 </navigation>

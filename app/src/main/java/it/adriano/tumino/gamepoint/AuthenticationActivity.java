@@ -2,6 +2,10 @@ package it.adriano.tumino.gamepoint;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +22,8 @@ import java.util.Objects;
 
 public class AuthenticationActivity extends AppCompatActivity {
     private static final String TAG = "AuthenticationActivity";
+
+    private NavController navController;
 
     private static final boolean EMULATOR = true;
     private AuthenticationSharedViewModel viewModel;
@@ -41,6 +47,12 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authentication);
         viewModel = new ViewModelProvider(this).get(AuthenticationSharedViewModel.class);
 
+        navController = Navigation.findNavController(this, R.id.nav_host_authentication);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.loginFragment, R.id.registerFragment)
+                .build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         Log.i(TAG, "Check if the user has already logged in before");
@@ -58,8 +70,17 @@ public class AuthenticationActivity extends AppCompatActivity {
                 }
             });
         }
+
+
         viewModel.setIsAuthenticate(false);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        navController.navigateUp();
+        return super.onSupportNavigateUp();
+    }
+
 
     private void successfulLogin(FirebaseUser user) {
         Log.i(TAG, "MainActivity Start");

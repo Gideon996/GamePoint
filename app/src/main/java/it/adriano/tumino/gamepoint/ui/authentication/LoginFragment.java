@@ -47,6 +47,8 @@ public class LoginFragment extends Fragment {
 
         binding.goToSignUp.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.sign_up_action));
 
+        binding.forgotPassword.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.reset_password_action));
+
         return binding.getRoot();
     }
 
@@ -55,7 +57,7 @@ public class LoginFragment extends Fragment {
         super.onStart();
     }
 
-    TextWatcher emailTextWatcher = new TextWatcher() {
+    final TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             binding.emailLoginLayout.setError(null);
@@ -75,7 +77,7 @@ public class LoginFragment extends Fragment {
         }
     };
 
-    TextWatcher passwordTextWatcher = new TextWatcher() {
+    final TextWatcher passwordTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             binding.passwordLoginLayout.setError(null);
@@ -95,7 +97,7 @@ public class LoginFragment extends Fragment {
         }
     };
 
-    View.OnClickListener loginListener = v -> {
+    final View.OnClickListener loginListener = v -> {
         if (correctEmail && correctPassword) {
             final String email = binding.loginEmail.getText().toString();
             final String password = binding.loginPassword.getText().toString();
@@ -111,5 +113,4 @@ public class LoginFragment extends Fragment {
             });
         }
     };
-
 }
