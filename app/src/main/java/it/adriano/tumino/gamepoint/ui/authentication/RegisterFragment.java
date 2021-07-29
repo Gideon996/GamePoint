@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -90,6 +92,14 @@ public class RegisterFragment extends Fragment {
 
                                     DatabaseReference userInDB = FirebaseDatabase.getInstance().getReference();
                                     userInDB.child("users").child(userId).setValue(otherInformation);
+
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(name + " " + surname)
+                                            .build();
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    assert user != null;
+                                    user.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(task1 -> Log.i(TAG, "update display Name"));
                                     Log.i(TAG, getString(R.string.update_information));
 
                                     Intent intent = new Intent(requireActivity(), MainActivity.class);

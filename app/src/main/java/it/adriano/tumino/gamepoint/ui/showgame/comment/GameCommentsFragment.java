@@ -4,15 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -28,12 +25,10 @@ import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 import it.adriano.tumino.gamepoint.databinding.FragmentGameCommentsBinding;
 
 public class GameCommentsFragment extends Fragment {
-
-    private LinearLayout linearLayout;
-    private RecyclerView recyclerView;
+    private FirebaseFirestore firebaseFirestore;
+    private FragmentGameCommentsBinding binding;
 
     private StoreGame storeGameSearchResult;
-    FloatingActionButton button;
 
     public GameCommentsFragment() {
     }
@@ -50,25 +45,24 @@ public class GameCommentsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentGameCommentsBinding binding = FragmentGameCommentsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        binding = FragmentGameCommentsBinding.inflate(inflater, container, false);
 
-        recyclerView = binding.commentsRecyclerView;
-        linearLayout = binding.noCommentsLinearLayout;
+        firebaseFirestore = FirebaseFirestore.getInstance();
         onSnapshotComments(storeGameSearchResult.getTitle(), storeGameSearchResult.getStore());
 
-        button = binding.addingCommentButton;
+        binding.addingCommentButton.setOnClickListener(v -> {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            AddCommentDialog addCommentDialog = new AddCommentDialog(storeGameSearchResult, auth.getCurrentUser());
+            addCommentDialog.show(getChildFragmentManager(), "Add Comment");
+        });
 
-
-        return root;
+        return binding.getRoot();
     }
 
     private void onSnapshotComments(String gameTitle, String store) {
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
         String title = gameTitle.replaceAll("\\s+", "");
 
-        firestore.collection("Games")
+        firebaseFirestore.collection("Games")
                 .document(title + store)
                 .collection("Comments").addSnapshotListener((value, e) -> {
             if (e != null) {
@@ -89,20 +83,11 @@ public class GameCommentsFragment extends Fragment {
 
     private void visualizeAllComments(List<Comment> list) {
         if (list.size() != 0) {
-            linearLayout.setVisibility(View.GONE);
+            binding.noCommentsLinearLayout.setVisibility(View.GONE);
+            CommentsAdapter commentsAdapter = new CommentsAdapter(list);
+            binding.commentsRecyclerView.setHasFixedSize(true);
+            binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.commentsRecyclerView.setAdapter(commentsAdapter);
         }
-
-        CommentsAdapter commentsAdapter = new CommentsAdapter(list);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(commentsAdapter);
-
-        button.setOnClickListener(v -> {
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            AddCommentDialog addCommentDialog = new AddCommentDialog(storeGameSearchResult, auth.getCurrentUser());
-            addCommentDialog.show(getChildFragmentManager(), "Add Comment");
-        });
     }
-
-
 }

@@ -25,7 +25,7 @@ public class SteamHandler {
     private static final String STEAM_SEARCH_URL = "https://store.steampowered.com/search/?term=";
     private static final String STEAM_OFFERS_URL = "https://store.steampowered.com/search/?filter=topsellers&specials=1";
 
-    public static String generateSteamUrl(String title){
+    public static String generateSteamUrl(String title) {
         return STEAM_SEARCH_URL + title;
     }
 
@@ -55,6 +55,7 @@ public class SteamHandler {
             if (ProcessUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) { //I only take games with the correct titles
                 String gameID = link.attributes().get("data-ds-appid");
                 if (gameID == null || gameID.isEmpty()) continue;
+                gameID = gameID.split(",")[0];
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
                 String platforms = getPlatform(link.getElementsByClass("platform_img"));
                 String price = link.getElementsByClass("search_price").get(0).text();
@@ -89,6 +90,7 @@ public class SteamHandler {
             if (link.attributes().hasKey("data-ds-appid")) {
                 String gameID = link.attributes().get("data-ds-appid");
                 if (gameID == null || gameID.isEmpty()) continue;
+                gameID = gameID.split(",")[0];
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
 
                 String platforms = getPlatform(link.getElementsByClass("platform_img"));

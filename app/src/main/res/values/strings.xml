@@ -84,7 +84,7 @@
     <string name="login_success">Login successful</string>
     <string name="name">NAME</string>
     <string name="surname">SURNAME</string>
-    <string name="sign_in">Do you already have an account? SignIn</string>
+    <string name="sign_in">Do you already have an account? SIGN IN</string>
     <string name="create_user">Create User</string>
     <string name="user_created">User created</string>
     <string name="update_information">Update user information</string>
@@ -119,4 +119,7 @@
     <string name="n_a">n.a.</string>
     <string name="video_trailer_description">Thumbnail video trailer</string>
     <string name="close_gallery_button">Close gallery button</string>
+    <string name="comment_added">Comment added</string>
+    <string name="error_comment">Error: Please try again in a few seconds</string>
+    <string name="add_description">Add Description</string>
 </resources>

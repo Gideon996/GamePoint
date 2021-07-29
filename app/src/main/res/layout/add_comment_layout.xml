@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="@dimen/ten_value">
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -13,15 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:foregroundGravity="center"
-        android:numStars="5" />
+        android:numStars="5"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/commentDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
+        android:layout_margin="@dimen/twenty_five_dp_value"
         android:ems="10"
-        android:hint="Add Description"
+        android:hint="@string/add_description"
+        android:importantForAutofill="no"
         android:includeFontPadding="false"
         android:inputType="textMultiLine"
         android:lines="3"

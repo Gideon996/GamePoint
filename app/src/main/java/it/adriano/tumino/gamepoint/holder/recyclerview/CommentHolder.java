@@ -14,7 +14,7 @@ public class CommentHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Object obj) {
-        binding.setVariable(BR.comment, obj); //nome della variabile da usare
+        binding.setVariable(BR.comment, obj);
         binding.executePendingBindings();
     }
 }

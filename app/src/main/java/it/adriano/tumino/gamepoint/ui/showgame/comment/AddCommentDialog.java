@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -85,12 +86,12 @@ public class AddCommentDialog extends DialogFragment {
     }
 
     private void saveComment(Comment comment, View view) {
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         String title = storeGame.getTitle().replaceAll("\\s+", "");
-        firestore.collection("Games").document(title + storeGame.getStore())
+        firebaseFirestore.collection("Games").document(title + storeGame.getStore())
                 .collection("Comments").document()
                 .set(comment)
-                .addOnSuccessListener(aVoid -> Toast.makeText(view.getContext(), "Commento Aggiunto correttamente", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(exception -> Toast.makeText(view.getContext(), "Errore: Riprovare fra qualche secondo", Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(aVoid -> Toast.makeText(view.getContext(), R.string.comment_added, Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(exception -> Toast.makeText(view.getContext(), R.string.error_comment, Toast.LENGTH_SHORT).show());
     }
 }

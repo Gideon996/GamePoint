@@ -16,8 +16,6 @@ import it.adriano.tumino.gamepoint.databinding.CommentLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.CommentHolder;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentHolder> {
-    private static final String TAG = "CommentsAdapter";
-
     private final List<Comment> comments;
 
     public CommentsAdapter(List<Comment> comments) {
