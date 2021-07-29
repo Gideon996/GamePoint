@@ -30,10 +30,10 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profileImage"
+                    profileImage="@{profile.uid}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:shapeAppearanceOverlay="@style/Circular"
-                    profileImage="@{profile.uid}"/>
+                    app:shapeAppearanceOverlay="@style/Circular" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/changeProfileImageButton"
@@ -84,101 +84,87 @@
             android:background="@color/gray" />
 
         <LinearLayout
-            android:id="@+id/impostazioniBottone"
+            android:id="@+id/changeShopsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/padding_layout">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0.5"
-                android:src="@drawable/icon_setting" />
+                android:src="@drawable/icon_setting"
+                app:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="IMPOSTAZIONI" />
+                android:text="Change Shops" />
         </LinearLayout>
 
         <View
             android:layout_width="300dp"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/changePasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/padding_layout">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0.5"
-                android:src="@drawable/fui_ic_apple_white_24dp" />
+                app:srcCompat="@drawable/icon_password" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
-                android:text="INFORMAZIONI" />
+                android:gravity="center_vertical"
+                android:text="Change Password" />
         </LinearLayout>
 
         <View
             android:layout_width="300dp"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/changeDisplayNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0.5"
-                android:src="@drawable/fui_ic_mail_white_24dp" />
+                app:srcCompat="@drawable/icon_name" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="I TUOI COMMENTI" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
-                android:text="Invita gli amici" />
+                android:gravity="center_vertical"
+                android:text="Change Display Name" />
         </LinearLayout>
 
     </LinearLayout>

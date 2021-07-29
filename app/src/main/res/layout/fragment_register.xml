@@ -24,7 +24,8 @@
             app:errorEnabled="true"
             app:errorIconTint="@color/red"
             app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:errorTextColor="@color/red">
+            app:errorTextColor="@color/red"
+            app:endIconMode="clear_text">
 
             <EditText
                 android:id="@+id/emailRegister"
@@ -83,7 +84,8 @@
             app:errorEnabled="true"
             app:errorIconTint="@color/red"
             app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:errorTextColor="@color/red">
+            app:errorTextColor="@color/red"
+            app:endIconMode="clear_text">
 
             <EditText
                 android:id="@+id/nameRegister"
@@ -112,7 +114,8 @@
             app:errorEnabled="true"
             app:errorIconTint="@color/red"
             app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:errorTextColor="@color/red">
+            app:errorTextColor="@color/red"
+            app:endIconMode="clear_text">
 
             <EditText
                 android:id="@+id/surnameRegister"

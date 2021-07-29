@@ -131,4 +131,12 @@
     <string name="your_email">YOUR EMAIL</string>
     <string name="fail_reset_password">Fail to send reset password email!</string>
     <string name="successful_reset_password">Check email to reset your password!</string>
+    <string name="settings">SETTINGS</string>
+    <string name="information">INFORMATION</string>
+    <string name="change">CHANGE</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="email_upper_cammel_case">Email</string>
+    <string name="password_changed">Password Changed</string>
+    <string name="error_change_password">Error to change password</string>
 </resources>

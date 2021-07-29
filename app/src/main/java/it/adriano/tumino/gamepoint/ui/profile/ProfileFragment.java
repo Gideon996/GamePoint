@@ -2,7 +2,6 @@ package it.adriano.tumino.gamepoint.ui.profile;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,8 +35,6 @@ import it.adriano.tumino.gamepoint.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
-
-    private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
     private Button logout;
     private StorageReference storageReference;
@@ -56,8 +53,6 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -76,16 +71,10 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        logout.setOnClickListener(v -> AuthUI.getInstance()
-                .signOut(view.getContext())
-                .addOnCompleteListener(task -> {
-                    Log.i(TAG, "User Log out");
-                    Toast.makeText(view.getContext(), "User Signed Out", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(view.getContext(), AuthenticationActivity.class);
-                    startActivity(i);
-                }));
+        logout.setOnClickListener(logOut);
 
-        binding.impostazioniBottone.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_settings));
+        binding.changeShopsLayout.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_change_shops));
+        binding.changePasswordLayout.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.navigate_to_change_password));
 
         binding.changeProfileImageButton.setOnClickListener(v -> changeProfileImage());
     }
@@ -102,4 +91,14 @@ public class ProfileFragment extends Fragment {
                         .addOnSuccessListener(uri -> Picasso.get().load(uri).fit().into(binding.profileImage)))
                 .addOnFailureListener(e -> Toast.makeText(requireActivity().getApplicationContext(), "Failed.", Toast.LENGTH_SHORT).show());
     }
+
+    final View.OnClickListener logOut = v -> AuthUI.getInstance()
+            .signOut(v.getContext())
+            .addOnCompleteListener(task -> {
+                Log.i(TAG, "User Log out");
+                Toast.makeText(v.getContext(), "User Signed Out", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(v.getContext(), AuthenticationActivity.class);
+                startActivity(i);
+            });
+
 }

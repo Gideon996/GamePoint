@@ -27,8 +27,11 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <action
-            android:id="@+id/navigate_to_settings"
+            android:id="@+id/navigate_to_change_shops"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/navigate_to_change_password"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
 
     <fragment
@@ -63,5 +66,10 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="it.adriano.tumino.gamepoint.ui.profile.SettingsFragment"
-        android:label="Settings" />
+        android:label="Change Shop" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="it.adriano.tumino.gamepoint.ui.profile.ChangePasswordFragment"
+        android:label="Change Password"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>
