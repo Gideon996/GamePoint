@@ -20,7 +20,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.FavoriteGamesAdapter;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.OffersAdapter;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;

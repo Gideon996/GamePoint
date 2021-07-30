@@ -1,6 +1,7 @@
 package it.adriano.tumino.gamepoint.ui.news;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -32,26 +34,23 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
 
         binding.newsShimmerLayout.startShimmer();
 
-        binding.refreshNewsLayout.setOnRefreshListener(() -> {
-            binding.newsShimmerLayout.setVisibility(View.VISIBLE);
-            binding.newsShimmerLayout.startShimmer();
-            binding.newsRecyclerView.setVisibility(View.GONE);
-            searchNews();
-            binding.refreshNewsLayout.setRefreshing(false);
-        });
+        binding.refreshNewsLayout.setOnRefreshListener(updateNews);
 
         return binding.getRoot();
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
         if (viewModel.getHasNews()) {
+            Log.i(TAG, "Restore saved news");
             setRecyclerValue(viewModel.getNewsList());
             binding.newsShimmerLayout.stopShimmer();
             binding.newsShimmerLayout.setVisibility(View.GONE);
             binding.newsRecyclerView.setVisibility(View.VISIBLE);
         } else {
+            Log.i(TAG, "Starting search news");
             searchNews();
         }
     }
@@ -76,6 +75,7 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
 
     @Override
     public void processFinish(List<News> newsList) {
+        Log.i(TAG, "shows news obtained");
         setRecyclerValue(newsList);
         viewModel.setNewsList(newsList);
         viewModel.setHasNews(true);
@@ -83,4 +83,13 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
         binding.newsShimmerLayout.setVisibility(View.GONE);
         binding.newsRecyclerView.setVisibility(View.VISIBLE);
     }
+
+    final SwipeRefreshLayout.OnRefreshListener updateNews = () -> {
+        Log.i(TAG, "Starting refresh news");
+        binding.newsShimmerLayout.setVisibility(View.VISIBLE);
+        binding.newsShimmerLayout.startShimmer();
+        binding.newsRecyclerView.setVisibility(View.GONE);
+        searchNews();
+        binding.refreshNewsLayout.setRefreshing(false);
+    };
 }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.utils.Utils;
 
 public class NewsDialog extends DialogFragment {
+    private final static String TAG = "NewsDialog";
 
     private final News news;
 
@@ -42,11 +44,13 @@ public class NewsDialog extends DialogFragment {
         LinearLayout shareNews = view.findViewById(R.id.shareNewsLayout);
 
         openNews.setOnClickListener(v -> {
+            Log.i(TAG, "Start Action View Intent");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(news.getNewsUrl()));
             requireContext().startActivity(intent);
         });
 
         copyLink.setOnClickListener(v -> {
+            Log.i(TAG, "Copy on clipboard");
             ClipboardManager clipboard = (ClipboardManager) requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("News Url", news.getNewsUrl());
             clipboard.setPrimaryClip(clip);
@@ -55,6 +59,7 @@ public class NewsDialog extends DialogFragment {
         });
 
         shareNews.setOnClickListener(v -> {
+            Log.i(TAG, "Share the content");
             Utils.shareContent(getContext(), news.getImageURL(), news.getTitle() + ": " + news.getNewsUrl());
             Objects.requireNonNull(getDialog()).dismiss();
         });
