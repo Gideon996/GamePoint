@@ -7,7 +7,7 @@
             android:entries="@array/store_entries"
             android:entryValues="@array/store_values"
             android:key="shopSelection"
-            android:title="Lista dei possibili shop" />
+            android:title="@string/shop_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

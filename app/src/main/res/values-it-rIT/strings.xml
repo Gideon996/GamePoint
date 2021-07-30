@@ -121,4 +121,6 @@
     <string name="correct_change_nickname">NickName cambiato con successo</string>
     <string name="error_change_nickname">Impossibile cambiare il nickname, riprova più tardi</string>
     <string name="change_nickname_description">Il nickname che scegli sarà visibile agli altri utenti. Per impostazione predefinita, il tuo nickname è composto dal tuo nome e cognome</string>
+    <string name="app_icon">Icona dell\'applicazione</string>
+    <string name="shop_title">Lista degli shop che possono essere utilizzati</string>
 </resources>
