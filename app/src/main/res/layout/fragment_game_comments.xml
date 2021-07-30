@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:foregroundGravity="center"
                 android:gravity="center"
-                android:text="@string/nessun_commento"
+                android:text="@string/no_comment"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
                 android:textStyle="bold"

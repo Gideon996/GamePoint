@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/ultime_ricerche_text"
+                android:text="@string/latest_research_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -140,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/risultati_ricerca_text"
+                android:text="@string/search_results_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <androidx.recyclerview.widget.RecyclerView

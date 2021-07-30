@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten_value"
-                android:text="@string/nessun_elemento"
+                android:text="@string/no_elements"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/silver" />
 
@@ -190,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/requisiti"
+            android:text="@string/requirements"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textStyle="italic" />
@@ -272,7 +272,7 @@
             android:layout_margin="@dimen/ten_value"
             android:layout_marginBottom="@dimen/fifteen_padding"
             android:gravity="center"
-            android:text="@string/caratteristiche_per_console_title"
+            android:text="@string/features_for_console_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textStyle="bold" />
@@ -448,7 +448,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/console_supportate_title"
+            android:text="@string/console_supported_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textStyle="italic" />
@@ -535,7 +535,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/requisiti"
+            android:text="@string/requirements"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
             android:textStyle="italic" />

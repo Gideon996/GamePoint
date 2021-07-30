@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,13 +53,7 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
 
         if (mAuth.getUid() != null) onSnapshotFavoritesGame(mAuth.getUid());
 
-        binding.refreshOffersList.setOnRefreshListener(() -> {
-            binding.offersShimmerLayout.setVisibility(View.VISIBLE);
-            binding.offersTitle.setVisibility(View.GONE);
-            binding.offersList.setVisibility(View.GONE);
-            startSearchOffers();
-            binding.refreshOffersList.setRefreshing(false);
-        });
+        binding.refreshOffersList.setOnRefreshListener(updateOffers);
 
         return binding.getRoot();
     }
@@ -67,13 +62,13 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
     public void onResume() {
         super.onResume();
         if (mainSharedViewModel.getHasOffers()) {
-            Log.i(TAG, getString(R.string.has_state_of_home_fragment));
+            Log.i(TAG, "List of saved offers, initialization of the list");
             setOffersList(mainSharedViewModel.getOffersList());
             binding.offersShimmerLayout.setVisibility(View.GONE);
             binding.offersTitle.setVisibility(View.VISIBLE);
             binding.offersList.setVisibility(View.VISIBLE);
         } else {
-            Log.i(TAG, getString(R.string.no_state_of_home_fragment));
+            Log.i(TAG, "No value saved, I start the search");
             binding.offersShimmerLayout.setVisibility(View.VISIBLE);
             binding.offersShimmerLayout.startShimmer();
             binding.offersTitle.setVisibility(View.GONE);
@@ -83,6 +78,7 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
     }
 
     public void startSearchOffers() {
+        Log.i(TAG, "Start search");
         SearchOffers searchOffers = new SearchOffers();
         searchOffers.delegate = this;
         searchOffers.execute();
@@ -96,10 +92,11 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
         binding.offersList.setVisibility(View.VISIBLE);
         if (result != null && result.size() > 0) {
             setOffersList(result);
-            Log.d(TAG, getString(R.string.save_state));
+            Log.i(TAG, "Save state of fragment");
             mainSharedViewModel.setHasOffers(true);
             mainSharedViewModel.setOffersList(result);
         } else {
+            Log.i(TAG, "No offers");
             binding.offersTitle.setVisibility(View.GONE);
             binding.offersList.setVisibility(View.GONE);
         }
@@ -119,7 +116,7 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
                     .collection("Favorites")
                     .addSnapshotListener((value, e) -> {
                         if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
+                            Log.e(TAG, "Listen failed.", e);
                             return;
                         }
 
@@ -130,7 +127,7 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
                                 comments.add(comment);
                             }
                         }
-
+                        Log.i(TAG, "I show the favorites obtained");
                         visualizeAllFavoriteGames(comments);
                     });
         }
@@ -145,10 +142,19 @@ public class HomeFragment extends Fragment implements AsyncResponse<List<GameOff
             FavoriteGamesAdapter favoriteGamesAdapter = new FavoriteGamesAdapter(list);
             binding.favoriteGamesList.setAdapter(favoriteGamesAdapter);
         } else {
+            Log.i(TAG, "No favorite game");
             binding.favoriteTitle.setVisibility(View.GONE);
             binding.favoriteGamesList.setVisibility(View.GONE);
         }
     }
+
+    final SwipeRefreshLayout.OnRefreshListener updateOffers = () -> {
+        binding.offersShimmerLayout.setVisibility(View.VISIBLE);
+        binding.offersTitle.setVisibility(View.GONE);
+        binding.offersList.setVisibility(View.GONE);
+        startSearchOffers();
+        binding.refreshOffersList.setRefreshing(false);
+    };
 
 
 }

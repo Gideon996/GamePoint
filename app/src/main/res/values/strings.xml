@@ -10,13 +10,13 @@
     <string name="favorite_game_text">Your favorites Games</string>
     <string name="developers">Developers</string>
     <string name="publisher">Publisher</string>
-    <string name="specifiche_windows">Windows specifications</string>
-    <string name="specifiche_mac">Mac specifications</string>
-    <string name="specifiche_linux">Linux specifications</string>
+    <string name="windows_specifications">Windows specifications</string>
+    <string name="mac_specifications">Mac specifications</string>
+    <string name="linux_specifications">Linux specifications</string>
     <string name="hint_search_edit_text">Search for the game</string>
     <string name="search_button_text">Search Button</string>
-    <string name="ultime_ricerche_text">Latest Searches</string>
-    <string name="risultati_ricerca_text">Search results:</string>
+    <string name="latest_research_text">Latest Searches</string>
+    <string name="search_results_text">Search results:</string>
     <string name="content_description_news">Image containing the thumbnail of the news: %s</string>
     <string name="content_description_screenshot">Image containing a screenshot of the game</string>
     <string name="content_description_shimmer_image">Image for the shimmer</string>
@@ -38,7 +38,7 @@
     <string name="no_games">No Item Found</string>
 
     <string name="description_store_icon">Image containing the %s store logo</string>
-    <string name="cancell_item">Cancell Item</string>
+    <string name="cancel_item">Cancell Item</string>
     <string name="content_description_image_header_result">Cover image by %s</string>
     <string name="favorite_content_description">button to save the game as a favorite</string>
     <string name="share_content_description">button to share the game</string>
@@ -58,15 +58,15 @@
     <string name="categories_title">Categories:</string>
     <string name="genres_title">Genres:</string>
     <string name="languages_title">Languages</string>
-    <string name="requisiti">Requirements</string>
-    <string name="nessun_elemento" translatable="false">N.A.</string>
+    <string name="requirements">Requirements</string>
+    <string name="no_elements" translatable="false">N.A.</string>
     <string name="content_description_pegi">Image containing the pegi of the game</string>
-    <string name="caratteristiche_per_console_title">Features for consoles</string>
+    <string name="features_for_console_title">Features for consoles</string>
     <string name="subgenres_title">SubGenres:</string>
     <string name="voice_title">Voice</string>
     <string name="subtitle_title">Subtitle</string>
-    <string name="console_supportate_title">Supported consoles</string>
-    <string name="nessun_commento">No Comment</string>
+    <string name="console_supported_title">Supported consoles</string>
+    <string name="no_comment">No Comment</string>
     <string name="comment_button_description">Button to add a new comment</string>
     <string name="button_to_change_image_description">Button for change profile image</string>
     <string name="log_out" translatable="false">Log Out</string>
@@ -96,9 +96,6 @@
     <string name="favorite_add">Game added to your favorites</string>
     <string name="error_add_favorite">Unable to bookmark the game, please try again in a few seconds</string>
     <string name="not_get_user_id">Unable to get user information</string>
-    <string name="no_state_of_home_fragment">No value saved, I start the search</string>
-    <string name="has_state_of_home_fragment">List of saved offers, initialization of the list</string>
-    <string name="save_state">Save state of fragment</string>
     <string name="loading">Loading…</string>
     <string name="copy_on_clipboard">URL copied to clipboard</string>
     <string name="open_icon_description">News opening icon</string>

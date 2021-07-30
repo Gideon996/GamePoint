@@ -88,7 +88,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/cancell_item"
+                android:contentDescription="@string/cancel_item"
                 app:srcCompat="@drawable/icon_close"
                 app:tint="@color/silver"
                 tools:ignore="TouchTargetSizeCheck" />
