@@ -9,12 +9,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.MainSharedViewModel;
+import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.SearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.adapter.recyclerview.LastSearchedGamesAdapter;
 import it.adriano.tumino.gamepoint.databinding.FragmentSearchGameBinding;
@@ -34,6 +37,8 @@ import it.adriano.tumino.gamepoint.database.DBManager;
 import it.adriano.tumino.gamepoint.database.DBUtils;
 
 public class SearchFragment extends Fragment implements AsyncResponse<List<BasicGameInformation>> {
+    private final static String TAG = "SearchFragment";
+
     private DBManager dbManager;
     private FragmentSearchGameBinding binding;
     private MainSharedViewModel viewModel;
@@ -57,16 +62,8 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
 
         binding.searchGameEditText.addTextChangedListener(gameTitleWatcher);
 
-        binding.searchGameEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                enterKey(binding.searchGameEditText.getText().toString());
-            }
-            return false;
-        });
-        binding.searchGameButton.setOnClickListener(v -> {
-            String text = binding.searchGameEditText.getText().toString();
-            enterKey(text);
-        });
+        binding.searchGameEditText.setOnEditorActionListener(searchKeyPressed);
+        binding.searchGameButton.setOnClickListener(searchGame);
 
         return binding.getRoot();
     }
@@ -75,12 +72,14 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
     public void onResume() {
         super.onResume();
         if (viewModel.getHasResearch()) {
+            Log.i(TAG, "Loading the previous state");
             binding.searchedGamesShimmerLayout.setVisibility(View.GONE);
             binding.latestResearchGamesLayout.setVisibility(View.GONE);
             binding.gameSearchResultsLayout.setVisibility(View.VISIBLE);
 
             setUpResearchView(viewModel.getSearchedList());
         } else {
+            Log.i(TAG, "SetUp new search layout");
             binding.searchedGamesShimmerLayout.setVisibility(View.GONE);
             binding.latestResearchGamesLayout.setVisibility(View.VISIBLE);
             binding.gameSearchResultsLayout.setVisibility(View.GONE);
@@ -106,8 +105,9 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
             binding.latestResearchGamesLayout.setVisibility(View.VISIBLE);
             binding.gameSearchResultsLayout.setVisibility(View.GONE);
             closeKeyboard();
-            Toast.makeText(getContext(), "Enter the title of the game you want to search...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.enter_title_to_search, Toast.LENGTH_SHORT).show();
         } else {
+            Log.i(TAG, "Start to search the game");
             binding.searchedGamesShimmerLayout.setVisibility(View.VISIBLE);
             binding.searchedGamesShimmerLayout.startShimmer();
             closeKeyboard();
@@ -119,11 +119,13 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
     }
 
     private void closeKeyboard() {
+        Log.i(TAG, "Close keyboard");
         InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.searchGameEditText.getWindowToken(), 0);
     }
 
     private void catchInformation(String name) {
+        Log.i(TAG, "Starting search");
         binding.searchedGamesShimmerLayout.setVisibility(View.VISIBLE);
         binding.searchedGamesShimmerLayout.startShimmer();
         SearchGames searchGames = new SearchGames(name, getContext());
@@ -137,8 +139,10 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
         binding.searchedGamesShimmerLayout.setVisibility(View.GONE);
 
         if (result.size() == 0) {
+            Log.i(TAG, "No game to show");
             binding.anyResultTextView.setVisibility(View.VISIBLE);
         } else {
+            Log.i(TAG, "Show all results");
             viewModel.setHasResearch(true);
             viewModel.setSearchedList(result);
             SearchedGamesAdapter searchedGamesAdapter = new SearchedGamesAdapter(result);
@@ -149,7 +153,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
         }
     }
 
-    TextWatcher gameTitleWatcher = new TextWatcher() {
+    final TextWatcher gameTitleWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -168,5 +172,17 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
                 viewModel.setHasResearch(false);
             }
         }
+    };
+
+    final TextView.OnEditorActionListener searchKeyPressed = (v, actionId, event) -> {
+        if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+            enterKey(binding.searchGameEditText.getText().toString());
+        }
+        return false;
+    };
+
+    final View.OnClickListener searchGame = v -> {
+        String text = binding.searchGameEditText.getText().toString();
+        enterKey(text);
     };
 }
