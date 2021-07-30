@@ -11,4 +11,5 @@
     <dimen name="ten_value">10dp</dimen>
     <dimen name="news_layout_margin">5dp</dimen>
     <dimen name="twenty_five_dp_value">25dp</dimen>
+    <dimen name="height_value">200dp</dimen>
 </resources>

@@ -151,4 +151,5 @@
     <string name="error_nickname">Enter a nickname of at least 4 characters</string>
     <string name="correct_change_nickname">nickname changed successfully</string>
     <string name="error_change_nickname">Unable to change your nickname, please try again in a few seconds</string>
+    <string name="app_icon">App Icon</string>
 </resources>

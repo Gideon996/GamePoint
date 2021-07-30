@@ -14,6 +14,13 @@
         android:padding="@dimen/padding_layout"
         tools:context=".ui.authentication.LoginFragment">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_value"
+            app:srcCompat="@drawable/icon"
+            android:contentDescription="@string/app_icon" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLoginLayout"
             android:layout_width="match_parent"
@@ -87,7 +94,7 @@
             android:layout_margin="@dimen/layout_margin"
             android:backgroundTint="@color/dark_cyan"
             android:text="@string/login"
-            android:textColor="#000000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/goToSignUp"
