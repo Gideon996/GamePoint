@@ -103,7 +103,7 @@ public class LoginFragment extends Fragment {
             final String password = binding.loginPassword.getText().toString();
             FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
-                Log.i(TAG, getString(R.string.login_success));
+                Log.i(TAG, "Login successful");
                 Intent intent = new Intent(requireActivity(), MainActivity.class);
                 startActivity(intent);
                 requireActivity().finish();

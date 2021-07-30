@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.FragmentResetPasswordBinding;
 
 public class ResetPasswordFragment extends Fragment {
+    private static final String TAG = "ResetPasswordFragment";
+
     private FragmentResetPasswordBinding binding;
     private FirebaseAuth mAuth;
 
@@ -35,7 +38,7 @@ public class ResetPasswordFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentResetPasswordBinding.inflate(inflater, container, false);
-        
+
         mAuth = FirebaseAuth.getInstance();
 
         binding.resetButton.setOnClickListener(resetPassword);
@@ -63,20 +66,22 @@ public class ResetPasswordFragment extends Fragment {
             }
         }
     };
-    
+
     final View.OnClickListener resetPassword = v -> {
-        if(correctEmail){
+        if (correctEmail) {
             String email = binding.emailReset.getText().toString().trim();
             mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            Log.i(TAG, "Email correctly sent");
                             Toast.makeText(getContext(), R.string.successful_reset_password, Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(v).navigateUp();
                         } else {
+                            Log.e(TAG, "unable to send the email");
                             Toast.makeText(getContext(), R.string.fail_reset_password, Toast.LENGTH_SHORT).show();
                         }
                     });
-        }else {
+        } else {
             Toast.makeText(getContext(), "Enter a correct email please", Toast.LENGTH_SHORT).show();
         }
     };

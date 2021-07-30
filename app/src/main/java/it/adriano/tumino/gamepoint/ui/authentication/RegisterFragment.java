@@ -64,7 +64,7 @@ public class RegisterFragment extends Fragment {
         return binding.getRoot();
     }
 
-    View.OnClickListener registrationAccount = v -> {
+    final View.OnClickListener registrationAccount = v -> {
         if (correctEmail && correctPassword && correctName && correctSurname) {
             final String email = binding.emailRegister.getText().toString();
             final String password = binding.passwordRegister.getText().toString();
@@ -77,10 +77,10 @@ public class RegisterFragment extends Fragment {
                         if (task.getResult() != null && task.getResult().getSignInMethods() != null) {
                             boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                             if (!isNewUser) {
-                                Toast.makeText(requireContext(), "This email is already associated with a user", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), R.string.email_already_associated, Toast.LENGTH_SHORT).show();
                             } else {
                                 auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(requireActivity(), authResult -> {
-                                    Log.i(TAG, getString(R.string.user_created));
+                                    Log.i(TAG, "User created");
                                     HashMap<String, String> otherInformation = new HashMap<>();
                                     otherInformation.put("email", email);
                                     otherInformation.put("name", name);
@@ -100,14 +100,14 @@ public class RegisterFragment extends Fragment {
                                     assert user != null;
                                     user.updateProfile(profileUpdates)
                                             .addOnCompleteListener(task1 -> Log.i(TAG, "update display Name"));
-                                    Log.i(TAG, getString(R.string.update_information));
+                                    Log.i(TAG, "Update user information");
 
                                     Intent intent = new Intent(requireActivity(), MainActivity.class);
                                     startActivity(intent);
                                     requireActivity().finish();
                                 }).addOnFailureListener(requireActivity(), e -> {
                                     Log.e(TAG, e.getMessage());
-                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
                                 });
                             }
                         }
@@ -117,7 +117,7 @@ public class RegisterFragment extends Fragment {
         }
     };
 
-    TextWatcher emailTextWatcher = new TextWatcher() {
+    final TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             binding.emailRegisterLayout.setError(null);
@@ -136,7 +136,7 @@ public class RegisterFragment extends Fragment {
         }
     };
 
-    TextWatcher passwordTextWatcher = new TextWatcher() {
+    final TextWatcher passwordTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             binding.passwordRegisterLayout.setError(null);
@@ -158,7 +158,7 @@ public class RegisterFragment extends Fragment {
         }
     };
 
-    TextWatcher nameTextWatcher = new TextWatcher() {
+    final TextWatcher nameTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             binding.nameRegisterLayout.setError(null);
@@ -176,7 +176,7 @@ public class RegisterFragment extends Fragment {
         }
     };
 
-    TextWatcher surnameTextWatcher = new TextWatcher() {
+    final TextWatcher surnameTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             binding.surnameRegisterLayout.setError(null);

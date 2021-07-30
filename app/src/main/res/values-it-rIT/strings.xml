@@ -58,13 +58,10 @@
     <string name="wrong_email">Per favore inserisci un\'email valida</string>
     <string name="wrong_password">Per favore inserisci una password valida</string>
     <string name="login_error">Errore durante il login, per favore riprova tra qualche secondo</string>
-    <string name="login_success">Login avvenuto con successo</string>
     <string name="name">NOME</string>
     <string name="surname">COGNOME</string>
     <string name="sign_in">Hai già un account? ENTRA</string>
     <string name="create_user">Crea l\'utente</string>
-    <string name="user_created">Utente creato</string>
-    <string name="update_information">Aggiornate le informazioni dell\'utente</string>
     <string name="error_registration">Inserisci tutte le informazioni corrette</string>
     <string name="wrong_name">Per favore inserisci il tuo nome</string>
     <string name="wrong_surname">Per favore inserisci il tuo cognome</string>
@@ -79,7 +76,7 @@
     <string name="no_state_of_home_fragment">Nessun valore salvato, Inizio la ricerca</string>
     <string name="has_state_of_home_fragment">Lista delle offerte salvate, inizializzazione della lista</string>
     <string name="save_state">Salvataggio dello stato del fragment</string>
-    <string name="loading">Caricamento...</string>
+    <string name="loading">Caricamento…</string>
     <string name="copy_on_clipboard">URL copiato negli appunti</string>
     <string name="open_icon_description">Icona apertura news</string>
     <string name="open">Apri</string>
@@ -123,4 +120,7 @@
     <string name="change_nickname_description">Il nickname che scegli sarà visibile agli altri utenti. Per impostazione predefinita, il tuo nickname è composto dal tuo nome e cognome</string>
     <string name="app_icon">Icona dell\'applicazione</string>
     <string name="shop_title">Lista degli shop che possono essere utilizzati</string>
+    <string name="welcome_back">Bentornato %s</string>
+    <string name="email_already_associated">Questa email è già associata ad un utente</string>
+    <string name="registration_failed">Registrazione fallita, riprovare più tardi</string>
 </resources>

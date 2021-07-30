@@ -1,7 +1,6 @@
 package it.adriano.tumino.gamepoint;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,7 +25,6 @@ public class AuthenticationActivity extends AppCompatActivity {
     private NavController navController;
 
     private static final boolean EMULATOR = true;
-    private AuthenticationSharedViewModel viewModel;
 
     static {
         if (EMULATOR) {
@@ -45,7 +43,6 @@ public class AuthenticationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
-        viewModel = new ViewModelProvider(this).get(AuthenticationSharedViewModel.class);
 
         navController = Navigation.findNavController(this, R.id.nav_host_authentication);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -62,17 +59,12 @@ public class AuthenticationActivity extends AppCompatActivity {
                     boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                     if (!isNewUser) {
                         Log.d(TAG, "Existing user, Autologin");
-                        viewModel.setIsAuthenticate(true);
-                        viewModel.setUser(mAuth);
-                        Toast.makeText(this, "Welcome Back " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, String.format(getString(R.string.welcome_back), user.getDisplayName()), Toast.LENGTH_SHORT).show();
                         successfulLogin(user);
                     }
                 }
             });
         }
-
-
-        viewModel.setIsAuthenticate(false);
     }
 
     @Override

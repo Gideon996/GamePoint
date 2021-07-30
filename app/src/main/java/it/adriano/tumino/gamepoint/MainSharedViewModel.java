@@ -72,13 +72,6 @@ public class MainSharedViewModel extends ViewModel {
         return searchedList.getValue();
     }
 
-
-    public int getCurrentPage() {
-        if (currentNewsPage.getValue() != null) return currentNewsPage.getValue();
-
-        return 0;
-    }
-
     public void setHasOffers(boolean value) {
         hasOffers.setValue(value);
     }
