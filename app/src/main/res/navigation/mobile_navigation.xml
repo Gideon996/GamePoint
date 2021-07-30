@@ -32,6 +32,9 @@
         <action
             android:id="@+id/navigate_to_change_password"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/navigate_to_change_nickname"
+            app:destination="@id/changeDisplayNameFragment" />
     </fragment>
 
     <fragment
@@ -72,4 +75,9 @@
         android:name="it.adriano.tumino.gamepoint.ui.profile.ChangePasswordFragment"
         android:label="Change Password"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/changeDisplayNameFragment"
+        android:name="it.adriano.tumino.gamepoint.ui.authentication.ChangeDisplayNameFragment"
+        android:label="Change NickName"
+        tools:layout="@layout/fragment_change_display_name" />
 </navigation>

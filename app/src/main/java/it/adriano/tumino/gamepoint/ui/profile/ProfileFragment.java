@@ -75,6 +75,7 @@ public class ProfileFragment extends Fragment {
 
         binding.changeShopsLayout.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_change_shops));
         binding.changePasswordLayout.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.navigate_to_change_password));
+        binding.changeDisplayNameLayout.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_change_nickname));
 
         binding.changeProfileImageButton.setOnClickListener(v -> changeProfileImage());
     }

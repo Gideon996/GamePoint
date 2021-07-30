@@ -113,21 +113,20 @@
     <string name="game_deleted">Game Deleted</string>
     <string name="price">Price:\n %s%s</string>
     <string name="release_data">Release date:\n%s</string>
-    <string name="price_symbol">€</string>
+    <string name="price_symbol" translatable="false">€</string>
     <string name="coming_soon">Coming soon</string>
-    <string name="free">free</string>
-    <string name="n_a">n.a.</string>
-    <string name="video_trailer_description">Thumbnail video trailer</string>
+    <string name="free" translatable="false">free</string>
+    <string name="n_a" translatable="false">n.a.</string>
+    <string name="video_trailer_description" translatable="false">Thumbnail video trailer</string>
     <string name="close_gallery_button">Close gallery button</string>
     <string name="comment_added">Comment added</string>
     <string name="error_comment">Error: Please try again in a few seconds</string>
     <string name="add_description">Add Description</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="forgot_password">Forgot your password? CLICK HERE</string>
     <string name="reset_password_instruction">To reset password, enter your email, press the button and check mail to follow instruction.</string>
     <string name="forgot_your_password">Forgot your password?</string>
-    <string name="reset">RESET</string>
+    <string name="reset" translatable="false">RESET</string>
     <string name="your_email">YOUR EMAIL</string>
     <string name="fail_reset_password">Fail to send reset password email!</string>
     <string name="successful_reset_password">Check email to reset your password!</string>
@@ -136,7 +135,20 @@
     <string name="change">CHANGE</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
-    <string name="email_upper_cammel_case">Email</string>
+    <string name="email_upper_camel_case" translatable="false">Email</string>
     <string name="password_changed">Password Changed</string>
     <string name="error_change_password">Error to change password</string>
+    <string name="your_profile_picture">Your profile picture</string>
+    <string name="change_shops">Change Shops</string>
+    <string name="change_password">Change your Password</string>
+    <string name="change_display_name">Change your NickName</string>
+    <string name="settings_image">Settings icon</string>
+    <string name="password_change_image">Password change icon</string>
+    <string name="picture_of_the_nickname_change">Nickname change icon</string>
+    <string name="new_nickname">New NickName</string>
+    <string name="change_your_nickname">Change your NickName</string>
+    <string name="change_nickname_description">The nickname you choose will be visible to other users. By default, your nickname consists of your first and last name</string>
+    <string name="error_nickname">Enter a nickname of at least 4 characters</string>
+    <string name="correct_change_nickname">nickname changed successfully</string>
+    <string name="error_change_nickname">Unable to change your nickname, please try again in a few seconds</string>
 </resources>

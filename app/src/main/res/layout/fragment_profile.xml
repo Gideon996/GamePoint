@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/ten_value"
         tools:context=".ui.profile.ProfileFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:padding="10dp"
+            android:padding="@dimen/ten_value"
             android:baselineAligned="false">
 
             <RelativeLayout
@@ -33,7 +33,8 @@
                     profileImage="@{profile.uid}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:shapeAppearanceOverlay="@style/Circular" />
+                    app:shapeAppearanceOverlay="@style/Circular"
+                    android:contentDescription="@string/your_profile_picture"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/changeProfileImageButton"
@@ -42,8 +43,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:clickable="true"
+                    android:contentDescription="@string/button_to_change_image_description"
                     app:srcCompat="@drawable/icon_change_profile_image"
-                    android:contentDescription="@string/button_to_change_image_description" />
+                    tools:ignore="RedundantDescriptionCheck" />
 
             </RelativeLayout>
 
@@ -70,7 +72,8 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/dark_cyan"
                     android:gravity="center"
-                    android:text="@string/log_out" />
+                    android:text="@string/log_out"
+                    tools:ignore="TextContrastCheck" />
 
             </LinearLayout>
 
@@ -96,7 +99,8 @@
                 android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0.5"
                 android:src="@drawable/icon_setting"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                android:contentDescription="@string/settings_image" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,7 +108,7 @@
                 android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Change Shops" />
+                android:text="@string/change_shops" />
         </LinearLayout>
 
         <View
@@ -126,7 +130,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0.5"
-                app:srcCompat="@drawable/icon_password" />
+                app:srcCompat="@drawable/icon_password"
+                android:contentDescription="@string/password_change_image" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -134,7 +139,7 @@
                 android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Change Password" />
+                android:text="@string/change_password" />
         </LinearLayout>
 
         <View
@@ -156,7 +161,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0.5"
-                app:srcCompat="@drawable/icon_name" />
+                app:srcCompat="@drawable/icon_name"
+                android:contentDescription="@string/picture_of_the_nickname_change" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,7 +170,7 @@
                 android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Change Display Name" />
+                android:text="@string/change_display_name" />
         </LinearLayout>
 
     </LinearLayout>
