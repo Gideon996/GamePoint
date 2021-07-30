@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -27,16 +26,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
 import it.adriano.tumino.gamepoint.AuthenticationActivity;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
+
     private FragmentProfileBinding binding;
-    private Button logout;
     private StorageReference storageReference;
     private String userID;
 
@@ -54,33 +51,25 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        binding.setProfile(user);
 
+        binding.setProfile(user);
         userID = (user != null) ? user.getUid() : null;
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        logout = binding.logOutButton;
-
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        logout.setOnClickListener(logOut);
+        binding.logOutButton.setOnClickListener(logOut);
 
         binding.changeShopsLayout.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_change_shops));
-        binding.changePasswordLayout.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.navigate_to_change_password));
+        binding.changePasswordLayout.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_change_password));
         binding.changeDisplayNameLayout.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigate_to_change_nickname));
 
         binding.changeProfileImageButton.setOnClickListener(v -> changeProfileImage());
+
+        return binding.getRoot();
     }
 
     public void changeProfileImage() {
+        Log.i(TAG, "Start Action Pick");
         Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         uploadImageFromGallery.launch(openGalleryIntent);
     }
@@ -89,15 +78,25 @@ public class ProfileFragment extends Fragment {
         final StorageReference fileRef = storageReference.child("users/" + userID + "/profile.jpg");
         fileRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
-                        .addOnSuccessListener(uri -> Picasso.get().load(uri).fit().into(binding.profileImage)))
-                .addOnFailureListener(e -> Toast.makeText(requireActivity().getApplicationContext(), "Failed.", Toast.LENGTH_SHORT).show());
+                        .addOnSuccessListener(uri -> {
+                            Log.i(TAG, "Image uploaded successfully");
+                            Picasso.get().load(uri).fit().into(binding.profileImage);
+                            Toast.makeText(requireContext(), R.string.success_upload_image, Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> {
+                            Log.e(TAG, e.getMessage());
+                            Toast.makeText(requireContext(), R.string.error_upload_image, Toast.LENGTH_SHORT).show();
+                        }))
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(requireContext(), R.string.error_upload_image, Toast.LENGTH_SHORT).show();
+                });
     }
 
     final View.OnClickListener logOut = v -> AuthUI.getInstance()
             .signOut(v.getContext())
             .addOnCompleteListener(task -> {
                 Log.i(TAG, "User Log out");
-                Toast.makeText(v.getContext(), "User Signed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), R.string.user_log_out, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(v.getContext(), AuthenticationActivity.class);
                 startActivity(i);
             });

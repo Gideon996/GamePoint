@@ -150,4 +150,7 @@
     <string name="welcome_back">Welcome Back %s</string>
     <string name="email_already_associated">This email is already associated with a user</string>
     <string name="registration_failed">Registration failed, try again later</string>
+    <string name="success_upload_image">Image uploaded successfully</string>
+    <string name="error_upload_image">Unable to update profile picture</string>
+    <string name="user_log_out">User Signed Out</string>
 </resources>

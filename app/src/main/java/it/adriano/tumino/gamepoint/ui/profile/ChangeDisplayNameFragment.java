@@ -72,6 +72,7 @@ public class ChangeDisplayNameFragment extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             user.updateProfile(profileUpdates).addOnCompleteListener(task1 -> {
+                Log.i(TAG, "Nickname updated successfully");
                 Toast.makeText(getContext(), R.string.correct_change_nickname, Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(requireView()).navigateUp();
             }).addOnFailureListener(requireActivity(), e -> {

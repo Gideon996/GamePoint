@@ -120,4 +120,7 @@
     <string name="welcome_back">Bentornato %s</string>
     <string name="email_already_associated">Questa email è già associata ad un utente</string>
     <string name="registration_failed">Registrazione fallita, riprovare più tardi</string>
+    <string name="success_upload_image">Immagine caricata con successo</string>
+    <string name="error_upload_image">Impossibile caricare l\'immagine</string>
+    <string name="user_log_out">Log out dell\'utente</string>
 </resources>

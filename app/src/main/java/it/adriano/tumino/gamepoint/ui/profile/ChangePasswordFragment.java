@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.databinding.FragmentChangePasswordBinding;
 
 public class ChangePasswordFragment extends Fragment {
+    private static final String TAG = "ChangePasswordFragment";
+
     private boolean correctEmail;
     private boolean correctOldPassword;
     private boolean correctNewPassword;
@@ -29,7 +32,6 @@ public class ChangePasswordFragment extends Fragment {
     private FragmentChangePasswordBinding binding;
 
     public ChangePasswordFragment() {
-
     }
 
 
@@ -127,18 +129,22 @@ public class ChangePasswordFragment extends Fragment {
                         if (task.isSuccessful()) {
                             user.updatePassword(newPassword).addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {
+                                    Log.i(TAG, "Password changed");
                                     Toast.makeText(v.getContext(), R.string.password_changed, Toast.LENGTH_SHORT).show();
                                 } else {
+                                    Log.e(TAG, "Error to change password");
                                     Toast.makeText(v.getContext(), R.string.error_change_password, Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {
+                            Log.e(TAG, "Error to change password");
                             Toast.makeText(v.getContext(), R.string.error_change_password, Toast.LENGTH_SHORT).show();
                         }
                     });
 
             Navigation.findNavController(v).navigateUp();
-
+        } else {
+            Toast.makeText(getContext(), R.string.error_registration, Toast.LENGTH_SHORT).show();
         }
     };
 }
