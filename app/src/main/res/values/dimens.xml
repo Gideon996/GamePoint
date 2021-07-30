@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="news_padding">15dp</dimen>
+    <dimen name="fifteen_padding">15dp</dimen>
 
     <dimen name="padding_news">20dp</dimen>
     <dimen name="layout_margin">20dp</dimen>
@@ -12,4 +12,13 @@
     <dimen name="news_layout_margin">5dp</dimen>
     <dimen name="twenty_five_dp_value">25dp</dimen>
     <dimen name="height_value">200dp</dimen>
+    <dimen name="five_value">5dp</dimen>
+    <dimen name="trailer_height">300dp</dimen>
+    <dimen name="padding_bottom">50dp</dimen>
+    <dimen name="max_text_size">20dp</dimen>
+    <dimen name="min_text_size">8dp</dimen>
+    <dimen name="step_text_size">1dp</dimen>
+    <dimen name="separation_view_width">300dp</dimen>
+    <dimen name="separation_view_height">2dp</dimen>
+    <dimen name="screenshot_thumbnail_width">400dp</dimen>
 </resources>

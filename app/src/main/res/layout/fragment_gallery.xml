@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:nestedScrollingEnabled="false">
+    android:nestedScrollingEnabled="false"
+    tools:context=".ui.showgame.gallery.GalleryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/galleryListView"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/ten_value"
         android:nestedScrollingEnabled="false"
-        android:paddingBottom="50dp"
+        android:paddingBottom="@dimen/padding_bottom"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

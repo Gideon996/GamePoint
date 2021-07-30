@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.showgame.comment.GameCommentsFragment">
 
-    <data>
-
-    </data>
+    <data />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp">
+        android:layout_margin="@dimen/ten_value">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addingCommentButton"
@@ -21,7 +20,8 @@
             android:contentDescription="@string/comment_button_description"
             android:foregroundGravity="bottom|right"
             android:src="@drawable/icon_add"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:ignore="RedundantDescriptionCheck" />
 
         <LinearLayout
             android:id="@+id/noCommentsLinearLayout"
@@ -42,14 +42,14 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="230dp" />
+                android:layout_height="@dimen/height_value" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="50dp"
+            android:paddingBottom="@dimen/padding_bottom"
             android:visibility="visible"
             tools:listitem="@layout/comment_layout" />
 

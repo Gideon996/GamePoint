@@ -44,7 +44,7 @@ public class GalleryDialog extends DialogFragment {
         builder.setView(view);
         builder.setCancelable(true);
 
-        ViewPager2 viewPager2 = view.findViewById(R.id.imageShowViewPager2);
+        ViewPager2 viewPager2 = view.findViewById(R.id.imageShowPager);
         viewPager2.setAdapter(new ImageGalleryAdapter(screenshots));
         viewPager2.setCurrentItem(initialPosition);
 

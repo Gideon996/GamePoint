@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.authentication.LoginFragment">
 
     <data />
 
@@ -11,15 +12,14 @@
         android:background="@drawable/background"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/padding_layout"
-        tools:context=".ui.authentication.LoginFragment">
+        android:padding="@dimen/padding_layout">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_value"
-            app:srcCompat="@drawable/icon"
-            android:contentDescription="@string/app_icon" />
+            android:contentDescription="@string/app_icon"
+            app:srcCompat="@drawable/icon" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLoginLayout"
@@ -28,11 +28,11 @@
             android:gravity="center"
             android:textColorHint="@color/silver"
             app:boxStrokeErrorColor="@color/red"
+            app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:errorIconTint="@color/red"
             app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:errorTextColor="@color/red"
-            app:endIconMode="clear_text">
+            app:errorTextColor="@color/red">
 
             <EditText
                 android:id="@+id/loginEmail"
@@ -94,7 +94,8 @@
             android:layout_margin="@dimen/layout_margin"
             android:backgroundTint="@color/dark_cyan"
             android:text="@string/login"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/goToSignUp"

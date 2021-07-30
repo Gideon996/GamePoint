@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".holder.recyclerview.NewsHolder">
 
     <data>
 
@@ -19,10 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/news_padding"
-            android:paddingTop="@dimen/news_padding"
-            android:paddingRight="@dimen/news_padding"
-            android:paddingBottom="@dimen/news_padding"
+            android:padding="@dimen/ten_value"
             android:baselineAligned="false">
 
             <LinearLayout
@@ -40,6 +38,7 @@
                     android:contentDescription="@{String.format(@string/content_description_news, news.title)}"
                     android:cropToPadding="false"
                     android:scaleType="fitXY"
+                    tools:ignore="ImageContrastCheck"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -64,16 +63,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:orientation="vertical"
-                android:paddingStart="10dp"
+                android:paddingStart="@dimen/ten_value"
                 tools:ignore="RtlSymmetry">
 
                 <TextView
                     android:id="@+id/newsTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoSizeMaxTextSize="20dp"
-                    android:autoSizeMinTextSize="8dp"
-                    android:autoSizeStepGranularity="1dp"
+                    android:autoSizeMaxTextSize="@dimen/max_text_size"
+                    android:autoSizeMinTextSize="@dimen/min_text_size"
+                    android:autoSizeStepGranularity="@dimen/step_text_size"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal|left"
                     android:text="@{news.title}"
@@ -86,9 +85,9 @@
                     android:id="@+id/newsDescriptionTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoSizeMaxTextSize="20dp"
-                    android:autoSizeMinTextSize="4dp"
-                    android:autoSizeStepGranularity="1dp"
+                    android:autoSizeMaxTextSize="@dimen/max_text_size"
+                    android:autoSizeMinTextSize="@dimen/min_text_size"
+                    android:autoSizeStepGranularity="@dimen/step_text_size"
                     android:autoSizeTextType="uniform"
                     android:text="@{news.body}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -98,8 +97,8 @@
         </LinearLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
             android:background="@color/gray" />
     </LinearLayout>

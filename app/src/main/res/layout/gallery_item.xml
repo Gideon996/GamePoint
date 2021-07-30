@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".holder.recyclerview.GalleryHolder">
 
     <data>
+
         <variable
             name="screenshot"
             type="java.lang.String" />
@@ -13,13 +15,13 @@
         android:id="@+id/galleryItemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="@dimen/ten_value">
 
         <ImageView
             android:id="@+id/screenImageView"
             showImageFromUrl="@{screenshot}"
-            android:layout_width="400dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/screenshot_thumbnail_width"
+            android:layout_height="@dimen/height_value"
             android:contentDescription="@string/content_description_screenshot"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -77,7 +77,7 @@
         tools:layout="@layout/fragment_change_password" />
     <fragment
         android:id="@+id/changeDisplayNameFragment"
-        android:name="it.adriano.tumino.gamepoint.ui.authentication.ChangeDisplayNameFragment"
+        android:name="it.adriano.tumino.gamepoint.ui.profile.ChangeDisplayNameFragment"
         android:label="Change NickName"
         tools:layout="@layout/fragment_change_display_name" />
 </navigation>

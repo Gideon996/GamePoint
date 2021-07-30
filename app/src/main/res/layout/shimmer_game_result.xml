@@ -20,7 +20,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/height_value"
                 android:background="@color/shimmer_background"
                 android:contentDescription="@string/content_description_shimmer_image"
                 tools:ignore="ContentDescription" />
@@ -30,23 +30,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:background="@color/shimmer_background"
                 android:contentDescription="@string/content_description_shimmer_image" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:background="@color/shimmer_background" />
         </LinearLayout>
@@ -54,16 +52,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/ten_value"
             android:background="@color/shimmer_background"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
+            android:padding="@dimen/ten_value"
             tools:ignore="RtlSymmetry" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="700dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten_value"
             android:background="@color/shimmer_background" />
 
 

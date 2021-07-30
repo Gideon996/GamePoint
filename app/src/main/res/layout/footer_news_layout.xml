@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".holder.recyclerview.FooterNewsHolder">
 
     <LinearLayout
         android:id="@+id/footerNewsLayout"
@@ -22,10 +24,11 @@
             android:id="@+id/viewMoreNewsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:layout_weight="1"
             android:backgroundTint="@color/cyan"
-            android:text="@string/footer_news_button_text" />
+            android:text="@string/footer_news_button_text"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 </layout>

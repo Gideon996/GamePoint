@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    tools:context=".ui.showgame.gallery.GalleryDialog">
 
     <ImageButton
         android:id="@+id/closeGalleryDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/icon_close"
+        android:layout_margin="@dimen/ten_value"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/close_gallery_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/ten_value"
-        android:contentDescription="@string/close_gallery_button" />
-
-    <!--<Button
-        android:id="@+id/closeGalleryDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawableEnd="@drawable/icon_close"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> -->
+        app:srcCompat="@drawable/icon_close"
+        tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/imageShowViewPager2"
+        android:id="@+id/imageShowPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -35,9 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/closeGalleryDialog">
-
-    </androidx.viewpager2.widget.ViewPager2>
+        app:layout_constraintTop_toBottomOf="@id/closeGalleryDialog"/>
 
     <LinearLayout
         android:id="@+id/dots_container"
@@ -49,8 +40,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageShowViewPager2" />
-
-
+        app:layout_constraintTop_toBottomOf="@id/imageShowPager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

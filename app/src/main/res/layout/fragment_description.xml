@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.showgame.DescriptionFragment">
 
     <data />
 
@@ -8,11 +10,11 @@
         android:id="@+id/descriptionLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/ten_value"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/trailerLayout"
+            android:id="@+id/trailerMP4Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -29,14 +31,18 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_margin="10dp"
+                android:layout_height="@dimen/trailer_height"
+                android:layout_margin="@dimen/ten_value"
                 android:visibility="visible">
 
                 <VideoView
                     android:id="@+id/trailerVideoView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
                     android:id="@+id/thumbnailVideoTrailer"
@@ -63,7 +69,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/icon_play_trailer" />
+                    app:srcCompat="@drawable/icon_play_trailer"
+                    tools:ignore="RedundantDescriptionCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
@@ -85,13 +92,13 @@
                 android:textStyle="italic" />
 
             <WebView
-                android:id="@+id/webView"
+                android:id="@+id/youtubeWebView"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="@dimen/trailer_height" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/descriptionTextView"
+            android:id="@+id/descriptionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/silver" />

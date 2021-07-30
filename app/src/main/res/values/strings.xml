@@ -18,7 +18,7 @@
     <string name="ultime_ricerche_text">Latest Searches</string>
     <string name="risultati_ricerca_text">Search results:</string>
     <string name="content_description_news">Image containing the thumbnail of the news: %s</string>
-    <string name="content_description_screenshot">Image containing a screenshot of the game %s</string>
+    <string name="content_description_screenshot">Image containing a screenshot of the game</string>
     <string name="content_description_shimmer_image">Image for the shimmer</string>
     <string name="content_description_game_searched">Image containing the cover of %s</string>
     <string name="rating_star_image">star rating symbol</string>
@@ -122,7 +122,7 @@
     <string name="comment_added">Comment added</string>
     <string name="error_comment">Error: Please try again in a few seconds</string>
     <string name="add_description">Add Description</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="forgot_password">Forgot your password? CLICK HERE</string>
     <string name="reset_password_instruction">To reset password, enter your email, press the button and check mail to follow instruction.</string>
     <string name="forgot_your_password">Forgot your password?</string>

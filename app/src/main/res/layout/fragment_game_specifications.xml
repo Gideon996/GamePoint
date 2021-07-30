@@ -11,14 +11,14 @@
         android:id="@+id/steamSpecificationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/ten_value"
         android:orientation="vertical"
         android:visibility="gone">
 
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="15dp"
+            android:paddingBottom="@dimen/fifteen_padding"
             app:columnCount="2"
             app:useDefaultMargins="true">
 
@@ -31,13 +31,13 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/developerTextView"
+                android:id="@+id/steamDeveloper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeStepGranularity="1dp"
+                android:layout_marginStart="@dimen/ten_value"
+                android:autoSizeMaxTextSize="@dimen/max_text_size"
+                android:autoSizeMinTextSize="@dimen/min_text_size"
+                android:autoSizeStepGranularity="@dimen/step_text_size"
                 android:autoSizeTextType="uniform"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/silver" />
@@ -51,13 +51,13 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/publisherTextView"
+                android:id="@+id/steamPublisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeStepGranularity="1dp"
+                android:layout_marginStart="@dimen/ten_value"
+                android:autoSizeMaxTextSize="@dimen/max_text_size"
+                android:autoSizeMinTextSize="@dimen/min_text_size"
+                android:autoSizeStepGranularity="@dimen/step_text_size"
                 android:autoSizeTextType="uniform"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/silver" />
@@ -71,14 +71,14 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/webSiteTextView"
+                android:id="@+id/steamWebUrl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten_value"
                 android:autoLink="web"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeStepGranularity="1dp"
+                android:autoSizeMaxTextSize="@dimen/max_text_size"
+                android:autoSizeMinTextSize="@dimen/min_text_size"
+                android:autoSizeStepGranularity="@dimen/step_text_size"
                 android:autoSizeTextType="uniform"
                 android:clickable="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -93,13 +93,13 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/metacriticScoreTextView"
+                android:id="@+id/steamMetacriticScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:autoSizeMaxTextSize="20dp"
-                android:autoSizeMinTextSize="8dp"
-                android:autoSizeStepGranularity="1dp"
+                android:layout_marginStart="@dimen/ten_value"
+                android:autoSizeMaxTextSize="@dimen/max_text_size"
+                android:autoSizeMinTextSize="@dimen/min_text_size"
+                android:autoSizeStepGranularity="@dimen/step_text_size"
                 android:autoSizeTextType="uniform"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/silver" />
@@ -107,10 +107,10 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <androidx.gridlayout.widget.GridLayout
@@ -128,10 +128,10 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/categoryTextView"
+                android:id="@+id/steamCategories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten_value"
                 android:text="@string/nessun_elemento"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/silver" />
@@ -145,25 +145,25 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/generiTextView"
+                android:id="@+id/steamGenres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten_value"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/silver" />
         </androidx.gridlayout.widget.GridLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_width"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/languages_title"
@@ -171,19 +171,19 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/languagesTextView"
+            android:id="@+id/steamLanguages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:layout_weight="1"
             android:gravity="start"
             android:textColor="@color/silver" />
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <TextView
@@ -201,10 +201,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/minimumTextView"
+                android:id="@+id/steamMinimum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:gravity="start"
                 android:textColor="@color/silver" />
@@ -213,14 +213,14 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:background="@color/gray" />
 
             <TextView
-                android:id="@+id/reccommendetTextView"
+                android:id="@+id/steamRecommended"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:gravity="start"
                 android:textColor="@color/silver" />
@@ -229,7 +229,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/eshopSpecificationLayout"
+        android:id="@+id/nintendoSpecificationLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -238,20 +238,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/caratteristicheTextView"
+                android:id="@+id/nintendoCharacteristics"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="1"
                 android:textColor="@color/silver" />
 
             <ImageView
-                android:id="@+id/pegiNintendo"
+                android:id="@+id/nintendoPegiImage"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -260,17 +260,17 @@
         </LinearLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_margin="@dimen/ten_value"
+            android:layout_marginBottom="@dimen/fifteen_padding"
             android:gravity="center"
             android:text="@string/caratteristiche_per_console_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -278,19 +278,19 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/caratterostocheConsoleLayout"
+            android:id="@+id/nintendoCharacteristicsForConsole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:orientation="vertical" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/psnSpecificationLayout"
+        android:id="@+id/playstationSpecificationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/ten_value"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -317,7 +317,7 @@
                     android:textStyle="italic" />
 
                 <TextView
-                    android:id="@+id/categoryPSNTextView"
+                    android:id="@+id/playstationCategories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -333,7 +333,7 @@
                     android:textStyle="italic" />
 
                 <TextView
-                    android:id="@+id/generiPSNTextView"
+                    android:id="@+id/playstationGenres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -348,14 +348,14 @@
                     android:textStyle="italic" />
 
                 <TextView
-                    android:id="@+id/subGenresPSNTextView"
+                    android:id="@+id/playstationSubGenres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/silver" />
             </androidx.gridlayout.widget.GridLayout>
 
             <ImageView
-                android:id="@+id/ratingImageView"
+                android:id="@+id/playstationPegiImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -412,7 +412,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/voiceLanguagesTextView"
+                android:id="@+id/playstationVoiceLanguages"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -424,12 +424,12 @@
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/ten_value"
                 android:layout_weight="0"
                 android:background="@color/gray" />
 
             <TextView
-                android:id="@+id/subTitleTextView"
+                android:id="@+id/playstationSubTitleLanguages"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -441,7 +441,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <TextView
@@ -454,7 +454,7 @@
             android:textStyle="italic" />
 
         <TextView
-            android:id="@+id/consolePSNTextView"
+            android:id="@+id/playstationConsole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -464,10 +464,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/mcsSpecificationLayout"
+        android:id="@+id/microsoftSpecificationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/ten_value"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -495,7 +495,7 @@
                     android:textStyle="italic" />
 
                 <TextView
-                    android:id="@+id/categoriesMCSTextView"
+                    android:id="@+id/microsoftCategories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -503,7 +503,7 @@
             </androidx.gridlayout.widget.GridLayout>
 
             <ImageView
-                android:id="@+id/pegiMCSImageView"
+                android:id="@+id/microsoftPegiImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -515,11 +515,11 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <TextView
-            android:id="@+id/metadataMCSTextView"
+            android:id="@+id/microsoftMetadata"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/silver" />
@@ -528,7 +528,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
 
         <TextView
@@ -541,7 +541,7 @@
             android:textStyle="italic" />
 
         <TextView
-            android:id="@+id/requirementMCSTextView"
+            android:id="@+id/microsoftRequirement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/silver" />

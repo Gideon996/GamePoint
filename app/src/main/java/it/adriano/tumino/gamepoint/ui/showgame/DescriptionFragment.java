@@ -68,14 +68,14 @@ public class DescriptionFragment extends Fragment {
         if (!storeGame.getVideoUrl().isEmpty()) {
             if (storeGame.getVideoUrl().contains("youtube.com")) {
                 setYoutubeVideoTrailer(storeGame.getVideoUrl());
-                binding.trailerLayout.setVisibility(View.GONE);
+                binding.trailerMP4Layout.setVisibility(View.GONE);
             } else {
                 setVideoTrailer(storeGame.getVideoUrl(), storeGame.getThumbnail());
                 binding.trailerYoutubeLayout.setVisibility(View.GONE);
             }
         } else {
             binding.trailerYoutubeLayout.setVisibility(View.GONE);
-            binding.trailerLayout.setVisibility(View.GONE);
+            binding.trailerMP4Layout.setVisibility(View.GONE);
         }
     }
 
@@ -99,7 +99,7 @@ public class DescriptionFragment extends Fragment {
     }
 
     private void showGameDescription() {
-        TextView descriptionTextView = binding.descriptionTextView;
+        TextView descriptionTextView = binding.descriptionText;
         String body = storeGame.getDescription();
         PicassoImageGetter picassoImageGetter = new PicassoImageGetter(descriptionTextView);
         descriptionTextView.setText(Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY, picassoImageGetter, null));
@@ -117,7 +117,7 @@ public class DescriptionFragment extends Fragment {
             }
         }
 
-        WebView webView = binding.webView;
+        WebView webView = binding.youtubeWebView;
 
         float density = getResources().getDisplayMetrics().density;
         float dpWidth = webView.getWidth() / density;

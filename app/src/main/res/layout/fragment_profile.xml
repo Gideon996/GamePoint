@@ -80,8 +80,8 @@
         </LinearLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:background="@color/gray" />
@@ -112,8 +112,8 @@
         </LinearLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
             android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />
@@ -143,8 +143,8 @@
         </LinearLayout>
 
         <View
-            android:layout_width="300dp"
-            android:layout_height="2dp"
+            android:layout_width="@dimen/separation_view_width"
+            android:layout_height="@dimen/separation_view_height"
             android:layout_gravity="center"
             android:layout_margin="@dimen/ten_value"
             android:background="@color/gray" />

@@ -1,4 +1,4 @@
-package it.adriano.tumino.gamepoint.ui.authentication;
+package it.adriano.tumino.gamepoint.ui.profile;
 
 import android.os.Bundle;
 

@@ -72,30 +72,30 @@ public class GameSpecificationsFragment extends Fragment {
         LinearLayout linearLayout = view.findViewById(R.id.steamSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        textView = view.findViewById(R.id.developerTextView);
+        textView = view.findViewById(R.id.steamDeveloper);
         textView.setText(String.join(", ", steamGame.getDevelopers()));
 
-        textView = view.findViewById(R.id.publisherTextView);
+        textView = view.findViewById(R.id.steamPublisher);
         textView.setText(String.join(", ", steamGame.getPublishers()));
 
-        textView = view.findViewById(R.id.webSiteTextView);
+        textView = view.findViewById(R.id.steamWebUrl);
         textView.setText(steamGame.getWebsite());
 
-        textView = view.findViewById(R.id.metacriticScoreTextView);
+        textView = view.findViewById(R.id.steamMetacriticScore);
         textView.setText(steamGame.getScoreMetacritic());
 
-        textView = view.findViewById(R.id.categoryPSNTextView);
+        textView = view.findViewById(R.id.playstationCategories);
         textView.setText(Html.fromHtml(fromListToHTML(steamGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.generiTextView);
+        textView = view.findViewById(R.id.steamGenres);
         textView.setText(Html.fromHtml(fromListToHTML(steamGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.languagesTextView);
+        textView = view.findViewById(R.id.steamLanguages);
         textView.setText(Html.fromHtml(fromListToHTML(Arrays.asList(steamGame.getLanguages().split(",").clone())), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.minimumTextView);
+        textView = view.findViewById(R.id.steamMinimum);
         textView.setText(Html.fromHtml(steamGame.getMinimumRequirement(), Html.FROM_HTML_MODE_LEGACY));
-        textView = view.findViewById(R.id.reccommendetTextView);
+        textView = view.findViewById(R.id.steamRecommended);
         if (steamGame.getRecommendedRequirement().isEmpty()) {
             textView.setVisibility(View.GONE);
         }
@@ -106,17 +106,17 @@ public class GameSpecificationsFragment extends Fragment {
     private void eShopGame(View view) {
         NintendoStoreGame nintendoGame = (NintendoStoreGame) storeGame;
 
-        LinearLayout linearLayout = view.findViewById(R.id.eshopSpecificationLayout);
+        LinearLayout linearLayout = view.findViewById(R.id.nintendoSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
         Drawable pegi = getRatingImage(nintendoGame.getPegi());
-        ImageView imageView = view.findViewById(R.id.pegiNintendo);
+        ImageView imageView = view.findViewById(R.id.nintendoPegiImage);
         imageView.setImageDrawable(pegi);
 
-        textView = view.findViewById(R.id.caratteristicheTextView);
+        textView = view.findViewById(R.id.nintendoCharacteristics);
         textView.setText(Html.fromHtml(nintendoGame.getSystemInfo(), Html.FROM_HTML_MODE_LEGACY));
 
-        LinearLayout characteristicsForConsole = view.findViewById(R.id.caratterostocheConsoleLayout);
+        LinearLayout characteristicsForConsole = view.findViewById(R.id.nintendoCharacteristicsForConsole);
         for (int i = 0; i < nintendoGame.getFeatureSheets().size(); i++) {
             String console = nintendoGame.getFeatureSheets().get(i);
             TextView textView = new TextView(getContext());
@@ -128,46 +128,46 @@ public class GameSpecificationsFragment extends Fragment {
     private void psnGame(View view) {
         PlayStationStoreGame playStationGame = (PlayStationStoreGame) storeGame;
 
-        LinearLayout linearLayout = view.findViewById(R.id.psnSpecificationLayout);
+        LinearLayout linearLayout = view.findViewById(R.id.playstationSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        ImageView imageView = view.findViewById(R.id.ratingImageView);
+        ImageView imageView = view.findViewById(R.id.playstationPegiImage);
         imageView.setImageDrawable(getRatingImage(playStationGame.getRating()));
 
-        textView = view.findViewById(R.id.categoryPSNTextView);
+        textView = view.findViewById(R.id.playstationCategories);
         textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.generiPSNTextView);
+        textView = view.findViewById(R.id.playstationGenres);
         textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getGenres()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.subGenresPSNTextView);
+        textView = view.findViewById(R.id.playstationSubGenres);
         textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getSubGenreList()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.voiceLanguagesTextView);
+        textView = view.findViewById(R.id.playstationVoiceLanguages);
         textView.setText(Html.fromHtml(fromListToHTML(fromAcronymToFullName(playStationGame.getVoiceLanguages())), Html.FROM_HTML_MODE_COMPACT));
-        textView = view.findViewById(R.id.subTitleTextView);
+        textView = view.findViewById(R.id.playstationSubTitleLanguages);
         textView.setText(Html.fromHtml(fromListToHTML(fromAcronymToFullName(playStationGame.getSubtitleLanguages())), Html.FROM_HTML_MODE_COMPACT));
 
-        textView = view.findViewById(R.id.consolePSNTextView);
+        textView = view.findViewById(R.id.playstationConsole);
         textView.setText(Html.fromHtml(fromListToHTML(playStationGame.getPlatforms()), Html.FROM_HTML_MODE_LEGACY));
     }
 
     private void mcsGame(View view) {
         MicrosoftStoreGame microsoftGame = (MicrosoftStoreGame) storeGame;
-        LinearLayout linearLayout = view.findViewById(R.id.mcsSpecificationLayout);
+        LinearLayout linearLayout = view.findViewById(R.id.microsoftSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        ImageView pegi = view.findViewById(R.id.pegiMCSImageView);
+        ImageView pegi = view.findViewById(R.id.microsoftPegiImage);
         Drawable pegiImage = getRatingImage(microsoftGame.getPegi());
         pegi.setImageDrawable(pegiImage);
 
-        textView = view.findViewById(R.id.categoriesMCSTextView);
+        textView = view.findViewById(R.id.microsoftCategories);
         textView.setText(Html.fromHtml(fromListToHTML(microsoftGame.getCategories()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.metadataMCSTextView);
+        textView = view.findViewById(R.id.microsoftMetadata);
         textView.setText(Html.fromHtml(fromListToHTML(microsoftGame.getMetadata()), Html.FROM_HTML_MODE_LEGACY));
 
-        textView = view.findViewById(R.id.requirementMCSTextView);
+        textView = view.findViewById(R.id.microsoftRequirement);
         textView.setText(Html.fromHtml(microsoftGame.getSystemRequirement(), Html.FROM_HTML_MODE_LEGACY));
     }
 

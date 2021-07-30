@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/ten_value">
+    android:padding="@dimen/ten_value"
+    tools:context=".ui.showgame.comment.AddCommentDialog">
 
     <RatingBar
         android:id="@+id/ratingBar"
