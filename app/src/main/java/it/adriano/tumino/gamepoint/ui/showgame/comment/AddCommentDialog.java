@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -25,6 +26,7 @@ import it.adriano.tumino.gamepoint.data.Comment;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 
 public class AddCommentDialog extends DialogFragment {
+    private final static String TAG = "AddCommentDialog";
 
     private final StoreGame storeGame;
     private final FirebaseUser user;
@@ -90,7 +92,13 @@ public class AddCommentDialog extends DialogFragment {
         firebaseFirestore.collection("Games").document(title + storeGame.getStore())
                 .collection("Comments").document()
                 .set(comment)
-                .addOnSuccessListener(aVoid -> Toast.makeText(view.getContext(), R.string.comment_added, Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(exception -> Toast.makeText(view.getContext(), R.string.error_comment, Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(aVoid -> {
+                    Log.i(TAG, "Comment added");
+                    Toast.makeText(view.getContext(), R.string.comment_added, Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(exception -> {
+                    Log.e(TAG, exception.getMessage());
+                    Toast.makeText(view.getContext(), R.string.error_comment, Toast.LENGTH_SHORT).show();
+                });
     }
 }

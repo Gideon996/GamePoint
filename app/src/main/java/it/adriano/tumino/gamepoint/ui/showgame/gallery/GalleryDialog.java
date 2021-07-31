@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.adapter.vievpager.ImageGalleryAdapter;
 
 public class GalleryDialog extends DialogFragment {
+    private final static String TAG = "GalleryDialog";
 
     private final int initialPosition;
     private final List<String> screenshots;
@@ -39,6 +41,7 @@ public class GalleryDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle bundle) {
+        Log.i(TAG, "Initialization Gallery Dialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = requireActivity().getLayoutInflater().inflate(R.layout.screenshot_show_layout, null);
         builder.setView(view);
@@ -53,13 +56,7 @@ public class GalleryDialog extends DialogFragment {
 
         setIndicators(view, initialPosition);
 
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                selectedDots(position);
-                super.onPageSelected(position);
-            }
-        });
+        viewPager2.registerOnPageChangeCallback(pageSelector);
 
         ImageButton closeButton = view.findViewById(R.id.closeGalleryDialog);
         closeButton.setOnClickListener(k -> Objects.requireNonNull(getDialog()).dismiss());
@@ -74,6 +71,7 @@ public class GalleryDialog extends DialogFragment {
     }
 
     private void setIndicators(View view, int initialPosition) {
+        Log.i(TAG, "Creation image indicators");
         LinearLayout linearLayout = view.findViewById(R.id.dots_container);
 
         for (int i = 0; i < dots.length; i++) {
@@ -82,8 +80,13 @@ public class GalleryDialog extends DialogFragment {
             if (i == initialPosition) dots[i].setImageDrawable(medium);
             linearLayout.addView(dots[i]);
         }
-
     }
 
-
+    final ViewPager2.OnPageChangeCallback pageSelector = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageSelected(int position) {
+            selectedDots(position);
+            super.onPageSelected(position);
+        }
+    };
 }

@@ -93,6 +93,8 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
                     NintendoHandler.catchGame(basicGameInformation.getUrl(), basicGameInformation.getPrice(), this);
                     break;
             }
+        } else {
+            Log.e(TAG, "Any gameID/URL information received");
         }
     }
 
@@ -100,10 +102,12 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGameResultBinding.inflate(inflater, container, false);
         if (viewModel.getIsEmpty().getValue() != null && viewModel.getIsEmpty().getValue()) {
+            Log.i(TAG, "No result to show");
             binding.gameResultShimmerLayout.setVisibility(View.GONE);
             binding.gameResultLayout.setVisibility(View.GONE);
             binding.noGameResultTextView.setVisibility(View.VISIBLE);
         } else {
+            Log.i(TAG, "Start catch game information from the shop");
             query = basicGameInformation.getTitle().replaceAll("\\s+", "") + basicGameInformation.getStore();
             binding.gameResultShimmerLayout.startShimmer();
             binding.tabLayout.addOnTabSelectedListener(this);
@@ -123,8 +127,17 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     public void onResume() {
         super.onResume();
         if (hasResultToShow()) {
+            Log.i(TAG, "Has fragment state to show");
             setFragmentLayout(fragments[(viewModel.getCurrentFragment().getValue() != null) ? viewModel.getCurrentFragment().getValue() : 0]);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        /*Since I create so many objects I prefer to call the garbage
+        collector to delete the ones that are no longer useful*/
+        System.gc();
     }
 
     private boolean hasResultToShow() {
@@ -140,6 +153,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
         binding.gameResultShimmerLayout.setVisibility(View.GONE);
 
         if (result != null) {
+            Log.i(TAG, "information received, filling of objects and sending arguments to the fragments");
             viewModel.getHasResult().setValue(true);
             viewModel.getResult().setValue(result);
 
@@ -151,7 +165,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             viewModel.getCurrentFragment().setValue(0);
             setFragmentLayout(fragments[0]);
 
-            if (result.getPrice().toLowerCase().equals("free") || result.getPrice().toLowerCase().equals("unavailable")) {
+            if (result.getPrice().equalsIgnoreCase("free") || result.getPrice().equalsIgnoreCase("unavailable")) {
                 binding.priceGameTextView.setText(String.format(getString(R.string.price), result.getPrice(), ""));
             } else {
                 binding.priceGameTextView.setText(String.format(getString(R.string.price), result.getPrice(), getString(R.string.price_symbol)));
@@ -160,6 +174,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             binding.shareButton.setOnClickListener(v -> Utils.shareContent(getContext(), result.getImageHeaderURL(), getString(R.string.share_game_text) + result.getTitle()));
             binding.favoriteButton.setOnClickListener(v -> favoriteRoutines());
         } else {
+            Log.i(TAG, "No information taken");
             viewModel.getHasResult().setValue(false);
             binding.noGameResultTextView.setVisibility(View.VISIBLE);
         }
@@ -167,6 +182,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
+        Log.i(TAG, "Selected tab " + tab.getText());
         viewModel.getCurrentFragment().setValue(tab.getPosition());
         setFragmentLayout(fragments[tab.getPosition()]);
     }
@@ -182,6 +198,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     }
 
     private void setFragmentLayout(Fragment fragment) {
+        Log.i(TAG, "Change tab fragment to show");
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.frameLayout, fragment);
@@ -190,16 +207,19 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
     }
 
     private void checkIfOnDatabase(@NonNull String userID) {
+        Log.i(TAG, "Check if game is on Firestore");
         DocumentReference exist = firebaseFirestore.collection(USER)
                 .document(userID).collection(FAVORITES).document(query);
         exist.get().addOnCompleteListener(task -> {
             binding.favoriteButton.setEnabled(true);
             if (task.isSuccessful()) {
+                Log.i(TAG, "document present in the database");
                 DocumentSnapshot document = task.getResult();
                 isOnDatabase = false;
                 if (document != null) isOnDatabase = document.exists();
                 changeColor();
             } else {
+                Log.i(TAG, "document non present in the database");
                 isOnDatabase = false;
             }
         });
@@ -216,6 +236,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
                         isOnDatabase = false;
                         Toast.makeText(requireContext(), R.string.remove_favorite, Toast.LENGTH_SHORT).show();
                         changeColor();
+                        Log.i(TAG, "Game removed from database");
                     })
                     .addOnFailureListener(e -> {
                         Log.e(TAG, e.getMessage());
@@ -227,6 +248,7 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
                         isOnDatabase = true;
                         changeColor();
                         Toast.makeText(requireContext(), R.string.favorite_add, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Game added to database");
                     })
                     .addOnFailureListener(exception -> {
                         Log.e(TAG, exception.getMessage());
@@ -238,13 +260,5 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
 
     private void changeColor() {
         binding.favoriteButton.setColorFilter(getResources().getColor((isOnDatabase) ? R.color.favorite_color : R.color.black, getResources().newTheme()));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        /*Since I create so many objects I prefer to call the garbage
-        collector to delete the ones that are no longer useful*/
-        System.gc();
     }
 }

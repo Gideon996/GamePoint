@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 import android.net.Uri;
@@ -36,7 +38,7 @@ import it.adriano.tumino.gamepoint.databinding.FragmentDescriptionBinding;
 
 public class DescriptionFragment extends Fragment {
     private static final String TAG = "DescriptionFragment";
-    private final static String embedURL = "https://www.youtube.com/embed/";
+    private final static String EMBED_YOUTUBE_URL = "https://www.youtube.com/embed/";
 
     private FragmentDescriptionBinding binding;
 
@@ -58,22 +60,26 @@ public class DescriptionFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false);
         showGameDescription();
-
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         if (!storeGame.getVideoUrl().isEmpty()) {
+            Log.i(TAG, "Creation trailer view");
             if (storeGame.getVideoUrl().contains("youtube.com")) {
+                Log.i(TAG, "Youtube Trailer");
                 setYoutubeVideoTrailer(storeGame.getVideoUrl());
                 binding.trailerMP4Layout.setVisibility(View.GONE);
             } else {
+                Log.i(TAG, "MP4 Trailer");
                 setVideoTrailer(storeGame.getVideoUrl(), storeGame.getThumbnail());
                 binding.trailerYoutubeLayout.setVisibility(View.GONE);
             }
         } else {
+            Log.i(TAG, "No trailer to show");
             binding.trailerYoutubeLayout.setVisibility(View.GONE);
             binding.trailerMP4Layout.setVisibility(View.GONE);
         }
@@ -86,6 +92,7 @@ public class DescriptionFragment extends Fragment {
     }
 
     private static String createYoutubeFrame(@NonNull String videoUrl, float width, float height) {
+        Log.i(TAG, "Creation embedded html for youtube trailer");
         return "<html>" +
                 "<body style='margin:0;padding:0;'>" +
                 "<iframe " +
@@ -99,6 +106,7 @@ public class DescriptionFragment extends Fragment {
     }
 
     private void showGameDescription() {
+        Log.i(TAG, "Creation HTML description of game");
         TextView descriptionTextView = binding.descriptionText;
         String body = storeGame.getDescription();
         PicassoImageGetter picassoImageGetter = new PicassoImageGetter(descriptionTextView);
@@ -113,7 +121,7 @@ public class DescriptionFragment extends Fragment {
             String[] split = videoTrailer.split("=");
             if (split.length > 1) {
                 String videoID = split[1];
-                videoTrailer = embedURL + videoID;
+                videoTrailer = EMBED_YOUTUBE_URL + videoID;
             }
         }
 
@@ -130,6 +138,7 @@ public class DescriptionFragment extends Fragment {
     }
 
     private void setVideoTrailer(String videoUrl, String thumbnail) {
+        Log.i(TAG, "Setting thumbnail, video view and play button");
         Picasso.get().load(thumbnail).fit().into(binding.thumbnailVideoTrailer);
 
         VideoView videoView = binding.trailerVideoView;
@@ -205,7 +214,7 @@ public class DescriptionFragment extends Fragment {
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                setDrawable(new ColorDrawable(Color.CYAN));
             }
 
         }

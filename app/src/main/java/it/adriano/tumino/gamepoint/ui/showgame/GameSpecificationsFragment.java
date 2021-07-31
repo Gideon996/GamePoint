@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
 
 
 public class GameSpecificationsFragment extends Fragment {
+    private final static String TAG = "GameSpecificationsFragment";
 
     private StoreGame storeGame;
     private TextView textView;
@@ -49,6 +51,7 @@ public class GameSpecificationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_specifications, container, false);
+        Log.i(TAG, "Check store to show");
         switch (storeGame.getStore()) {
             case "STEAM":
                 steamGame(view);
@@ -67,6 +70,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void steamGame(View view) {
+        Log.i(TAG, "Fill object for Steam Store");
         SteamStoreGame steamGame = (SteamStoreGame) storeGame;
 
         LinearLayout linearLayout = view.findViewById(R.id.steamSpecificationLayout);
@@ -104,6 +108,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void eShopGame(View view) {
+        Log.i(TAG, "Fill object for Nintendo Store");
         NintendoStoreGame nintendoGame = (NintendoStoreGame) storeGame;
 
         LinearLayout linearLayout = view.findViewById(R.id.nintendoSpecificationLayout);
@@ -126,6 +131,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void psnGame(View view) {
+        Log.i(TAG, "Fill object for PlayStation Store");
         PlayStationStoreGame playStationGame = (PlayStationStoreGame) storeGame;
 
         LinearLayout linearLayout = view.findViewById(R.id.playstationSpecificationLayout);
@@ -153,6 +159,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private void mcsGame(View view) {
+        Log.i(TAG, "Fill object for Microsoft Store");
         MicrosoftStoreGame microsoftGame = (MicrosoftStoreGame) storeGame;
         LinearLayout linearLayout = view.findViewById(R.id.microsoftSpecificationLayout);
         linearLayout.setVisibility(View.VISIBLE);
@@ -172,6 +179,7 @@ public class GameSpecificationsFragment extends Fragment {
     }
 
     private Drawable getRatingImage(String rating) {
+        Log.i(TAG, "Get Pegi drawable for the game");
         Drawable d;
         String name = "pegi3.png";
         rating = rating.replaceAll("[^0-9]", "");
