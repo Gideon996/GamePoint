@@ -16,7 +16,6 @@ import it.adriano.tumino.gamepoint.databinding.ScreenshotLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.viewpager.ImageGalleryHolder;
 
 public class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryHolder> {
-
     private final List<String> list;
 
     public ImageGalleryAdapter(List<String> list) {

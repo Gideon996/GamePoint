@@ -16,7 +16,6 @@ import it.adriano.tumino.gamepoint.databinding.FavoriteGameLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.FavoriteGamesHolder;
 
 public class FavoriteGamesAdapter extends RecyclerView.Adapter<FavoriteGamesHolder>{
-
     private final List<BasicGameInformation> favoriteGames;
 
     public FavoriteGamesAdapter(List<BasicGameInformation> favoriteGames) {

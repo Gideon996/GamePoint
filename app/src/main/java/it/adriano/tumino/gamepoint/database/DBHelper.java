@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DBUtils.generateLastResearcTable());
+        db.execSQL(DBUtils.generateLastResearchTable());
     }
 
     @Override

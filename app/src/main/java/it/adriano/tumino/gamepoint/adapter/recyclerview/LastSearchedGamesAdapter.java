@@ -18,7 +18,6 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.LastSearchedGamesHolder;
 
 
 public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedGamesHolder> {
-    public static final String TAG = "SearchGamesAdapter";
     private final List<BasicGameInformation> lastSearchedGamesList;
 
     public LastSearchedGamesAdapter(List<BasicGameInformation> lastSearchedGamesList) {
@@ -46,6 +45,6 @@ public class LastSearchedGamesAdapter extends RecyclerView.Adapter<LastSearchedG
 
     public void deleteItem(int position) {
         lastSearchedGamesList.remove(position);
-        notifyDataSetChanged();
+        notifyItemRemoved(position);
     }
 }

@@ -3,7 +3,6 @@ package it.adriano.tumino.gamepoint.database;
 import org.jetbrains.annotations.NotNull;
 
 public class DBUtils {
-
     public static final String ID = "_id";
     public static final String TITLE = "Title";
     public static final String IMAGE_URL = "Image_Url";
@@ -17,7 +16,7 @@ public class DBUtils {
     private static final String SELECT_FROM = "SELECT  * FROM %s";
     private static final String SELECT_FROM_NAME_AND_STORE = " where %s = '%s' AND %s = '%s'";
 
-    public static String generateLastResearcTable() {
+    public static String generateLastResearchTable() {
         String query = "";
         query += "CREATE TABLE " + LAST_RESEARCH_TABLE_TITLE;
         query += " ( " + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,";

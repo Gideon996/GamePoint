@@ -11,7 +11,6 @@ import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.databinding.FavoriteGameLayoutBinding;
 
 public class FavoriteGamesHolder extends RecyclerView.ViewHolder {
-
     public FavoriteGameLayoutBinding binding;
 
     public FavoriteGamesHolder(FavoriteGameLayoutBinding binding) {
@@ -20,7 +19,7 @@ public class FavoriteGamesHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Object obj) {
-        binding.setVariable(BR.lastGames, obj); //nome della variabile da usare
+        binding.setVariable(BR.lastGames, obj);
         binding.executePendingBindings();
         binding.favoriteGameLayout.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;

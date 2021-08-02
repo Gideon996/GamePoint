@@ -13,13 +13,10 @@ import java.util.List;
 import it.adriano.tumino.gamepoint.R;
 import it.adriano.tumino.gamepoint.data.BasicGameInformation;
 import it.adriano.tumino.gamepoint.data.GameOffers;
-import it.adriano.tumino.gamepoint.databinding.FavoriteGameLayoutBinding;
 import it.adriano.tumino.gamepoint.databinding.OffersLayoutBinding;
-import it.adriano.tumino.gamepoint.holder.recyclerview.FavoriteGamesHolder;
 import it.adriano.tumino.gamepoint.holder.recyclerview.OffersHolder;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersHolder> {
-
     private final List<GameOffers> favoriteGames;
 
     public OffersAdapter(List<GameOffers> favoriteGames) {

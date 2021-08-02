@@ -18,23 +18,21 @@ import it.adriano.tumino.gamepoint.databinding.GameSearchedLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.SearchGameHolder;
 
 public class SearchedGamesAdapter extends RecyclerView.Adapter<SearchGameHolder> {
-    public static final String TAG = "SearchGamesAdapter";
     private final List<BasicGameInformation> searchedGames;
 
     public SearchedGamesAdapter(List<BasicGameInformation> searchedGames) {
         this.searchedGames = searchedGames;
     }
 
-    @NonNull
     @NotNull
     @Override
-    public SearchGameHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public SearchGameHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         GameSearchedLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.game_searched_layout, parent, false);
         return new SearchGameHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull SearchGameHolder holder, int position) {
+    public void onBindViewHolder(@NotNull SearchGameHolder holder, int position) {
         BasicGameInformation basicGameInformation = searchedGames.get(position);
         holder.bind(basicGameInformation);
     }

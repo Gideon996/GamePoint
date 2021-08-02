@@ -18,7 +18,6 @@ import it.adriano.tumino.gamepoint.holder.recyclerview.GalleryHolder;
 import it.adriano.tumino.gamepoint.ui.showgame.gallery.GalleryDialog;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryHolder> {
-
     private final List<String> list;
     private final Context context;
 

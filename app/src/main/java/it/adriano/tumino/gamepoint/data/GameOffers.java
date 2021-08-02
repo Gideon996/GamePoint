@@ -4,12 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class GameOffers extends BasicGameInformation {
-
     private String originalPrice;
     private String discountPercentage;
-
-    public GameOffers() {
-    }
 
     public GameOffers(String title, String imageURL, String url, String appID, String platforms, String store, String priceFinal, String originalPrice, String discountPercentage) {
         super(title, imageURL, url, appID, platforms, store, priceFinal);

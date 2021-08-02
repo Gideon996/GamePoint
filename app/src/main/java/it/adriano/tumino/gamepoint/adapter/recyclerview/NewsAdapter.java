@@ -23,8 +23,6 @@ import it.adriano.tumino.gamepoint.data.News;
 import it.adriano.tumino.gamepoint.holder.recyclerview.NewsHolder;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AsyncResponse<List<News>> {
-    public static final String TAG = "NewsAdapter";
-
     private final List<News> newsList;
     private final MainSharedViewModel viewModel;
 

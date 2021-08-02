@@ -38,7 +38,7 @@ public class DBManager {
             Log.i(TAG, "Save game " + basicGameInformation.getTitle() + " in " + tableName);
             database.insert(tableName, null, contentValues);
         } catch (SQLiteException exception) {
-            Log.e(TAG, exception.toString());
+            Log.e(TAG, exception.getMessage());
         }
     }
 

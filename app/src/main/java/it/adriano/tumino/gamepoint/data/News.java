@@ -1,7 +1,6 @@
 package it.adriano.tumino.gamepoint.data;
 
 public class News {
-
     private String title;
     private String imageURL;
     private String newsUrl;

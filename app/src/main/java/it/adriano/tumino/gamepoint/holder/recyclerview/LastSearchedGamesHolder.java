@@ -15,9 +15,9 @@ import it.adriano.tumino.gamepoint.database.DBUtils;
 import it.adriano.tumino.gamepoint.databinding.LastSearchLayoutBinding;
 
 public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
-
     private final LastSearchLayoutBinding binding;
     private final LastSearchedGamesAdapter adapter;
+
     public LastSearchedGamesHolder(LastSearchLayoutBinding binding, LastSearchedGamesAdapter adapter) {
         super(binding.getRoot());
         this.binding = binding;

@@ -15,7 +15,6 @@ public class FooterNewsHolder extends RecyclerView.ViewHolder {
     public FooterNewsLayoutBinding binding;
     private final AsyncResponse<List<News>> delegate;
 
-
     public FooterNewsHolder(FooterNewsLayoutBinding binding, AsyncResponse<List<News>> delegate) {
         super(binding.getRoot());
         this.binding = binding;

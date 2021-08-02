@@ -6,7 +6,6 @@ import it.adriano.tumino.gamepoint.BR;
 import it.adriano.tumino.gamepoint.databinding.ScreenshotLayoutBinding;
 
 public class ImageGalleryHolder extends RecyclerView.ViewHolder {
-
     public ScreenshotLayoutBinding binding;
 
     public ImageGalleryHolder(ScreenshotLayoutBinding binding){

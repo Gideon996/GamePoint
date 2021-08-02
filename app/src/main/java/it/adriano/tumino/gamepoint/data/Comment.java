@@ -1,14 +1,11 @@
 package it.adriano.tumino.gamepoint.data;
 
 public class Comment {
-    private String author;
-    private String authorID;
-    private String description;
-    private float rating;
-    private String data;
-
-    public Comment(){
-    }
+    private final float rating;
+    private final String author;
+    private final String authorID;
+    private final String description;
+    private final String data;
 
     public Comment(String author, String authorID, String description, float rating, String data) {
         this.author = author;
