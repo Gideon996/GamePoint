@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +38,8 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
 
     @Override
     public SteamStoreGame jsonParser(@NotNull String json) throws JSONException {
+        Log.i(TAG, "Start parsing of steam's JSON");
+
         JSONObject jsonObject = new JSONObject(json);
         if (jsonObject.has(appID)) {
             JSONObject result = jsonObject.getJSONObject(appID);
@@ -43,6 +47,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
             SteamStoreGame game = new SteamStoreGame();
 
             if (!result.getBoolean("success")) {
+                Log.i(TAG, "No result");
                 return null;
             }
 
@@ -163,6 +168,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
             }
         }
 
+        Log.i(TAG, "No result");
         return null;
     }
 
@@ -174,11 +180,11 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
 
     private ArrayList<String> getValuesFromJSONArray(JSONArray array, String... valuesName) throws JSONException {
         ArrayList<String> list = new ArrayList<>();
-        if (valuesName[0].isEmpty()) { //simpleJsonArray
+        if (valuesName[0].isEmpty()) {
             for (int i = 0; i < array.length(); i++) {
                 list.add(array.getString(i));
             }
-        } else { //JsonArray of object
+        } else {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
                 for (String valueName : valuesName) {
@@ -191,6 +197,7 @@ public class CatchSteamGame extends TaskRunner<Void, StoreGame> implements JsonP
 
     @Override
     public void onPostExecute(StoreGame output) {
+        Log.i(TAG, "Delegation of steam's result");
         delegate.processFinish(output);
     }
 }

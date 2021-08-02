@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,6 +32,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
     @Override
     public MicrosoftStoreGame scrapping(@NotNull Document document) {
+        Log.i(TAG, "Starting scrapping microsoft's html page");
         MicrosoftStoreGame game = new MicrosoftStoreGame();
 
         Elements body = document.select("#pdp");
@@ -51,7 +54,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
         String price = productPrice.select("span").get(0).text();
         game.setPrice(price.substring(1));
 
-        Elements overviewTab = body.select("#pivot-OverviewTab"); //contiene la descrizione
+        Elements overviewTab = body.select("#pivot-OverviewTab");
         Elements available = overviewTab.select("#AvailableOnModule");
         String console = available.select("a").text();
         game.setConsole(console);
@@ -69,22 +72,21 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
         game.setDescription(description);
 
         Elements screenshotsElements = overviewTab.select("#responsiveScreenshots");
-        ArrayList<String> schreenshots = new ArrayList<>();
-        schreenshots.add("https://images-na.ssl-images-amazon.com/images/I/51ilsGij0KL._AC_SX679_.jpg");
+        ArrayList<String> screenshots = new ArrayList<>();
+        screenshots.add("https://images-na.ssl-images-amazon.com/images/I/51ilsGij0KL._AC_SX679_.jpg");
         if (screenshotsElements != null && !screenshotsElements.isEmpty()) {
             Elements screenshotsList = screenshotsElements.select(".cli_screenshot_gallery");
             if (screenshotsList != null && !screenshotsList.isEmpty()) {
                 Elements list = screenshotsList.select("ul").get(0).children();
-                schreenshots.clear();
+                screenshots.clear();
                 for (Element screen : list) {
-                    Element tmp = screen.select("img").get(0);
-                    String s = tmp.attributes().get("data-src");
-                    s = s.replaceAll("//", "https://");
-                    schreenshots.add(s);
+                    String img = screen.select("img").get(0).attributes()
+                            .get("data-src").replaceAll("//", "https://");
+                    screenshots.add(img);
                 }
             }
         }
-        game.setScreenshotsUrl(schreenshots);
+        game.setScreenshotsUrl(screenshots);
 
         Elements information = overviewTab.select("#information");
         Elements additionalInformation = information.select(".m-additional-information");
@@ -97,7 +99,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
             string += "<h4>" + h4.text() + "</h4>";
             Elements span = div.select("span");
             string += "<p>" + span.text() + "</p>";
-            if (h4.text().equals("Data di uscita")) game.setReleaseData(span.text());
+            if (h4.text().equals("Data di uscita") || h4.text().equals("Release date")) game.setReleaseData(span.text());
             metadata.add(string);
         }
         game.setMetadata(metadata);
@@ -110,14 +112,14 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
             Element caption = table.select("caption").get(0);
             String captionText = caption.text();
             Elements trs = table.select("tr");
-            StringBuilder corpo = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
             for (Element tr : trs) {
                 Elements th = tr.select("th");
-                corpo.append("<h4>").append(th.text()).append("</h4>");
+                stringBuilder.append("<h4>").append(th.text()).append("</h4>");
                 Elements td = tr.select("td");
-                corpo.append("<p>").append(td.text()).append("</p>");
+                stringBuilder.append("<p>").append(td.text()).append("</p>");
             }
-            req.append("<h3>").append(captionText).append("</h3>").append(corpo);
+            req.append("<h3>").append(captionText).append("</h3>").append(stringBuilder);
         }
         req.append("</section>");
         game.setSystemRequirement(req.toString());
@@ -127,6 +129,7 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
     @Override
     public void onPostExecute(StoreGame output) {
+        Log.i(TAG, "Delegation of microsoft's result");
         delegate.processFinish(output);
     }
 }

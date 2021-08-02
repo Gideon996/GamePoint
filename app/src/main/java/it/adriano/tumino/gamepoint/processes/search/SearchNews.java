@@ -59,7 +59,7 @@ public class SearchNews extends TaskRunner<Integer, List<News>> {
 
     @Override
     public void onPostExecute(List<News> gameNewsList) {
-        Log.i(TAG, "Retrived News, started delegation");
+        Log.i(TAG, "Retrieved News, started delegation");
         delegate.processFinish(gameNewsList);
     }
 

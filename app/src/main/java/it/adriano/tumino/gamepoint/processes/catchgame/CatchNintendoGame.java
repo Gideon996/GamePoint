@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -35,6 +37,7 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
 
     @Override
     public NintendoStoreGame scrapping(@NotNull Document document) {
+        Log.i(TAG, "Start parsing of nintendo's html page");
         NintendoStoreGame game = new NintendoStoreGame();
         game.setPrice(price);
         HashMap<String, String> hashMap = NintendoHandler.webClassName();
@@ -46,7 +49,6 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         String videoUrl = "https://www.youtube.com/embed/DKBK4OnvjX0?rel=0&theme=light&modestbranding=1&showinfo=0&autohide=1&autoplay=2&cc_load_policy=0&cc_lang_pref=it&enablejsapi=1";
         if (!video.isEmpty()) videoUrl = video.first().attributes().get(hashMap.get("src"));
         game.setVideoUrl(videoUrl);
-
 
         Elements imageElements = header.select(hashMap.get("img"));
         String imageHeader = "https://cdn02.nintendo-europe.com/media/images/10_share_images/others_3/nintendo_eshop_5/H2x1_NintendoeShop_WebsitePortal_itIT.jpg";
@@ -68,33 +70,33 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         game.setConsole(console);
         game.setReleaseData(ProcessUtils.normalizeNintendoDate(releaseDate));
 
-        Elements panoramica = content.select(hashMap.get("overviewId"));
-        Element gameSectionContents = panoramica.select(hashMap.get("div")).first();
+        Elements overview = content.select(hashMap.get("overviewId"));
+        Element gameSectionContents = overview.select(hashMap.get("div")).first();
         Element div = gameSectionContents.children().first();
 
         Elements information = div.children().select(hashMap.get("rowContentClass"));
         String text = information.text();
-        String[] sezioni = text.split(" {2}");
+        String[] sections = text.split(" {2}");
         StringBuilder builder = new StringBuilder();
-        for (String sezione : sezioni) {
-            if (!sezione.isEmpty()) builder.append(sezione).append("<br/>");
+        for (String section : sections) {
+            if (!section.isEmpty()) builder.append(section).append("<br/>");
         }
         game.setDescription(builder.toString());
 
-        Elements immagini = content.select(hashMap.get("galleryId"));
+        Elements images = content.select(hashMap.get("galleryId"));
         ArrayList<String> screenshotsUrl = new ArrayList<>();
-        if (immagini != null && !immagini.isEmpty()) {
-            Elements galleria = immagini.select(hashMap.get("divRowSelector")).select(hashMap.get("ul")).first().children();
+        if (images != null && !images.isEmpty()) {
+            Elements galleria = images.select(hashMap.get("divRowSelector")).select(hashMap.get("ul")).first().children();
             for (Element tmp : galleria) {
-                Element immagine = tmp.select(hashMap.get("imgResponsiveSelector")).first();
-                if (immagine != null)
-                    screenshotsUrl.add(immagine.attributes().get(hashMap.get("dataXS")).replaceAll("//", "https://"));
+                Element image = tmp.select(hashMap.get("imgResponsiveSelector")).first();
+                if (image != null)
+                    screenshotsUrl.add(image.attributes().get(hashMap.get("dataXS")).replaceAll("//", "https://"));
             }
         }
         game.setScreenshotsUrl(screenshotsUrl);
 
-        Elements dettagli = content.select(hashMap.get("gameDetailsID"));
-        Elements systemInfo = dettagli.select(hashMap.get("systemInfoClass")).not(hashMap.get("divAmiiboSelector"));
+        Elements gameDetails = content.select(hashMap.get("gameDetailsID"));
+        Elements systemInfo = gameDetails.select(hashMap.get("systemInfoClass")).not(hashMap.get("divAmiiboSelector"));
         StringBuilder stringBuilder = new StringBuilder();
         for (Element element : systemInfo) {
             if (element.select(hashMap.get("gameInfoTitleClass")).hasText()) {
@@ -112,21 +114,21 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
         game.setSystemInfo(stringBuilder.toString());
 
         systemInfo = content.select(hashMap.get("divRowSelector")).select(hashMap.get("divGameInfoSelector"));
-        Elements schede = systemInfo.select(hashMap.get("listWheaderClass"));
+        Elements listWheader = systemInfo.select(hashMap.get("listWheaderClass"));
 
         ArrayList<String> featureSheets = new ArrayList<>();
-        for (int i = 0; i < schede.size(); i++) {
+        for (int i = 0; i < listWheader.size(); i++) {
             StringBuilder featureSheetsBuilder = new StringBuilder();
-            Element scheda = schede.get(i);
-            Elements figli = scheda.children();
+            Element wheader = listWheader.get(i);
+            Elements wheaderChildren = wheader.children();
 
-            if (figli.hasClass(hashMap.get("contentSectionHeader"))) {
-                Element titolo = figli.select(hashMap.get("h2")).first();
-                featureSheetsBuilder.append("<h3>").append(titolo.text()).append("</h3>");
+            if (wheaderChildren.hasClass(hashMap.get("contentSectionHeader"))) {
+                Element titleOfChild = wheaderChildren.select(hashMap.get("h2")).first();
+                featureSheetsBuilder.append("<h3>").append(titleOfChild.text()).append("</h3>");
             }
 
-            if (figli.hasClass(hashMap.get("gameInfoContainer"))) {
-                Elements gameInfo = scheda.select(hashMap.get("gameInfoContainerClass")).first().children();
+            if (wheaderChildren.hasClass(hashMap.get("gameInfoContainer"))) {
+                Elements gameInfo = wheader.select(hashMap.get("gameInfoContainerClass")).first().children();
                 for (Element tmp : gameInfo) {
                     String gameTitle = tmp.select(hashMap.get("gameInfoTitleClass")).text();
                     featureSheetsBuilder.append("<p> <strong>").append(gameTitle).append(": </strong>");
@@ -145,6 +147,7 @@ public class CatchNintendoGame extends TaskRunner<Void, StoreGame> implements We
 
     @Override
     public void onPostExecute(StoreGame output) {
+        Log.i(TAG, "Delegation of nintendo's result");
         delegate.processFinish(output);
     }
 }

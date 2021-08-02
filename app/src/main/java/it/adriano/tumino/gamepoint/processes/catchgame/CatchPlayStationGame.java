@@ -1,5 +1,7 @@
 package it.adriano.tumino.gamepoint.processes.catchgame;
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +19,6 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
     public static final String TAG = "CatchGameFromPSN";
 
     private final String finalURL;
-
     public AsyncResponse<StoreGame> delegate = null;
 
     public CatchPlayStationGame(String gameUrl) {
@@ -31,6 +32,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
 
     @Override
     public PlayStationStoreGame jsonParser(@NotNull String json) throws JSONException {
+        Log.i(TAG, "Start parsing of playstation's JSON");
         JSONObject jsonObject = new JSONObject(json);
 
         if (jsonObject.has("codeName")) {
@@ -149,7 +151,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
 
             if (skus.has("display_price")) {
                 price = skus.getString("display_price");
-                if (!price.toLowerCase().equals("free")) price = price.substring(1);
+                if (!price.equalsIgnoreCase("free")) price = price.substring(1);
             }
 
             JSONObject entitlements = skus.getJSONArray("entitlements").getJSONObject(0);
@@ -218,6 +220,7 @@ public class CatchPlayStationGame extends TaskRunner<Void, StoreGame> implements
 
     @Override
     public void onPostExecute(StoreGame output) {
+        Log.i(TAG, "Delegation of playstation's result");
         delegate.processFinish(output);
     }
 }

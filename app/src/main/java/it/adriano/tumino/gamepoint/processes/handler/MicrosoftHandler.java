@@ -24,7 +24,6 @@ import it.adriano.tumino.gamepoint.utils.Utils;
 public class MicrosoftHandler {
     private static final String TAG = "MicrosoftHandler";
 
-    //en-us
     private final static String MICROSOFT_URL = "https://www.microsoft.com/en-us/search/shop/games?q=";
 
     public static String generateMicrosoftUrl(String title) {
@@ -57,8 +56,8 @@ public class MicrosoftHandler {
             Element gameUrlElement = game.getElementsByTag("a").first();
             String gameUrl = "https://www.microsoft.com" + gameUrlElement.attributes().get("href");
 
-            Element titlediv = gameUrlElement.getElementsByClass("c-subheading-6").first();
-            String titleGame = titlediv.text();
+            Element titleDiv = gameUrlElement.getElementsByClass("c-subheading-6").first();
+            String titleGame = titleDiv.text();
 
             if (ProcessUtils.deleteSpecialCharacter(titleGame).toLowerCase().contains(title)) {
                 String gameID;
