@@ -78,6 +78,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
             binding.gameSearchResultsLayout.setVisibility(View.VISIBLE);
 
             setUpResearchView(viewModel.getSearchedList());
+            binding.searchGameEditText.setText(viewModel.getSearchTitle());
         } else {
             Log.i(TAG, "SetUp new search layout");
             binding.searchedGamesShimmerLayout.setVisibility(View.GONE);
@@ -131,6 +132,7 @@ public class SearchFragment extends Fragment implements AsyncResponse<List<Basic
         SearchGames searchGames = new SearchGames(name, getContext());
         searchGames.delegate = this;
         searchGames.execute();
+        viewModel.setSearchedTitle(name);
     }
 
     @Override

@@ -93,7 +93,7 @@ public class PlayStationHandler {
 
                         String price = "N.A.";
                         if (gameInformation.has("default_sku")) {
-                            price = gameInformation.getJSONObject("default_sku").getString("display_price");
+                            price = gameInformation.getJSONObject("default_sku").getString("display_price").substring(1);
                         }
 
                         BasicGameInformation basicGameInformation = new BasicGameInformation(titleGame, imageURL, gameURL, id, console, "PSN", price);

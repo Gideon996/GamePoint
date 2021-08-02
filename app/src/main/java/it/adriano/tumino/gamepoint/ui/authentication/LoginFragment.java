@@ -15,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import it.adriano.tumino.gamepoint.MainActivity;
 import it.adriano.tumino.gamepoint.R;
@@ -39,6 +42,8 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
 
+        checkLogin();
+
         binding.loginEmail.addTextChangedListener(emailTextWatcher);
 
         binding.loginPassword.addTextChangedListener(passwordTextWatcher);
@@ -50,6 +55,45 @@ public class LoginFragment extends Fragment {
         binding.forgotPassword.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.reset_password_action));
 
         return binding.getRoot();
+    }
+
+    private void checkLogin(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        Log.i(TAG, "Check if the user has already logged in before");
+        if (user != null) {
+            mAuth.fetchSignInMethodsForEmail(Objects.requireNonNull(user.getEmail())).addOnCompleteListener(task -> {
+                if (task.getResult() != null && task.getResult().getSignInMethods() != null) {
+                    boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
+                    if (!isNewUser) {
+                        Log.d(TAG, "Existing user, Autologin");
+                        Toast.makeText(getContext(), String.format(getString(R.string.welcome_back), user.getDisplayName()), Toast.LENGTH_SHORT).show();
+                        successfulLogin(user);
+                    }else{
+                        setUpLogin();
+                    }
+                }else{
+                    setUpLogin();
+                }
+            });
+        }else{
+            setUpLogin();
+        }
+    }
+
+    private void setUpLogin(){
+        binding.loginLayout.setVisibility(View.VISIBLE);
+        binding.appNameText.setVisibility(View.GONE);
+    }
+
+    private void successfulLogin(FirebaseUser user) {
+        Log.i(TAG, "MainActivity Start");
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+        Intent intent = new Intent(requireContext(), MainActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        requireActivity().finish();
     }
 
     @Override

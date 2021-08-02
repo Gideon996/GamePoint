@@ -18,6 +18,7 @@ public class MainSharedViewModel extends ViewModel {
     private final MutableLiveData<List<GameOffers>> offersList;
     private final MutableLiveData<List<News>> newsList;
     private final MutableLiveData<List<BasicGameInformation>> searchedList;
+    private final MutableLiveData<String> searchedTitle;
 
     private final MutableLiveData<Integer> currentNewsPage;
 
@@ -29,6 +30,7 @@ public class MainSharedViewModel extends ViewModel {
         offersList = new MutableLiveData<>();
         newsList = new MutableLiveData<>();
         searchedList = new MutableLiveData<>();
+        searchedTitle = new MutableLiveData<>();
 
         currentNewsPage = new MutableLiveData<>();
 
@@ -72,6 +74,8 @@ public class MainSharedViewModel extends ViewModel {
         return searchedList.getValue();
     }
 
+    public String getSearchTitle(){return searchedTitle.getValue(); }
+
     public void setHasOffers(boolean value) {
         hasOffers.setValue(value);
     }
@@ -107,6 +111,8 @@ public class MainSharedViewModel extends ViewModel {
     public void setSearchedList(List<BasicGameInformation> list) {
         searchedList.setValue(list);
     }
+
+    public void setSearchedTitle(String title){searchedTitle.setValue(title);}
 
     public int nextPage() {
         int currentPage = 0;

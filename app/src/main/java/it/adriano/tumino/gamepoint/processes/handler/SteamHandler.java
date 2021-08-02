@@ -59,7 +59,7 @@ public class SteamHandler {
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
                 String platforms = getPlatform(link.getElementsByClass("platform_img"));
                 String price = link.getElementsByClass("search_price").get(0).text();
-
+                price = price.substring(0, price.length()-1);
                 BasicGameInformation gameInformation = new BasicGameInformation(gameTitle, imgUrl, null, gameID, platforms, "STEAM", price);
                 result.add(gameInformation);
             }

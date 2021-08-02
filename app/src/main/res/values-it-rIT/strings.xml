@@ -65,7 +65,7 @@
     <string name="error_registration">Inserisci tutte le informazioni corrette</string>
     <string name="wrong_name">Per favore inserisci il tuo nome</string>
     <string name="wrong_surname">Per favore inserisci il tuo cognome</string>
-    <string name="password_elements">La password deve contenere:\\n- almeno 6 caratteri\\n- almeno un carattere maiuscolo \\n- almeno un carattere minuscolo\\n- almeno un numero\\n</string>
+    <string name="password_elements">La password deve contenere:\n- almeno 6 caratteri\n- almeno un carattere maiuscolo \n- almeno un carattere minuscolo\n- almeno un numero</string>
     <string name="special_offers">Offerte speciali</string>
     <string name="no_offer">Nessuna offerta</string>
     <string name="remove_favorite">Gioco rimosso dai preferiti</string>
@@ -82,8 +82,8 @@
     <string name="news_sharing_icon">Icona per la condivisione della news</string>
     <string name="share">Condividi</string>
     <string name="game_deleted">Gioco Cancellato</string>
-    <string name="price">Prezzo:\\n %s%s</string>
-    <string name="release_data">Data di Rilascio:\\n%s</string>
+    <string name="price">Prezzo:\n %s%s</string>
+    <string name="release_data">Data di Rilascio:\n%s</string>
     <string name="coming_soon">Prossimamente</string>
     <string name="close_gallery_button">Bottone per chiudere la galleria</string>
     <string name="comment_added">Commento aggiunto</string>

@@ -35,14 +35,14 @@ public class LastSearchedGamesHolder extends RecyclerView.ViewHolder {
             Navigation.findNavController(binding.getRoot()).navigate(R.id.navigate_to_searched, bundle);
         });
 
-        binding.cancellImageButton.setOnClickListener(v -> {
+        binding.cancelImageButton.setOnClickListener(v -> {
             BasicGameInformation basicGameInformation = (BasicGameInformation) obj;
             int position = getAdapterPosition();
-            DBManager dbManager = new DBManager(binding.cancellImageButton.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
+            DBManager dbManager = new DBManager(binding.cancelImageButton.getContext(), DBUtils.LAST_RESEARCH_TABLE_TITLE);
             boolean result = dbManager.deleteByNameAndStore(basicGameInformation.getTitle(), basicGameInformation.getStore());
             if (result) {
                 adapter.deleteItem(position);
-                Toast.makeText(binding.cancellImageButton.getContext(), R.string.game_deleted, Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.cancelImageButton.getContext(), R.string.game_deleted, Toast.LENGTH_SHORT).show();
             }
         });
     }
