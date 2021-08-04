@@ -134,7 +134,7 @@ public class LoginFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            correctPassword = s.toString().matches(getString(R.string.password_regex));
+            correctPassword = s.toString().length() > 5;
             if (!correctPassword && !s.toString().isEmpty()) {
                 binding.passwordLoginLayout.setError(getString(R.string.wrong_password));
             }

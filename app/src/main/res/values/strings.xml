@@ -88,7 +88,7 @@
     <string name="error_registration">Enter all information correctly</string>
     <string name="wrong_name">Please enter your name</string>
     <string name="wrong_surname">Please enter your surname</string>
-    <string name="password_elements">The password must contain:\n- at least 6 characters\n- one uppercase character\n- one lowercase character\n- at least one number\n</string>
+    <string name="password_elements">The password must contain:\n- at least 6 characters</string>
     <string name="special_offers">Special Offers</string>
     <string name="no_offer">No Offer</string>
     <string name="remove_favorite">Game removed from favorites</string>

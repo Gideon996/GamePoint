@@ -149,7 +149,7 @@ public class RegisterFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            correctPassword = s.toString().matches(getString(R.string.password_regex));
+            correctPassword = s.toString().length() > 5;
             if (!correctPassword && !s.toString().isEmpty()) {
                 String stringBuilder = getString(R.string.wrong_password) + "\n" + getString(R.string.password_elements);
                 binding.passwordRegisterLayout.setError(stringBuilder);

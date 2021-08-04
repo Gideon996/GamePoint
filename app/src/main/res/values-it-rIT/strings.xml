@@ -65,7 +65,7 @@
     <string name="error_registration">Inserisci tutte le informazioni corrette</string>
     <string name="wrong_name">Per favore inserisci il tuo nome</string>
     <string name="wrong_surname">Per favore inserisci il tuo cognome</string>
-    <string name="password_elements">La password deve contenere:\n- almeno 6 caratteri\n- almeno un carattere maiuscolo \n- almeno un carattere minuscolo\n- almeno un numero</string>
+    <string name="password_elements">La password deve contenere:\n- almeno 6 caratteri</string>
     <string name="special_offers">Offerte speciali</string>
     <string name="no_offer">Nessuna offerta</string>
     <string name="remove_favorite">Gioco rimosso dai preferiti</string>
