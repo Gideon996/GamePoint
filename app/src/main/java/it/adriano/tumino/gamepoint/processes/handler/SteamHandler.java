@@ -50,16 +50,29 @@ public class SteamHandler {
         }
 
         Elements links = resultsRows.getElementsByTag("a");
-        for (Element link : links) {
+        Log.e("TEST", "" + links.size());
+        for (int i = 0; i < links.size(); i++) {
+            Log.e("TEST", "" + i);
+            Element link = links.get(i);
             String gameTitle = link.getElementsByClass("title").get(0).text();
             if (ProcessUtils.deleteSpecialCharacter(gameTitle).toLowerCase().contains(title)) { //I only take games with the correct titles
+                Log.e("TEST", "IF PASSATo");
                 String gameID = link.attributes().get("data-ds-appid");
-                if (gameID == null || gameID.isEmpty()) continue;
                 gameID = gameID.split(",")[0];
+                Log.e("TEST", gameID);
+                if (gameID == null || gameID.isEmpty()) {
+                    Log.e("TEST", "skip");
+                    continue;
+                }
+
                 String imgUrl = link.getElementsByTag("img").get(0).attributes().get("src");
+
                 String platforms = getPlatform(link.getElementsByClass("platform_img"));
+
                 String price = link.getElementsByClass("search_price").get(0).text();
-                price = price.substring(0, price.length()-1);
+                if (price != null && !price.isEmpty() && !price.equalsIgnoreCase("free"))
+                    price = price.substring(0, price.length() - 1);
+
                 BasicGameInformation gameInformation = new BasicGameInformation(gameTitle, imgUrl, null, gameID, platforms, "STEAM", price);
                 result.add(gameInformation);
             }

@@ -1,11 +1,13 @@
 package it.adriano.tumino.gamepoint.data;
 
 public class Comment {
-    private final float rating;
-    private final String author;
-    private final String authorID;
-    private final String description;
-    private final String data;
+    private float rating;
+    private String author;
+    private String authorID;
+    private String description;
+    private String data;
+
+    public Comment(){} //for downloading comment from firebase
 
     public Comment(String author, String authorID, String description, float rating, String data) {
         this.author = author;

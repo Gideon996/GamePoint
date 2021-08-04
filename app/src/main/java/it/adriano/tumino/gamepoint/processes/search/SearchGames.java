@@ -81,9 +81,8 @@ public class SearchGames extends TaskRunner<Void, List<BasicGameInformation>> {
 
             for (Future<List<BasicGameInformation>> result : results) {
                 list.addAll(result.get());
+                Log.e("TEST", result.get().toString());
             }
-
-            Collections.shuffle(list);
 
             return list;
         } catch (InterruptedException | ExecutionException ie) {
