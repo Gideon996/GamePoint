@@ -154,4 +154,6 @@
     <string name="error_upload_image">Unable to update profile picture</string>
     <string name="user_log_out">User Signed Out</string>
     <string name="enter_title_to_search">Enter the title of the game you want to search...</string>
+    <string name="any_price">Unavailable</string>
+    <string name="null_item" translatable="false"> </string>
 </resources>

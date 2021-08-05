@@ -52,7 +52,11 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
         Elements productPrice = body.select("#productPrice");
         String price = productPrice.select("span").get(0).text();
-        game.setPrice(price.substring(1));
+        final String trim = price.substring(0, price.length() - 1).trim();
+        if (trim.matches("^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)$")) {
+            price = trim;
+        }
+        game.setPrice(price);
 
         Elements overviewTab = body.select("#pivot-OverviewTab");
         Elements available = overviewTab.select("#AvailableOnModule");
@@ -99,7 +103,8 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
             string += "<h4>" + h4.text() + "</h4>";
             Elements span = div.select("span");
             string += "<p>" + span.text() + "</p>";
-            if (h4.text().equals("Data di uscita") || h4.text().equals("Release date")) game.setReleaseData(span.text());
+            if (h4.text().equals("Data di uscita") || h4.text().equals("Release date"))
+                game.setReleaseData(span.text());
             metadata.add(string);
         }
         game.setMetadata(metadata);

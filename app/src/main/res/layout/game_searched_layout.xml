@@ -4,7 +4,7 @@
     tools:context=".holder.recyclerview.SearchGameHolder">
 
     <data>
-
+        <import type="android.text.TextUtils" />
         <variable
             name="game"
             type="it.adriano.tumino.gamepoint.data.BasicGameInformation" />
@@ -19,19 +19,19 @@
         <LinearLayout
             android:id="@+id/searchedGameLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_value"
+            android:layout_height="150dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/gameCoverSearchedImageView"
                 showImageFromUrl="@{game.imageHeaderURL}"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_game_searched"
                 android:cropToPadding="false"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 tools:ignore="ImageContrastCheck"
                 tools:srcCompat="@tools:sample/avatars" />
 
@@ -46,19 +46,21 @@
                 <TextView
                     android:id="@+id/gameTitleSearchedTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:autoSizeMaxTextSize="@dimen/max_text_size"
                     android:autoSizeMinTextSize="@dimen/min_text_size"
                     android:autoSizeStepGranularity="@dimen/step_text_size"
                     android:autoSizeTextType="uniform"
                     android:gravity="center_horizontal|start"
-                    android:maxLength="35"
                     android:text="@{game.title}"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    tools:ignore="NestedWeights" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -77,7 +79,7 @@
                         android:layout_weight="1"
                         android:autoSizeTextType="none"
                         android:gravity="center|end"
-                        android:text="@{String.format(@string/price, game.price, @string/price_symbol)}"
+                        android:text="@{TextUtils.isEmpty(game.price) ? String.format(@string/price, @string/any_price, @string/null_item) : String.format(@string/price, game.price, @string/price_symbol)}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
