@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.adriano.tumino.gamepoint.R;
-import it.adriano.tumino.gamepoint.databinding.GalleryItemBinding;
+import it.adriano.tumino.gamepoint.databinding.GalleryItemLayoutBinding;
 import it.adriano.tumino.gamepoint.holder.recyclerview.GalleryHolder;
 import it.adriano.tumino.gamepoint.ui.showgame.gallery.GalleryDialog;
 
@@ -29,7 +29,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryHolder> {
     @NonNull
     @Override
     public GalleryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        GalleryItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.gallery_item, parent, false);
+        GalleryItemLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.gallery_item_layout, parent, false);
         return new GalleryHolder(binding);
     }
 
