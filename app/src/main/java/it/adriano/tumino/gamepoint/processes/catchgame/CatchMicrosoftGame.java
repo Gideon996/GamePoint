@@ -8,10 +8,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.adriano.tumino.gamepoint.processes.AsyncResponse;
 import it.adriano.tumino.gamepoint.data.storegame.MicrosoftStoreGame;
 import it.adriano.tumino.gamepoint.data.storegame.StoreGame;
+import it.adriano.tumino.gamepoint.processes.ProcessUtils;
 import it.adriano.tumino.gamepoint.processes.TaskRunner;
 
 public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements WebScrapping<MicrosoftStoreGame> {
@@ -52,9 +54,15 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
 
         Elements productPrice = body.select("#productPrice");
         String price = productPrice.select("span").get(0).text();
-        final String trim = price.substring(0, price.length() - 1).trim();
-        if (trim.matches("^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)$")) {
-            price = trim;
+        if (price != null && !price.isEmpty()) {
+            String trim = (Locale.getDefault().getLanguage().equals("it")) ?
+                    price.substring(0, price.length() - 1).trim() : price.substring(1).trim();
+            trim = trim.replace(".", ",");
+            if (trim.matches("^[+-]?([0-9]+,?[0-9]*|\\.[0-9]+)$")) {
+                price = trim;
+            }
+        } else {
+            price = "";
         }
         game.setPrice(price);
 
@@ -103,8 +111,10 @@ public class CatchMicrosoftGame extends TaskRunner<Void, StoreGame> implements W
             string += "<h4>" + h4.text() + "</h4>";
             Elements span = div.select("span");
             string += "<p>" + span.text() + "</p>";
-            if (h4.text().equals("Data di uscita") || h4.text().equals("Release date"))
-                game.setReleaseData(span.text());
+            if (h4.text().equals("Data di uscita") || h4.text().equals("Release date")) {
+                game.setReleaseData(ProcessUtils.normalizeMicrosoftDate(span.text()));
+            }
+
             metadata.add(string);
         }
         game.setMetadata(metadata);

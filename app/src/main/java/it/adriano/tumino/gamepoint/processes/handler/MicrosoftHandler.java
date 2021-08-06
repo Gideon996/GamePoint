@@ -74,7 +74,7 @@ public class MicrosoftHandler {
                     imageURl = image.attributes().get("data-srcset");
                 }
 
-                BasicGameInformation basicGameInformation = new BasicGameInformation(title, imageURl, gameUrl, gameID, null, "MCS", null);
+                BasicGameInformation basicGameInformation = new BasicGameInformation(titleGame, imageURl, gameUrl, gameID, null, "MCS", null);
                 result.add(basicGameInformation);
             }
         }

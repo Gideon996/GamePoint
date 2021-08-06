@@ -165,7 +165,9 @@ public class GameResultFragment extends Fragment implements AsyncResponse<StoreG
             viewModel.getCurrentFragment().setValue(0);
             setFragmentLayout(fragments[0]);
 
-            if (result.getPrice().equalsIgnoreCase("free") || result.getPrice().equalsIgnoreCase("unavailable")) {
+            if(result.getPrice().isEmpty()){
+                binding.priceGameTextView.setText(String.format(getString(R.string.price), getString(R.string.any_price), ""));
+            }else if (result.getPrice().equalsIgnoreCase(getString(R.string.free_price)) || result.getPrice().equalsIgnoreCase(getString(R.string.any_price))) {
                 binding.priceGameTextView.setText(String.format(getString(R.string.price), result.getPrice(), ""));
             } else {
                 binding.priceGameTextView.setText(String.format(getString(R.string.price), result.getPrice(), getString(R.string.price_symbol)));

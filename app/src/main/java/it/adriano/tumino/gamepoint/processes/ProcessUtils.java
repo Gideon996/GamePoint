@@ -58,6 +58,14 @@ public class ProcessUtils {
         return tmp[2] + " " + fromNumberToName(tmp[1]) + " " + tmp[0];
     }
 
+    public static String normalizeMicrosoftDate(String date) {
+        String[] tmp = date.split("/");
+        if(Locale.getDefault().getLanguage().equals("it")) {
+            return tmp[0] + " " + fromNumberToName(tmp[1]) + " " + tmp[2];
+        }
+        return tmp[1] + " " + fromNumberToName(tmp[0]) + " " + tmp[2];
+    }
+
     public static String normalizePCGamerDate(String date) {
         String tmp = date.split("T")[0];
         String[] parserDate = tmp.split("-");

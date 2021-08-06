@@ -63,7 +63,7 @@ public class NintendoHandler {
         put("gameInfoContainerClass", ".game_info_container");
     }};
 
-    private static final HashMap<String, String> ENGLISH_MAP = new HashMap<String, String>(){{
+    private static final HashMap<String, String> ENGLISH_MAP = new HashMap<String, String>() {{
         put("tabContent", "tab-content");
         put("gameBannerClass", ".gamepage-banner");
         put("iframe", "iframe");
@@ -154,7 +154,7 @@ public class NintendoHandler {
                             if (object.has("price_sorting_f")) {
                                 double price = object.getDouble("price_sorting_f");
                                 finalPrice = "" + price;
-                                if (price == 999999.0) finalPrice = "Unavailable";
+                                if (price == 999999.0) finalPrice = "";
                             }
 
                             StringBuilder console = new StringBuilder();
@@ -165,10 +165,8 @@ public class NintendoHandler {
                                     console.append(consoleArray.optString(j));
                                 }
                             }
-
                             BasicGameInformation basicGameInformation = new BasicGameInformation(gameTitle, imageUrl, gameUrl, null, console.toString(), "ESHOP", finalPrice);
                             result.add(basicGameInformation);
-
                         }
                     }
                 }
