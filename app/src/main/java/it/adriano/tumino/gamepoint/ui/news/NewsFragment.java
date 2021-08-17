@@ -51,13 +51,13 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
             binding.newsRecyclerView.setVisibility(View.VISIBLE);
         } else {
             Log.i(TAG, "Starting search news");
-            searchNews();
+            searchNews(viewModel.nextPage());
         }
     }
 
-    private void searchNews() {
+    private void searchNews(int page) {
         SearchNews searchNews = new SearchNews(this);
-        searchNews.execute(viewModel.nextPage());
+        searchNews.execute(page);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class NewsFragment extends Fragment implements AsyncResponse<List<News>> 
         binding.newsShimmerLayout.setVisibility(View.VISIBLE);
         binding.newsShimmerLayout.startShimmer();
         binding.newsRecyclerView.setVisibility(View.GONE);
-        searchNews();
+        searchNews(viewModel.getCurrentPage());
         binding.refreshNewsLayout.setRefreshing(false);
     };
 }

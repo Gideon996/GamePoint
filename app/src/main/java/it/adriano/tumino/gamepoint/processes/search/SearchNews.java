@@ -51,6 +51,11 @@ public class SearchNews extends TaskRunner<Integer, List<News>> {
             for (Future<List<News>> result : results) {
                 list.addAll(result.get());
             }
+
+            if (taskList.size() > 1 && !list.isEmpty()) {
+                return News.sortNewsByDate(list);
+            }
+
             return list;
         } catch (InterruptedException | ExecutionException ie) {
             return new ArrayList<>();

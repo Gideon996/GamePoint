@@ -74,7 +74,14 @@ public class MainSharedViewModel extends ViewModel {
         return searchedList.getValue();
     }
 
-    public String getSearchTitle(){return searchedTitle.getValue(); }
+    public int getCurrentPage() {
+        if (currentNewsPage.getValue() != null) return currentNewsPage.getValue();
+        return 0;
+    }
+
+    public String getSearchTitle() {
+        return searchedTitle.getValue();
+    }
 
     public void setHasOffers(boolean value) {
         hasOffers.setValue(value);
@@ -112,7 +119,9 @@ public class MainSharedViewModel extends ViewModel {
         searchedList.setValue(list);
     }
 
-    public void setSearchedTitle(String title){searchedTitle.setValue(title);}
+    public void setSearchedTitle(String title) {
+        searchedTitle.setValue(title);
+    }
 
     public int nextPage() {
         int currentPage = 0;

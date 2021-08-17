@@ -1,5 +1,8 @@
 package it.adriano.tumino.gamepoint.data;
 
+import java.util.Comparator;
+import java.util.List;
+
 public class News {
     private String title;
     private String imageURL;
@@ -8,13 +11,16 @@ public class News {
     private String date;
     private String website;
 
-    public News(String title, String body, String imageUrl, String date, String newsUrl, String website) {
+    private final int comparator;
+
+    public News(String title, String body, String imageUrl, String date, String newsUrl, String website, int comparator) {
         this.title = title;
         this.imageURL = imageUrl;
         this.newsUrl = newsUrl;
         this.body = body;
         this.date = date;
         this.website = website;
+        this.comparator = comparator;
     }
 
     public String getTitle() {
@@ -63,5 +69,22 @@ public class News {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public int getComparator() {
+        return comparator;
+    }
+
+    public static List<News> sortNewsByDate(List<News> list) {
+        list.sort(new CustomComparator());
+        return list;
+    }
+
+    public static class CustomComparator implements Comparator<News> {
+
+        @Override
+        public int compare(News o1, News o2) {
+            return Integer.compare(o1.getComparator(), o2.getComparator());
+        }
     }
 }
