@@ -157,4 +157,5 @@
     <string name="any_price">Unavailable</string>
     <string name="null_item" translatable="false"> </string>
     <string name="free_price">free</string>
+    <string name="coming_soon_price">Coming soon</string>
 </resources>
