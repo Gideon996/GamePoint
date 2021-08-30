@@ -6,135 +6,140 @@
 
     <data />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/background"
+        android:fillViewport="true"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/padding_layout">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_value"
-            android:contentDescription="@string/app_icon"
-            app:srcCompat="@drawable/icon" />
-
-        <TextView
-            android:id="@+id/appNameText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/loginLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailLoginLayout"
+            <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColorHint="@color/silver"
-                app:boxStrokeErrorColor="@color/red"
-                app:endIconMode="clear_text"
-                app:errorEnabled="true"
-                app:errorIconTint="@color/red"
-                app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:errorTextColor="@color/red">
-
-                <EditText
-                    android:id="@+id/loginEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/layout_margin"
-                    android:background="@drawable/edit_text_background"
-                    android:backgroundTint="@color/dark_cyan"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="@string/email"
-                    android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/silver"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordLoginLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColorHint="@color/silver"
-                android:visibility="visible"
-                app:boxStrokeErrorColor="@color/red"
-                app:errorEnabled="true"
-                app:errorIconTint="@color/red"
-                app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:errorTextColor="@color/red"
-                app:passwordToggleEnabled="true">
-
-                <EditText
-                    android:id="@+id/loginPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/layout_margin"
-                    android:background="@drawable/edit_text_background"
-                    android:backgroundTint="@color/dark_cyan"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="@string/password"
-                    android:importantForAutofill="no"
-                    android:inputType="textPassword"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/silver"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:backgroundTint="@color/dark_cyan"
-                android:text="@string/login"
-                android:textColor="@color/white"
-                tools:ignore="TextContrastCheck" />
+                android:layout_height="@dimen/height_value"
+                android:contentDescription="@string/app_icon"
+                app:srcCompat="@drawable/icon" />
 
             <TextView
-                android:id="@+id/goToSignUp"
+                android:id="@+id/appNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/registration"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
-            <TextView
-                android:id="@+id/forgotPassword"
+            <LinearLayout
+                android:id="@+id/loginLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/twenty_five_dp_value"
-                android:clickable="true"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:minHeight="48dp"
-                android:text="@string/forgot_password"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/white"
-                android:textStyle="italic" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailLoginLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColorHint="@color/silver"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:errorIconTint="@color/red"
+                    app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:errorTextColor="@color/red">
+
+                    <EditText
+                        android:id="@+id/loginEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/layout_margin"
+                        android:background="@drawable/edit_text_background"
+                        android:backgroundTint="@color/dark_cyan"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/email"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/silver"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordLoginLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColorHint="@color/silver"
+                    android:visibility="visible"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:errorEnabled="true"
+                    app:errorIconTint="@color/red"
+                    app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:errorTextColor="@color/red"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/loginPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/layout_margin"
+                        android:background="@drawable/edit_text_background"
+                        android:backgroundTint="@color/dark_cyan"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/password"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/silver"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:backgroundTint="@color/dark_cyan"
+                    android:text="@string/login"
+                    android:textColor="@color/white"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/goToSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/registration"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/forgotPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/twenty_five_dp_value"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:text="@string/forgot_password"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/white"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
         </LinearLayout>
-
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

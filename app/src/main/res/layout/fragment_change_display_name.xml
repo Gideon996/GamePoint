@@ -6,7 +6,7 @@
 
     <data />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
@@ -14,60 +14,67 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_layout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/ten_value"
-            android:text="@string/change_your_nickname"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/ten_value"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/ten_value"
-            android:text="@string/change_nickname_description" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/changeNickNameLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColorHint="@color/silver"
-            app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:endIconMode="clear_text">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/changeNickName"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/ten_value"
+                android:text="@string/change_your_nickname"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten_value"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/ten_value"
+                android:text="@string/change_nickname_description" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/changeNickNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:background="@drawable/edit_text_background"
-                android:backgroundTint="@color/dark_cyan"
-                android:ems="10"
                 android:gravity="center"
-                android:hint="@string/new_nickname"
-                android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:textColor="@color/white"
                 android:textColorHint="@color/silver"
-                tools:ignore="SpeakableTextPresentCheck,TextFields" />
+                app:endIconMode="clear_text"
+                app:errorTextAppearance="@style/TextAppearance.AppCompat.Medium">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/changeNickName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
+                    android:background="@drawable/edit_text_background"
+                    android:backgroundTint="@color/dark_cyan"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="@string/new_nickname"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/silver"
+                    tools:ignore="SpeakableTextPresentCheck,TextFields" />
 
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/changeNickNameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_margin"
-            android:backgroundTint="@color/dark_cyan"
-            android:text="@string/change"
-            android:textColor="@color/white"
-            tools:ignore="TextContrastCheck" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/changeNickNameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin"
+                android:backgroundTint="@color/dark_cyan"
+                android:text="@string/change"
+                android:textColor="@color/white"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>
